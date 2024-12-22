@@ -1,0 +1,11 @@
+fileFormatVersion: 2
+guid: d56dd9c8224fbdc49a82cff0ee7ca1a5
+TextScriptImporter:
+  userData: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 113599
+  packageName: Pixel Levels
+  packageVersion: 1.0
+  assetPath: Assets/PixelLevels/Data/Town.json
+  uploadId: 239492

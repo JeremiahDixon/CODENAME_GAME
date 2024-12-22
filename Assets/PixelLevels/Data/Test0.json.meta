@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4a5e331cb1d9d794c9c701b2a1e07151
+timeCreated: 1486687114
+licenseType: Store
+TextScriptImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 113599
+  packageName: Pixel Levels
+  packageVersion: 1.0
+  assetPath: Assets/PixelLevels/Data/Test0.json
+  uploadId: 239492
