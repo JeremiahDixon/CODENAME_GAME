@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 6005b496762e5014c96de88b2a350858
+timeCreated: 1449023682
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 54995
+  packageName: Pixel Mobs
+  packageVersion: 1.0
+  assetPath: Assets/PixelMobs/Script/Mob.cs
+  uploadId: 239015

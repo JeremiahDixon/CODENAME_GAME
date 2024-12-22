@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 027216a14835c174b9b7df9b203022dc
+timeCreated: 1522590295
+licenseType: Store
+TextScriptImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 113599
+  packageName: Pixel Levels
+  packageVersion: 1.0
+  assetPath: Assets/PixelLevels/ReadMe.txt
+  uploadId: 239492

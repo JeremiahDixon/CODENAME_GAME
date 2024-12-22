@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 0540b322a10ecbb4da89ce47ebdfa6f7
+timeCreated: 1427683851
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 113599
+  packageName: Pixel Levels
+  packageVersion: 1.0
+  assetPath: Assets/PixelLevels/Visual/Animation/TargetFore.controller
+  uploadId: 239492

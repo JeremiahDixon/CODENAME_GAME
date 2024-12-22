@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 54bb32eab2da9e14f97af4996fe7515b
+timeCreated: 1486251994
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 113599
+  packageName: Pixel Levels
+  packageVersion: 1.0
+  assetPath: Assets/PixelLevels/Visual/Level.mat
+  uploadId: 239492

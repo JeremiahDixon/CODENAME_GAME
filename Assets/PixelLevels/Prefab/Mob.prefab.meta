@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ca7fb011cf7bca24e956bc8938d5fcfc
+timeCreated: 1462388333
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 113599
+  packageName: Pixel Levels
+  packageVersion: 1.0
+  assetPath: Assets/PixelLevels/Prefab/Mob.prefab
+  uploadId: 239492
