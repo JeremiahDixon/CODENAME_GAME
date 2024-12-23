@@ -115,6 +115,10 @@ MonoBehaviour:
   whatIsPickupItem: 7
   attackRange: 0.22
   strength: 3
+  activeMovementSpeed: {x: 0, y: 0}
+  dashSpeed: {x: 6, y: 6}
+  dashLength: 0.3
+  dashCooldown: 1
 --- !u!50 &1559659194115269552
 Rigidbody2D:
   serializedVersion: 5

@@ -23,7 +23,11 @@ public class Player : MonoBehaviour
     public bool shouldBeDamaging {get; private set;} = false;
     private List<IEnemy> damagedEnemies = new List<IEnemy>();
     public static Player Instance;
-
+    public Vector2 activeMovementSpeed;
+    public Vector2 dashSpeed;
+    public float dashLength = .5f, dashCooldown =1f;
+    private float dashCounter;
+    private float dashCoolCounter;
     private void Awake()
     {
         if (Instance == null)
@@ -43,6 +47,7 @@ public class Player : MonoBehaviour
         myRigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         currentStrength = strength;
+        activeMovementSpeed = MovementSpeed;
     }
 
 
@@ -50,6 +55,25 @@ public class Player : MonoBehaviour
     void Update()
     {
         inputVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+        
+        if(Input.GetKeyDown(KeyCode.M)){
+            if(dashCoolCounter <=0 && dashCounter <= 0){
+                activeMovementSpeed = dashSpeed;
+                dashCounter = dashLength;
+            }
+        }
+        if(dashCounter > 0){
+            dashCounter -= Time.deltaTime;
+
+            if(dashCounter <= 0){
+                activeMovementSpeed = MovementSpeed;
+                dashCoolCounter = dashCooldown;
+            }
+        }
+
+        if(dashCoolCounter > 0){
+            dashCoolCounter -= Time.deltaTime;
+        }
         if(timeBtwAttack <= 0){
             if(Input.GetKeyDown(KeyCode.Space)){
                 anim.SetTrigger("isAttackingTrigger");
@@ -62,7 +86,7 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         // Rigidbody2D affects physics so any ops on it should happen in FixedUpdate
-        myRigid.MovePosition(myRigid.position + (inputVector * MovementSpeed * Time.fixedDeltaTime));
+        myRigid.MovePosition(myRigid.position + (inputVector * activeMovementSpeed * Time.fixedDeltaTime));
         if(facingRight == false && inputVector.x < 0){
             Flip();
         }else if(facingRight == true && inputVector.x > 0){
