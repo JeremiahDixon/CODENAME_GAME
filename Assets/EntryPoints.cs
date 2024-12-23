@@ -20,7 +20,7 @@ public class EntryPoints : MonoBehaviour
     {
         if(other.gameObject.tag == "Player"){
             if(gameObject.name == "ToForest"){
-                SceneLoader.Instance.LoadSceneAsync("Scene2");
+                SceneLoader.Instance.LoadScene("Scene2");
             }
         }
     }

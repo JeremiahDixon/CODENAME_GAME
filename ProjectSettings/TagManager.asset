@@ -44,5 +44,8 @@ TagManager:
   - name: Player
     uniqueID: 834131347
     locked: 0
+  - name: Top terrain
+    uniqueID: 893932479
+    locked: 0
   m_RenderingLayers:
   - Default

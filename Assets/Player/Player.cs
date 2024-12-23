@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float speed;
+    public Vector2 MovementSpeed = new Vector2(100.0f, 100.0f); // 2D Movement speed to have independant axis speed
+    private Vector2 inputVector = new Vector2(0.0f, 0.0f);
     private Rigidbody2D myRigid;
     private float moveInput;
     private float moveInputY;
@@ -23,6 +22,20 @@ public class Player : MonoBehaviour
     private int currentStrength;
     public bool shouldBeDamaging {get; private set;} = false;
     private List<IEnemy> damagedEnemies = new List<IEnemy>();
+    public static Player Instance;
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);  // Keeps this manager between scenes
+        }
+        else
+        {
+            Destroy(gameObject);  // Prevent duplicates
+        }
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -36,14 +49,23 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        moveInput = Input.GetAxisRaw("Horizontal");
-        moveInputY = Input.GetAxisRaw("Vertical");
-        myRigid.linearVelocity = new Vector2(moveInput * speed, myRigid.linearVelocity.y);
-        myRigid.linearVelocity = new Vector2(myRigid.linearVelocity.x, moveInputY * speed);
+        inputVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+        if(timeBtwAttack <= 0){
+            if(Input.GetKeyDown(KeyCode.Space)){
+                anim.SetTrigger("isAttackingTrigger");
+            }
+        }else{
+            timeBtwAttack -= Time.deltaTime;
+        }
+    }
 
-        if(facingRight == false && moveInput < 0){
+    void FixedUpdate()
+    {
+        // Rigidbody2D affects physics so any ops on it should happen in FixedUpdate
+        myRigid.MovePosition(myRigid.position + (inputVector * MovementSpeed * Time.fixedDeltaTime));
+        if(facingRight == false && inputVector.x < 0){
             Flip();
-        }else if(facingRight == true && moveInput > 0){
+        }else if(facingRight == true && inputVector.x > 0){
             Flip();
         }
 
@@ -52,15 +74,6 @@ public class Player : MonoBehaviour
         }else{
             anim.SetBool("isWalking", true);
         }
-
-        if(timeBtwAttack <= 0){
-            if(Input.GetKeyDown(KeyCode.Space)){
-                anim.SetTrigger("isAttackingTrigger");
-            }
-        }else{
-            timeBtwAttack -= Time.deltaTime;
-        }
-
     }
 
     void Flip(){
@@ -79,7 +92,7 @@ public class Player : MonoBehaviour
             RaycastHit2D[] enemiesToDamage = Physics2D.CircleCastAll(attackPos.position, attackRange, transform.right, 0f, whatIsEnemies);
             for (int i = 0; i < enemiesToDamage.Length; i++){
                 IEnemy enemy = enemiesToDamage[i].collider.gameObject.GetComponent<IEnemy>();
-                if(enemy != null && !damagedEnemies.Contains(enemy)){
+                if(enemy != null && !damagedEnemies.Contains(enemy) && enemiesToDamage[i].collider is PolygonCollider2D){
                     enemy.TakeDamage(strength);
                     damagedEnemies.Add(enemy);
                 }

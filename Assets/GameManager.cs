@@ -1,3 +1,4 @@
+using Unity.Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -26,16 +27,18 @@ public class GameManager: MonoBehaviour
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
+    // void Start()
+    // {
         
-    }
+    // }
 
     // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    //void Update()
+    //{
+        // CinemachineCamera camera = GameObject.Find("PlayerCamera").GetComponent<CinemachineCamera>();
+        // GameObject player = GameObject.Find("Player");
+        // camera.Follow = GameObject.Find("Player").transform;
+    //}
 
     public void Heal(int amount){
         int newHealthValue = this.playerHealth + amount;
