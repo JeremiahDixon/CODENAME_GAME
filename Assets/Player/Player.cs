@@ -29,6 +29,9 @@ public class Player : MonoBehaviour
     private float dashCoolCounter;
     private CinemachineCamera camera;
     private CinemachineImpulseSource impulseSource;
+    public Transform shotPoint;
+    public GameObject arrow;
+    public float launchForce;
     private void Awake()
     {
         if (Instance == null)
@@ -81,6 +84,9 @@ public class Player : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.Space)){
                 anim.SetTrigger("isAttackingTrigger");
             }
+            if(Input.GetKeyDown(KeyCode.Q)){
+                anim.SetTrigger("isShootingTrigger");
+            }
         }else{
             timeBtwAttack -= Time.deltaTime;
         }
@@ -105,6 +111,22 @@ public class Player : MonoBehaviour
         }
     }
 
+    void Shoot(){
+        GameObject newArrow = Instantiate(arrow, shotPoint.position, shotPoint.rotation);
+        if(!facingRight){
+            Vector3 Scaler = newArrow.transform.localScale;
+            Scaler.x *= -1;
+            newArrow.transform.localScale = Scaler;
+            newArrow.GetComponent<Rigidbody2D>().linearVelocity = Vector3.left * launchForce;
+        }else{
+            newArrow.GetComponent<Rigidbody2D>().linearVelocity = Vector3.right * launchForce;
+        }
+        myRigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+    }
+
+    void Freeze(){
+        myRigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+    }
     void Flip(){
         facingRight = !facingRight;
         Vector3 Scaler = transform.localScale;
@@ -120,13 +142,13 @@ public class Player : MonoBehaviour
 
         while(shouldBeDamaging){
             RaycastHit2D[] enemiesToDamage = Physics2D.CircleCastAll(attackPos.position, attackRange, transform.right, 0f, whatIsEnemies);
-            if(!shook && enemiesToDamage.Length > 0){
-                impulseSource.GenerateImpulse(new Vector3(0, -0.1f, 0));
-                shook = true;
-            }
             for (int i = 0; i < enemiesToDamage.Length; i++){
                 IEnemy enemy = enemiesToDamage[i].collider.gameObject.GetComponent<IEnemy>();
                 if(enemy != null && !damagedEnemies.Contains(enemy) && enemiesToDamage[i].collider is PolygonCollider2D){
+                    if(!shook){
+                        impulseSource.GenerateImpulse(new Vector3(0, -0.1f, 0));
+                        shook = true;
+                    }
                     enemy.TakeDamage(strength);
                     damagedEnemies.Add(enemy);
                 }
