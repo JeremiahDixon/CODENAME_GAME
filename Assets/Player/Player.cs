@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -7,8 +8,6 @@ public class Player : MonoBehaviour
     public Vector2 MovementSpeed = new Vector2(100.0f, 100.0f); // 2D Movement speed to have independant axis speed
     private Vector2 inputVector = new Vector2(0.0f, 0.0f);
     private Rigidbody2D myRigid;
-    private float moveInput;
-    private float moveInputY;
     private bool facingRight = true;
     private Animator anim;
     public float timeBtwAttack;
@@ -28,6 +27,8 @@ public class Player : MonoBehaviour
     public float dashLength = .5f, dashCooldown =1f;
     private float dashCounter;
     private float dashCoolCounter;
+    private CinemachineCamera camera;
+    private CinemachineImpulseSource impulseSource;
     private void Awake()
     {
         if (Instance == null)
@@ -48,6 +49,8 @@ public class Player : MonoBehaviour
         anim = GetComponent<Animator>();
         currentStrength = strength;
         activeMovementSpeed = MovementSpeed;
+        camera = GameObject.Find("PlayerCamera").GetComponent<CinemachineCamera>();
+        impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
 
@@ -87,15 +90,17 @@ public class Player : MonoBehaviour
     {
         // Rigidbody2D affects physics so any ops on it should happen in FixedUpdate
         myRigid.MovePosition(myRigid.position + (inputVector * activeMovementSpeed * Time.fixedDeltaTime));
-        if(facingRight == false && inputVector.x < 0){
+        if(facingRight == false && inputVector.x > 0){
             Flip();
-        }else if(facingRight == true && inputVector.x > 0){
+        }else if(facingRight == true && inputVector.x < 0){
             Flip();
         }
 
-        if(moveInput == 0 && moveInputY == 0){
+        if(inputVector.x == 0 && inputVector.y == 0){
             anim.SetBool("isWalking", false);
+            anim.SetBool("isIdle", true);
         }else{
+            anim.SetBool("isIdle", false);
             anim.SetBool("isWalking", true);
         }
     }
@@ -111,9 +116,14 @@ public class Player : MonoBehaviour
         myRigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
         shouldBeDamaging = true;
         timeBtwAttack = startTimeBtwAttack;
+        bool shook = false;
 
         while(shouldBeDamaging){
             RaycastHit2D[] enemiesToDamage = Physics2D.CircleCastAll(attackPos.position, attackRange, transform.right, 0f, whatIsEnemies);
+            if(!shook && enemiesToDamage.Length > 0){
+                impulseSource.GenerateImpulse(new Vector3(0, -0.1f, 0));
+                shook = true;
+            }
             for (int i = 0; i < enemiesToDamage.Length; i++){
                 IEnemy enemy = enemiesToDamage[i].collider.gameObject.GetComponent<IEnemy>();
                 if(enemy != null && !damagedEnemies.Contains(enemy) && enemiesToDamage[i].collider is PolygonCollider2D){
@@ -131,7 +141,7 @@ public class Player : MonoBehaviour
         damagedEnemies.Clear();
     }
 
-    void AttackStop(){
+    public void AttackStop(){
         shouldBeDamaging = false;
         myRigid.constraints = RigidbodyConstraints2D.FreezeRotation;
     }

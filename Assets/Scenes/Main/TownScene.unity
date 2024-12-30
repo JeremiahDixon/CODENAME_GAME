@@ -44906,6 +44906,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1985412663270274383, guid: 7f8ae2c887318ac4488377376c7dec1f, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 4.499118
+      objectReference: {fileID: 0}
+    - target: {fileID: 1985412663270274383, guid: 7f8ae2c887318ac4488377376c7dec1f, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 4.499118
+      objectReference: {fileID: 0}
+    - target: {fileID: 1985412663270274383, guid: 7f8ae2c887318ac4488377376c7dec1f, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 4.499118
+      objectReference: {fileID: 0}
+    - target: {fileID: 1985412663270274383, guid: 7f8ae2c887318ac4488377376c7dec1f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -10.04
       objectReference: {fileID: 0}
@@ -44951,19 +44963,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5983398358969458683, guid: 7f8ae2c887318ac4488377376c7dec1f, type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6039317818185974709, guid: 7f8ae2c887318ac4488377376c7dec1f, type: 3}
-      propertyPath: dashLength
-      value: 0.3
+      propertyPath: attackRange
+      value: 0.44
       objectReference: {fileID: 0}
-    - target: {fileID: 6039317818185974709, guid: 7f8ae2c887318ac4488377376c7dec1f, type: 3}
-      propertyPath: dashSpeed.x
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6039317818185974709, guid: 7f8ae2c887318ac4488377376c7dec1f, type: 3}
-      propertyPath: dashSpeed.y
-      value: 6
+    - target: {fileID: 7035066685179371624, guid: 7f8ae2c887318ac4488377376c7dec1f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.118
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
