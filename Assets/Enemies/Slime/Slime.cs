@@ -31,7 +31,7 @@ public class Slime : MonoBehaviour, IEnemy
         Debug.Log("Damage Taken!");
         if (hp <= 0){
             Debug.Log("dropping loot!");
-            int randomInt = Random.Range(1, 100);
+            int randomInt = Random.Range(1, 101);
             dropLoot(randomInt);
             Debug.Log("destorying!");
             Destroy(gameObject);
