@@ -62,7 +62,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
     {
         inputVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
         
-        if(Input.GetKeyDown(KeyCode.M)){
+        if(Input.GetKeyDown(KeyCode.E)){
             if(dashCoolCounter <=0 && dashCounter <= 0){
                 activeMovementSpeed = dashSpeed;
                 dashCounter = dashLength;
@@ -168,4 +168,14 @@ public class VSPlayer : MonoBehaviour, IPlayer
     public void equipWeapon(int amount){
         currentStrength = strength + amount;
     }
+
+    public void TakeDamage(int amount){
+        Debug.Log("Player Damaged!");
+        GameManager.Instance.TakeDamage(amount);
+    }
+
+    public void Die(){
+        Debug.Log("DEAD!");
+    }
+
 }

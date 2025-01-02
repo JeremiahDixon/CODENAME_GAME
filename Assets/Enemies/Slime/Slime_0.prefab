@@ -78,9 +78,9 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingLayerID: 491491893
+  m_SortingLayer: 1
+  m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 90aad0cf8dd99a042b600728db7470d3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -122,14 +122,14 @@ Rigidbody2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8112522797563040343}
-  m_BodyType: 1
+  m_BodyType: 0
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
   m_LinearDamping: 0
   m_AngularDamping: 0.05
-  m_GravityScale: 1
+  m_GravityScale: 0
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -164,7 +164,7 @@ PolygonCollider2D:
     m_Bits: 247
   m_ForceReceiveLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 247
   m_ContactCaptureLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -256,8 +256,10 @@ MonoBehaviour:
   strength: 0
   enemyName: 
   loot:
-  - {fileID: 2946919918409338192, guid: e0cf438a9ba7c524399d43e8d1b74373, type: 3}
-  - {fileID: 2586672892296621288, guid: a1b68ef930639aa4d8ca9fe9fb025099, type: 3}
+  - {fileID: 0}
   enemySo: {fileID: 11400000, guid: d419ec6b9d7ec6844949fdd6386a4b48, type: 2}
   timeBtwAttack: 0
   speed: 2
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 8

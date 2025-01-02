@@ -7,6 +7,11 @@ public class Player : MonoBehaviour, IPlayer
 {
     public Vector2 MovementSpeed = new Vector2(100.0f, 100.0f); // 2D Movement speed to have independant axis speed
     private Vector2 inputVector = new Vector2(0.0f, 0.0f);
+    const string ATTACKING_TRIGGER = "isAttackingTrigger";
+    const string SHOOTING_TRIGGER = "isShootingTrigger";
+    const string WALKING = "isWalking";
+    const string IDLE = "isIdle";
+    const string CAMERA_NAME = "PlayerCamera";
     private Rigidbody2D myRigid;
     private bool facingRight = true;
     private Animator anim;
@@ -52,7 +57,7 @@ public class Player : MonoBehaviour, IPlayer
         anim = GetComponent<Animator>();
         currentStrength = strength;
         activeMovementSpeed = MovementSpeed;
-        camera = GameObject.Find("PlayerCamera").GetComponent<CinemachineCamera>();
+        camera = GameObject.Find(CAMERA_NAME).GetComponent<CinemachineCamera>();
         impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
@@ -62,7 +67,7 @@ public class Player : MonoBehaviour, IPlayer
     {
         inputVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
         
-        if(Input.GetKeyDown(KeyCode.M)){
+        if(Input.GetKeyDown(KeyCode.E)){
             if(dashCoolCounter <=0 && dashCounter <= 0){
                 activeMovementSpeed = dashSpeed;
                 dashCounter = dashLength;
@@ -82,10 +87,10 @@ public class Player : MonoBehaviour, IPlayer
         }
         if(timeBtwAttack <= 0){
             if(Input.GetKeyDown(KeyCode.Space)){
-                anim.SetTrigger("isAttackingTrigger");
+                anim.SetTrigger(ATTACKING_TRIGGER);
             }
             if(Input.GetKeyDown(KeyCode.Q)){
-                anim.SetTrigger("isShootingTrigger");
+                anim.SetTrigger(SHOOTING_TRIGGER);
             }
         }else{
             timeBtwAttack -= Time.deltaTime;
@@ -103,11 +108,11 @@ public class Player : MonoBehaviour, IPlayer
         }
 
         if(inputVector.x == 0 && inputVector.y == 0){
-            anim.SetBool("isWalking", false);
-            anim.SetBool("isIdle", true);
+            anim.SetBool(WALKING, false);
+            anim.SetBool(IDLE, true);
         }else{
-            anim.SetBool("isIdle", false);
-            anim.SetBool("isWalking", true);
+            anim.SetBool(IDLE, false);
+            anim.SetBool(WALKING, true);
         }
     }
 
@@ -159,7 +164,7 @@ public class Player : MonoBehaviour, IPlayer
         returnDamagedEnemiesHittable();
     }
 
-    private void returnDamagedEnemiesHittable(){
+    void returnDamagedEnemiesHittable(){
         damagedEnemies.Clear();
     }
 
@@ -178,7 +183,15 @@ public class Player : MonoBehaviour, IPlayer
         GameManager.Instance.Heal(amount);
     }
 
+    public void TakeDamage(int amount){
+        GameManager.Instance.TakeDamage(amount);
+    }
+
     public void equipWeapon(int amount){
         currentStrength = strength + amount;
+    }
+
+    public void Die(){
+        Debug.Log("DEAD!");
     }
 }

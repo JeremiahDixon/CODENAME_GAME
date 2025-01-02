@@ -1,4 +1,5 @@
 using UnityEditor;
+using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class Slime : MonoBehaviour, IEnemy
@@ -16,7 +17,8 @@ public class Slime : MonoBehaviour, IEnemy
     private Transform playerPos;
     private IPlayer player;
     public float timeBtwAttack;
-    private bool isTargeting = false;
+    private bool facingRight = false;
+    private bool isTargeting = true;
     [SerializeField]
     private float speed;
     [SerializeField]
@@ -50,6 +52,18 @@ public class Slime : MonoBehaviour, IEnemy
         }else{
             timeBtwAttack -= Time.deltaTime;
         }
+        if(playerPos.position.x > transform.position.x && !facingRight){
+            Flip();
+        }else if(playerPos.position.x < transform.position.x && facingRight){
+            Flip();
+        }
+    }
+
+    void Flip(){
+        facingRight = !facingRight;
+        Vector3 Scaler = transform.localScale;
+        Scaler.x *= -1;
+        transform.localScale = Scaler;
     }
 
     public void TakeDamage (int damage){
@@ -64,43 +78,44 @@ public class Slime : MonoBehaviour, IEnemy
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if(other.gameObject.tag == "Player"){
-            Debug.Log("Triggered");
-            anim.SetBool("isWalking", false);
-            anim.SetBool("isRunning", true);
-            isTargeting = true;
-        }
-    }
+    // private void OnTriggerEnter2D(Collider2D other)
+    // {
+    //     if(other.gameObject.tag == "Player"){
+    //         anim.SetBool("isWalking", false);
+    //         anim.SetBool("isRunning", true);
+    //         isTargeting = true;
+    //     }
+    // }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if(other.gameObject.tag == "Player"){
-            anim.SetBool("isWalking", false);
-            anim.SetBool("isRunning", false);
-            isTargeting = false;
-        } 
-    }
+    // private void OnTriggerExit2D(Collider2D other)
+    // {
+    //     if(other.gameObject.tag == "Player"){
+    //         anim.SetBool("isWalking", false);
+    //         anim.SetBool("isRunning", false);
+    //         isTargeting = false;
+    //     } 
+    // }
 
     void dropLoot(int randomInt){
         Vector3 objectPosition = transform.position;
         Vector3 randPoint = new Vector3(objectPosition.x + Random.Range(-1.0f, 1.0f), objectPosition.y + Random.Range(-1.0f, 1.0f));
         if(randomInt < 10){
-            Instantiate(loot[0], randPoint, Quaternion.identity);
+            //Instantiate(loot[0], randPoint, Quaternion.identity);
         }else if(randomInt >= 10 && randomInt <= 100){
-            Instantiate(loot[1], randPoint, Quaternion.identity);
+            //Instantiate(loot[1], randPoint, Quaternion.identity);
         }
     }
 
     //call this durring animation event to check if hit
     void tryToHitPlayer(){
         //create a attackpos and replace transform
-        RaycastHit2D playerToDamage = Physics2D.CircleCast(transform.position, 1, transform.right, 0f, whatIsPlayer);
-        Player thePlayer = playerToDamage.collider.gameObject.GetComponent<Player>();
-        if(thePlayer != null && playerToDamage.collider is BoxCollider2D){
-            //damage, screenshake etc
+        RaycastHit2D playerToDamage = Physics2D.CircleCast(transform.position, 0.75f, transform.right, 0f, whatIsPlayer);
+        if( playerToDamage ){
+            IPlayer thePlayer = playerToDamage.collider.gameObject.GetComponent<IPlayer>();
+            if(thePlayer != null && playerToDamage.collider is BoxCollider2D){
+            thePlayer.TakeDamage(strength);
             //might need to add a bool playerBeenDamaged
+        }
         }
     }
     public int getHp()

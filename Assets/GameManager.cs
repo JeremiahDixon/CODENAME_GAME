@@ -9,8 +9,10 @@ public class GameManager: MonoBehaviour
     public GameState currentState;
     private bool innLocked{get; set;}
     private bool shoplocked{get; set;}
-    private int playerHealth{get; set;}
-    private int maxPlayerHealth{get; set;}
+    public int playerHealth{get; private set;} = 10;
+    public int maxPlayerHealth{get; private set;} = 10;
+    private IPlayer thePlayer;
+    private HealthManager healthManager;
 
     private void Awake()
     {
@@ -27,23 +29,36 @@ public class GameManager: MonoBehaviour
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    // void Start()
-    // {
-        
-    // }
+    void Start()
+    {
+        thePlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<IPlayer>();
+        // playerHealth = 10;
+        // maxPlayerHealth = 10;
+        healthManager = GameObject.Find("HealthManager").GetComponent<HealthManager>();
+    }
 
     // Update is called once per frame
     //void Update()
     //{
-        // CinemachineCamera camera = GameObject.Find("PlayerCamera").GetComponent<CinemachineCamera>();
-        // GameObject player = GameObject.Find("Player");
-        // camera.Follow = GameObject.Find("Player").transform;
+
     //}
 
     public void Heal(int amount){
         int newHealthValue = this.playerHealth + amount;
+        healthManager.Heal(amount);
         if(newHealthValue >= maxPlayerHealth){
             playerHealth = maxPlayerHealth;
+        }else{
+            playerHealth = newHealthValue;
+        }
+    }
+
+    public void TakeDamage(int amount){
+        int newHealthValue = this.playerHealth - amount;
+        healthManager.TakeDamage(amount);
+        if(newHealthValue <= 0){
+            playerHealth = 0;
+            thePlayer.Die();
         }else{
             playerHealth = newHealthValue;
         }

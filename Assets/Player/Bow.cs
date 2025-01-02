@@ -20,7 +20,7 @@ public class Bow : MonoBehaviour
         Vector2 direction = mousePosition - bowPosition;
         transform.right = direction;
 
-        if(Input.GetKeyDown(KeyCode.Q)){
+        if(Input.GetMouseButtonDown(0)){
             Shoot();
         }
     }
