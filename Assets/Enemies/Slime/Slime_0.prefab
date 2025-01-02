@@ -239,7 +239,7 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 0.75
+  m_Radius: 1
 --- !u!114 &8959407537743996655
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,3 +259,5 @@ MonoBehaviour:
   - {fileID: 2946919918409338192, guid: e0cf438a9ba7c524399d43e8d1b74373, type: 3}
   - {fileID: 2586672892296621288, guid: a1b68ef930639aa4d8ca9fe9fb025099, type: 3}
   enemySo: {fileID: 11400000, guid: d419ec6b9d7ec6844949fdd6386a4b48, type: 2}
+  timeBtwAttack: 0
+  speed: 2

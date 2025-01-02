@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 
-public class Player : MonoBehaviour, IPlayer
+public class VSPlayer : MonoBehaviour, IPlayer
 {
     public Vector2 MovementSpeed = new Vector2(100.0f, 100.0f); // 2D Movement speed to have independant axis speed
     private Vector2 inputVector = new Vector2(0.0f, 0.0f);
@@ -21,7 +21,7 @@ public class Player : MonoBehaviour, IPlayer
     private int currentStrength;
     public bool shouldBeDamaging {get; private set;} = false;
     private List<IEnemy> damagedEnemies = new List<IEnemy>();
-    public static Player Instance;
+    public static VSPlayer Instance;
     public Vector2 activeMovementSpeed;
     public Vector2 dashSpeed;
     public float dashLength = .5f, dashCooldown =1f;
@@ -29,9 +29,8 @@ public class Player : MonoBehaviour, IPlayer
     private float dashCoolCounter;
     private CinemachineCamera camera;
     private CinemachineImpulseSource impulseSource;
-    public Transform shotPoint;
-    public GameObject arrow;
-    public float launchForce;
+
+    SpriteRenderer spriteRenderer;
     private void Awake()
     {
         if (Instance == null)
@@ -54,6 +53,7 @@ public class Player : MonoBehaviour, IPlayer
         activeMovementSpeed = MovementSpeed;
         camera = GameObject.Find("PlayerCamera").GetComponent<CinemachineCamera>();
         impulseSource = GetComponent<CinemachineImpulseSource>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
 
@@ -84,9 +84,6 @@ public class Player : MonoBehaviour, IPlayer
             if(Input.GetKeyDown(KeyCode.Space)){
                 anim.SetTrigger("isAttackingTrigger");
             }
-            if(Input.GetKeyDown(KeyCode.Q)){
-                anim.SetTrigger("isShootingTrigger");
-            }
         }else{
             timeBtwAttack -= Time.deltaTime;
         }
@@ -96,9 +93,10 @@ public class Player : MonoBehaviour, IPlayer
     {
         // Rigidbody2D affects physics so any ops on it should happen in FixedUpdate
         myRigid.MovePosition(myRigid.position + (inputVector * activeMovementSpeed * Time.fixedDeltaTime));
-        if(facingRight == false && inputVector.x > 0){
+        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        if(facingRight == false && mousePosition.x > transform.position.x){
             Flip();
-        }else if(facingRight == true && inputVector.x < 0){
+        }else if(facingRight == true && mousePosition.x < transform.position.x){
             Flip();
         }
 
@@ -111,27 +109,16 @@ public class Player : MonoBehaviour, IPlayer
         }
     }
 
-    void Shoot(){
-        GameObject newArrow = Instantiate(arrow, shotPoint.position, shotPoint.rotation);
-        if(!facingRight){
-            Vector3 Scaler = newArrow.transform.localScale;
-            Scaler.x *= -1;
-            newArrow.transform.localScale = Scaler;
-            newArrow.GetComponent<Rigidbody2D>().linearVelocity = Vector3.left * launchForce;
-        }else{
-            newArrow.GetComponent<Rigidbody2D>().linearVelocity = Vector3.right * launchForce;
-        }
-        myRigid.constraints = RigidbodyConstraints2D.FreezeRotation;
-    }
-
     void Freeze(){
         myRigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
     }
     void Flip(){
         facingRight = !facingRight;
-        Vector3 Scaler = transform.localScale;
-        Scaler.x *= -1;
-        transform.localScale = Scaler;
+        if(facingRight){
+            spriteRenderer.flipX = false;
+        }else{
+            spriteRenderer.flipX = true;
+        }
     }
 
     public IEnumerator DamageWhileAttackingIsActive(){

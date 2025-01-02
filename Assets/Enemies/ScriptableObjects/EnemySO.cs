@@ -7,6 +7,7 @@ public class EnemySO : ScriptableObject
     public EnemyLevel enemyLevel = new EnemyLevel();
     public int hp;
     public int strength;
+    public float speed;
     private Item[] loot;
     private Item[] lootTable;
 
@@ -23,6 +24,7 @@ public class EnemySO : ScriptableObject
                 gameObject.GetComponent<IEnemy>().setHp(hp);
                 gameObject.GetComponent<IEnemy>().setStrength(strength);
                 gameObject.GetComponent<IEnemy>().setEnemyName(enemyName);
+                gameObject.GetComponent<IEnemy>().setSpeed(speed);
                 break;
             case EnemyLevel.intermediate:
                 break;

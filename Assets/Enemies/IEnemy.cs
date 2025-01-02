@@ -8,6 +8,8 @@ public interface IEnemy
     void TakeDamage (int damage);
     int getStrength();
     void setStrength(int strength);
+    float getSpeed();
+    void setSpeed(float speed);
     public string getEnemyName();
     public void setEnemyName(string enemyName);
     

@@ -71,4 +71,14 @@ public class Skull : MonoBehaviour, IEnemy
     {
         this.enemyName = enemyName;
     }
+
+    public float getSpeed()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void setSpeed(float speed)
+    {
+        throw new System.NotImplementedException();
+    }
 }

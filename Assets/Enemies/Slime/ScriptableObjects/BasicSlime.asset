@@ -16,3 +16,4 @@ MonoBehaviour:
   enemyLevel: 0
   hp: 6
   strength: 2
+  speed: 1.5
