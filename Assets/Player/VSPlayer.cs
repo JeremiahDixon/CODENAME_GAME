@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public class VSPlayer : MonoBehaviour, IPlayer
 {
-    public Vector2 MovementSpeed = new Vector2(100.0f, 100.0f); // 2D Movement speed to have independant axis speed
+    public Vector2 MovementSpeed = new Vector2(0.0f, 0.0f); // 2D Movement speed to have independant axis speed
     private Vector2 inputVector = new Vector2(0.0f, 0.0f);
-    const string ATTACKING_TRIGGER = "isAttackingTrigger";
+    const string SWORD_TRIGGER = "isAttackingTrigger";
     const string WALKING = "isWalking";
     const string IDLE = "isIdle";
     const string CAMERA_NAME = "PlayerCamera";
@@ -34,6 +34,11 @@ public class VSPlayer : MonoBehaviour, IPlayer
     private float dashCoolCounter;
     private CinemachineCamera playerCamera;
     private CinemachineImpulseSource impulseSource;
+    public InputSystem_Actions playerControls;
+    private InputAction move;
+    private InputAction look;
+    private InputAction dash;
+    private InputAction swordAttack;
 
     SpriteRenderer spriteRenderer;
     private void Awake()
@@ -47,6 +52,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
         {
             Destroy(gameObject);  // Prevent duplicates
         }
+        playerControls = new InputSystem_Actions();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -61,35 +67,65 @@ public class VSPlayer : MonoBehaviour, IPlayer
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    private void OnEnable()
+    {
+        playerControls.Enable();
+        move = playerControls.Player.Move;
+        move.Enable();
+        look = playerControls.Player.Look;
+        look.Enable();
+        dash = playerControls.Player.Dash;
+        dash.Enable();
+        swordAttack = playerControls.Player.SwordAttack;
+        swordAttack.Enable();
+    }
+
+    private void OnDisable()
+    {
+        playerControls.Disable();
+        move.Disable();
+        look.Disable();
+        dash.Disable();
+        swordAttack.Disable();
+    }
+
 
     // Update is called once per frame
     void Update()
     {
-        inputVector = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+        inputVector = move.ReadValue<Vector2>(); //new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
         
-        if(Input.GetKeyDown(KeyCode.E)){
-            if(dashCoolCounter <=0 && dashCounter <= 0){
+        if(dash.WasPressedThisFrame())
+        {
+            if(dashCoolCounter <=0 && dashCounter <= 0)
+            {
                 activeMovementSpeed = dashSpeed;
                 dashCounter = dashLength;
             }
         }
-        if(dashCounter > 0){
+        if(dashCounter > 0)
+        {
             dashCounter -= Time.deltaTime;
 
-            if(dashCounter <= 0){
+            if(dashCounter <= 0)
+            {
                 activeMovementSpeed = MovementSpeed;
                 dashCoolCounter = dashCooldown;
             }
         }
 
-        if(dashCoolCounter > 0){
+        if(dashCoolCounter > 0)
+        {
             dashCoolCounter -= Time.deltaTime;
         }
-        if(timeBtwAttack <= 0){
-            if(Input.GetKeyDown(KeyCode.Space)){
-                anim.SetTrigger(ATTACKING_TRIGGER);
+        if(timeBtwAttack <= 0)
+        {
+            if(swordAttack.WasPressedThisFrame())
+            {
+                anim.SetTrigger(SWORD_TRIGGER);
             }
-        }else{
+        }else
+        {
             timeBtwAttack -= Time.deltaTime;
         }
     }
@@ -98,52 +134,67 @@ public class VSPlayer : MonoBehaviour, IPlayer
     {
         // Rigidbody2D affects physics so any ops on it should happen in FixedUpdate
         myRigid.MovePosition(myRigid.position + (inputVector * activeMovementSpeed * Time.fixedDeltaTime));
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        if(facingRight == false && mousePosition.x > transform.position.x){
+        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(look.ReadValue<Vector2>());
+        if(facingRight == false && mousePosition.x > transform.position.x)
+        {
             Flip();
-        }else if(facingRight == true && mousePosition.x < transform.position.x){
+        }else if(facingRight == true && mousePosition.x < transform.position.x)
+        {
             Flip();
         }
 
-        if(inputVector.x == 0 && inputVector.y == 0){
+        if(inputVector.x == 0 && inputVector.y == 0)
+        {
             anim.SetBool(WALKING, false);
             anim.SetBool(IDLE, true);
-        }else{
+        }else
+        {
             anim.SetBool(IDLE, false);
             anim.SetBool(WALKING, true);
         }
     }
 
-    void Freeze(){
+    void Freeze()
+    {
         myRigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
     }
-    void Flip(){
+    void Flip()
+    {
         facingRight = !facingRight;
-        if(facingRight){
+        if(facingRight)
+        {
             spriteRenderer.flipX = false;
-        }else{
+        }else
+        {
             spriteRenderer.flipX = true;
         }
         //flip the sword attack pos
     }
 
-    public IEnumerator DamageWhileAttackingIsActive(){
+    public IEnumerator DamageWhileAttackingIsActive()
+    {
         myRigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
         shouldBeDamaging = true;
         timeBtwAttack = startTimeBtwAttack;
         bool shook = false;
 
-        while(shouldBeDamaging){
+        while(shouldBeDamaging)
+        {
             RaycastHit2D[] enemiesToDamage;
-            if(facingRight){
+            if(facingRight)
+            {
                 enemiesToDamage = Physics2D.CircleCastAll(attackPos.position, attackRange, transform.right, 0f, whatIsEnemies);
-            }else{
+            }else
+            {
                 enemiesToDamage = Physics2D.CircleCastAll(attackPosLeft.position, attackRange, transform.right, 0f, whatIsEnemies);
             }
-            for (int i = 0; i < enemiesToDamage.Length; i++){
+            for (int i = 0; i < enemiesToDamage.Length; i++)
+            {
                 IEnemy enemy = enemiesToDamage[i].collider.gameObject.GetComponent<IEnemy>();
-                if(enemy != null && !damagedEnemies.Contains(enemy) && enemiesToDamage[i].collider is PolygonCollider2D){
-                    if(!shook){
+                if(enemy != null && !damagedEnemies.Contains(enemy) && enemiesToDamage[i].collider is PolygonCollider2D)
+                {
+                    if(!shook)
+                    {
                         impulseSource.GenerateImpulse(new Vector3(0, -0.1f, 0));
                         shook = true;
                     }
@@ -154,14 +205,16 @@ public class VSPlayer : MonoBehaviour, IPlayer
             yield return null;
         }
         Debug.Log("Attack!");
-        returnDamagedEnemiesHittable();
+        ReturnDamagedEnemiesHittable();
     }
 
-    private void returnDamagedEnemiesHittable(){
+    private void ReturnDamagedEnemiesHittable()
+    {
         damagedEnemies.Clear();
     }
 
-    public void AttackStop(){
+    public void AttackStop()
+    {
         shouldBeDamaging = false;
         myRigid.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
@@ -173,20 +226,24 @@ public class VSPlayer : MonoBehaviour, IPlayer
         Gizmos.DrawWireSphere(attackPosLeft.position, attackRange);
     }
 
-    public void Heal(int amount){
+    public void Heal(int amount)
+    {
         GameManager.Instance.Heal(amount);
     }
 
-    public void equipWeapon(int amount){
+    public void EquipWeapon(int amount)
+    {
         currentStrength = strength + amount;
     }
 
-    public void TakeDamage(int amount){
+    public void TakeDamage(int amount)
+    {
         Debug.Log("Player Damaged!");
         GameManager.Instance.TakeDamage(amount);
     }
 
-    public void Die(){
+    public void Die()
+    {
         Debug.Log("DEAD!");
     }
 
