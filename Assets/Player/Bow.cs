@@ -10,11 +10,20 @@ public class Bow : MonoBehaviour
     public float launchForce;
     private InputAction shoot;
     private InputAction look;
-    public InputSystem_Actions playerControls;
+    private InputAction joysticklook;
+    public InputActionAsset playerControls;
+    private PlayerInput playerInput;
+    const string ACTION_MAP = "Player";
+    const string LOOK_ACTION = "Look";
+    const string SHOOT_ACTION = "Attack";
+    const string JOYSTICK_LOOK_ACTION = "JoystickLook";
+    const string GAMEPAD_SCHEME = "Gamepad";
+    const string KM_SCHEME = "Keyboard&Mouse";
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
-        playerControls = new InputSystem_Actions();
+        playerInput = GetComponentInParent<PlayerInput>();
+        playerControls = playerInput.actions;
     }
     void Start()
     {
@@ -23,10 +32,12 @@ public class Bow : MonoBehaviour
 
     private void OnEnable(){
         playerControls.Enable();
-        look = playerControls.Player.Look;
-        shoot = playerControls.Player.Attack;
+        look = playerControls.FindActionMap(ACTION_MAP).FindAction(LOOK_ACTION);
+        shoot = playerControls.FindActionMap(ACTION_MAP).FindAction(SHOOT_ACTION);
+        joysticklook = playerControls.FindActionMap(ACTION_MAP).FindAction(JOYSTICK_LOOK_ACTION);
         shoot.Enable();
         look.Enable();
+        joysticklook.Enable();
         shoot.performed += Shoot;
     }
 
@@ -34,19 +45,24 @@ public class Bow : MonoBehaviour
         playerControls.Disable();
         shoot.Disable();
         look.Disable();
+        joysticklook.Disable();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Vector2 bowPosition = transform.position;
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(look.ReadValue<Vector2>());
-        Vector2 direction = mousePosition - bowPosition;
-        transform.right = direction;
+        if(playerInput.currentControlScheme == GAMEPAD_SCHEME){
+            Vector2 joystickPos = joysticklook.ReadValue<Vector2>();
+            if(joystickPos != new Vector2(0, 0)){
+                transform.right = joystickPos;
+            }
+        }else if(playerInput.currentControlScheme == KM_SCHEME){
+            Vector2 bowPosition = transform.position;
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(look.ReadValue<Vector2>());
+            Vector2 direction = mousePosition - bowPosition;
+            transform.right = direction;
+        }
 
-        // if(Input.GetMouseButtonDown(0)){
-        //     Shoot();
-        // }
     }
 
     void Shoot(InputAction.CallbackContext context){

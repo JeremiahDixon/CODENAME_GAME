@@ -11,6 +11,14 @@ public class VSPlayer : MonoBehaviour, IPlayer
     const string WALKING = "isWalking";
     const string IDLE = "isIdle";
     const string CAMERA_NAME = "PlayerCamera";
+    const string ACTION_MAP = "Player";
+    const string LOOK_ACTION = "Look";
+    const string MOVE_ACTION = "Move";
+    const string SWORD_ATTACK_ACTION = "SwordAttack";
+    const string JOYSTICK_LOOK_ACTION = "JoystickLook";
+    const string DASH_ACTION = "DASH";
+    const string GAMEPAD_SCHEME = "Gamepad";
+    const string KM_SCHEME = "Keyboard&Mouse";
     private Rigidbody2D myRigid;
     private bool facingRight = true;
     private Animator anim;
@@ -34,11 +42,13 @@ public class VSPlayer : MonoBehaviour, IPlayer
     private float dashCoolCounter;
     private CinemachineCamera playerCamera;
     private CinemachineImpulseSource impulseSource;
-    public InputSystem_Actions playerControls;
+    public InputActionAsset playerControls;
     private InputAction move;
     private InputAction look;
     private InputAction dash;
     private InputAction swordAttack;
+    private InputAction joysticklook;
+    private PlayerInput playerInput;
 
     SpriteRenderer spriteRenderer;
     private void Awake()
@@ -52,7 +62,8 @@ public class VSPlayer : MonoBehaviour, IPlayer
         {
             Destroy(gameObject);  // Prevent duplicates
         }
-        playerControls = new InputSystem_Actions();
+        playerInput = GetComponent<PlayerInput>();
+        playerControls = playerInput.actions;
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -70,23 +81,26 @@ public class VSPlayer : MonoBehaviour, IPlayer
     private void OnEnable()
     {
         playerControls.Enable();
-        move = playerControls.Player.Move;
+        move = playerControls.FindActionMap(ACTION_MAP).FindAction(MOVE_ACTION);
+        look = playerControls.FindActionMap(ACTION_MAP).FindAction(LOOK_ACTION);
+        dash = playerControls.FindActionMap(ACTION_MAP).FindAction(DASH_ACTION);
+        joysticklook = playerControls.FindActionMap(ACTION_MAP).FindAction(JOYSTICK_LOOK_ACTION);
+        swordAttack = playerControls.FindActionMap(ACTION_MAP).FindAction(SWORD_ATTACK_ACTION);
         move.Enable();
-        look = playerControls.Player.Look;
         look.Enable();
-        dash = playerControls.Player.Dash;
         dash.Enable();
-        swordAttack = playerControls.Player.SwordAttack;
+        joysticklook.Enable();
         swordAttack.Enable();
     }
 
     private void OnDisable()
     {
-        playerControls.Disable();
+        //playerControls.Disable();
         move.Disable();
         look.Disable();
         dash.Disable();
         swordAttack.Disable();
+        joysticklook.Disable();
     }
 
 
@@ -134,13 +148,27 @@ public class VSPlayer : MonoBehaviour, IPlayer
     {
         // Rigidbody2D affects physics so any ops on it should happen in FixedUpdate
         myRigid.MovePosition(myRigid.position + (inputVector * activeMovementSpeed * Time.fixedDeltaTime));
-        Vector2 mousePosition = Camera.main.ScreenToWorldPoint(look.ReadValue<Vector2>());
-        if(facingRight == false && mousePosition.x > transform.position.x)
-        {
-            Flip();
-        }else if(facingRight == true && mousePosition.x < transform.position.x)
-        {
-            Flip();
+
+        if(playerInput.currentControlScheme == GAMEPAD_SCHEME){
+            Vector2 joystickPos = joysticklook.ReadValue<Vector2>();
+            if(joystickPos != new Vector2(0, 0)){
+                if(!facingRight && joystickPos.x > 0)
+                {
+                    Flip();
+                }else if(facingRight && joystickPos.x <= 0)
+                {
+                    Flip();
+                }
+            }
+        }else if(playerInput.currentControlScheme == KM_SCHEME){
+            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(look.ReadValue<Vector2>());
+            if(!facingRight && mousePosition.x > transform.position.x)
+            {
+                Flip();
+            }else if(facingRight && mousePosition.x < transform.position.x)
+            {
+                Flip();
+            }
         }
 
         if(inputVector.x == 0 && inputVector.y == 0)
