@@ -15,4 +15,5 @@ MonoBehaviour:
   enemyName: Basic Skull
   enemyLevel: 0
   hp: 8
-  strength: 3
+  strength: 2
+  speed: 2

@@ -7,12 +7,17 @@ public class VSPlayer : MonoBehaviour, IPlayer
 {
     public Vector2 MovementSpeed = new Vector2(100.0f, 100.0f); // 2D Movement speed to have independant axis speed
     private Vector2 inputVector = new Vector2(0.0f, 0.0f);
+    const string ATTACKING_TRIGGER = "isAttackingTrigger";
+    const string WALKING = "isWalking";
+    const string IDLE = "isIdle";
+    const string CAMERA_NAME = "PlayerCamera";
     private Rigidbody2D myRigid;
     private bool facingRight = true;
     private Animator anim;
     public float timeBtwAttack;
     public float startTimeBtwAttack;
     public Transform attackPos;
+    public Transform attackPosLeft;
     public LayerMask whatIsEnemies;
     public int whatIsPickupItem;
     public float attackRange;
@@ -27,7 +32,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
     public float dashLength = .5f, dashCooldown =1f;
     private float dashCounter;
     private float dashCoolCounter;
-    private CinemachineCamera camera;
+    private CinemachineCamera playerCamera;
     private CinemachineImpulseSource impulseSource;
 
     SpriteRenderer spriteRenderer;
@@ -51,7 +56,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
         anim = GetComponent<Animator>();
         currentStrength = strength;
         activeMovementSpeed = MovementSpeed;
-        camera = GameObject.Find("PlayerCamera").GetComponent<CinemachineCamera>();
+        playerCamera = GameObject.Find(CAMERA_NAME).GetComponent<CinemachineCamera>();
         impulseSource = GetComponent<CinemachineImpulseSource>();
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -82,7 +87,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
         }
         if(timeBtwAttack <= 0){
             if(Input.GetKeyDown(KeyCode.Space)){
-                anim.SetTrigger("isAttackingTrigger");
+                anim.SetTrigger(ATTACKING_TRIGGER);
             }
         }else{
             timeBtwAttack -= Time.deltaTime;
@@ -101,11 +106,11 @@ public class VSPlayer : MonoBehaviour, IPlayer
         }
 
         if(inputVector.x == 0 && inputVector.y == 0){
-            anim.SetBool("isWalking", false);
-            anim.SetBool("isIdle", true);
+            anim.SetBool(WALKING, false);
+            anim.SetBool(IDLE, true);
         }else{
-            anim.SetBool("isIdle", false);
-            anim.SetBool("isWalking", true);
+            anim.SetBool(IDLE, false);
+            anim.SetBool(WALKING, true);
         }
     }
 
@@ -119,6 +124,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
         }else{
             spriteRenderer.flipX = true;
         }
+        //flip the sword attack pos
     }
 
     public IEnumerator DamageWhileAttackingIsActive(){
@@ -128,7 +134,12 @@ public class VSPlayer : MonoBehaviour, IPlayer
         bool shook = false;
 
         while(shouldBeDamaging){
-            RaycastHit2D[] enemiesToDamage = Physics2D.CircleCastAll(attackPos.position, attackRange, transform.right, 0f, whatIsEnemies);
+            RaycastHit2D[] enemiesToDamage;
+            if(facingRight){
+                enemiesToDamage = Physics2D.CircleCastAll(attackPos.position, attackRange, transform.right, 0f, whatIsEnemies);
+            }else{
+                enemiesToDamage = Physics2D.CircleCastAll(attackPosLeft.position, attackRange, transform.right, 0f, whatIsEnemies);
+            }
             for (int i = 0; i < enemiesToDamage.Length; i++){
                 IEnemy enemy = enemiesToDamage[i].collider.gameObject.GetComponent<IEnemy>();
                 if(enemy != null && !damagedEnemies.Contains(enemy) && enemiesToDamage[i].collider is PolygonCollider2D){
@@ -159,6 +170,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
     {
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(attackPos.position, attackRange);
+        Gizmos.DrawWireSphere(attackPosLeft.position, attackRange);
     }
 
     public void Heal(int amount){

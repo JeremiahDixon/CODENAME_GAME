@@ -2,45 +2,119 @@ using UnityEngine;
 
 public class Skull : MonoBehaviour, IEnemy
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     [SerializeField]
     private int hp;
     [SerializeField]
     private int strength;
     [SerializeField]
     private string enemyName;
+    [SerializeField]
     private Item[] loot;
     public EnemySO enemySo;
+    private Animator anim;
+    private Transform playerPos;
+    private IPlayer player;
+    public float timeBtwAttack;
+    private bool facingRight = false;
+    private bool isTargeting = true;
+    [SerializeField]
+    private float speed;
+    [SerializeField]
+    private LayerMask whatIsPlayer;
 
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         enemySo.CreateStats(gameObject);
+        anim = GetComponent<Animator>();
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<IPlayer>();
+        playerPos = player.transform;
     }
     void FixedUpdate()
     {
+    }
 
+    void Update(){
+        if(isTargeting){
+            anim.SetBool("isRunning", true);
+            if(Vector2.Distance(anim.transform.position, playerPos.position) > 0.75f){
+                anim.transform.position = Vector2.MoveTowards(anim.transform.position, playerPos.position, speed * Time.deltaTime);
+            }
+        }
+        if(timeBtwAttack <= 0){
+            if(Vector2.Distance(transform.position, playerPos.position) <= 0.75f){
+                anim.SetBool("isRunning", false);
+                timeBtwAttack = 3f;
+                tryToHitPlayer();
+            }
+        }else{
+            timeBtwAttack -= Time.deltaTime;
+        }
+        if(playerPos.position.x > transform.position.x && !facingRight){
+            Flip();
+        }else if(playerPos.position.x < transform.position.x && facingRight){
+            Flip();
+        }
+    }
+
+    void Flip(){
+        facingRight = !facingRight;
+        Vector3 Scaler = transform.localScale;
+        Scaler.x *= -1;
+        transform.localScale = Scaler;
     }
 
     public void TakeDamage (int damage){
         hp -= damage;
         Debug.Log("Damage Taken!");
         if (hp <= 0){
+            Debug.Log("dropping loot!");
+            int randomInt = Random.Range(1, 101);
+            dropLoot(randomInt);
+            Debug.Log("destorying!");
             Destroy(gameObject);
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if(other.gameObject.tag == "Player"){
-            
+    // private void OnTriggerEnter2D(Collider2D other)
+    // {
+    //     if(other.gameObject.tag == "Player"){
+    //         anim.SetBool("isWalking", false);
+    //         anim.SetBool("isRunning", true);
+    //         isTargeting = true;
+    //     }
+    // }
+
+    // private void OnTriggerExit2D(Collider2D other)
+    // {
+    //     if(other.gameObject.tag == "Player"){
+    //         anim.SetBool("isWalking", false);
+    //         anim.SetBool("isRunning", false);
+    //         isTargeting = false;
+    //     } 
+    // }
+
+    void dropLoot(int randomInt){
+        Vector3 objectPosition = transform.position;
+        Vector3 randPoint = new Vector3(objectPosition.x + Random.Range(-1.0f, 1.0f), objectPosition.y + Random.Range(-1.0f, 1.0f));
+        if(randomInt < 10){
+            //Instantiate(loot[0], randPoint, Quaternion.identity);
+        }else if(randomInt >= 10 && randomInt <= 100){
+            //Instantiate(loot[1], randPoint, Quaternion.identity);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        if(other.gameObject.tag == "Player"){
-
-        } 
+    //call this durring animation event to check if hit
+    void tryToHitPlayer(){
+        //create a attackpos and replace transform
+        RaycastHit2D playerToDamage = Physics2D.CircleCast(transform.position, 0.75f, transform.right, 0f, whatIsPlayer);
+        if( playerToDamage ){
+            IPlayer thePlayer = playerToDamage.collider.gameObject.GetComponent<IPlayer>();
+            if(thePlayer != null && playerToDamage.collider is BoxCollider2D){
+            thePlayer.TakeDamage(strength);
+            //might need to add a bool playerBeenDamaged
+        }
+        }
     }
     public int getHp()
     {
@@ -62,6 +136,16 @@ public class Skull : MonoBehaviour, IEnemy
         this.strength = strength;
     }
 
+    public float getSpeed()
+    {
+        return this.speed;
+    }
+
+    public void setSpeed(float speed)
+    {
+        this.speed = speed;
+    }
+
     public string getEnemyName()
     {
         return enemyName;
@@ -70,15 +154,5 @@ public class Skull : MonoBehaviour, IEnemy
     public void setEnemyName(string enemyName)
     {
         this.enemyName = enemyName;
-    }
-
-    public float getSpeed()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void setSpeed(float speed)
-    {
-        throw new System.NotImplementedException();
     }
 }
