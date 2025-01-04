@@ -2,7 +2,7 @@ using UnityEditor;
 using UnityEditor.Tilemaps;
 using UnityEngine;
 
-public class Slime : MonoBehaviour, IEnemy
+public class Dwarf : MonoBehaviour, IEnemy
 {
     [SerializeField]
     private int hp;
