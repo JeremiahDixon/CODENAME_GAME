@@ -232,7 +232,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
 
     public IEnumerator DamageWhileAttackingIsActive()
     {
-        myRigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+        //myRigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
         shouldBeDamaging = true;
         timeBtwAttack = startTimeBtwAttack;
         bool shook = false;
@@ -275,7 +275,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
     public void AttackStop()
     {
         shouldBeDamaging = false;
-        myRigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+        //myRigid.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     void OnDrawGizmosSelected()
