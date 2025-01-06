@@ -8,4 +8,5 @@ public interface IPlayer
     public void TakeDamage(int amount);
     public void Heal(int amount);
     public void ResetPlayer();
+    public void SetClassSo(ClassSO classSo);
 }

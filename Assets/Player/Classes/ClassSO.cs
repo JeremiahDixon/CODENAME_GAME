@@ -26,7 +26,7 @@ public class ClassSO : ScriptableObject
         gameObject.GetComponent<VSPlayer>().SetBaseHp(baseHp);
         gameObject.GetComponent<VSPlayer>().SetSprite(sprite);
         gameObject.GetComponent<VSPlayer>().SetAnimatorController(animController);
-        GameObject newClass = Instantiate(getClassPrefab(className), gameObject.transform.position, gameObject.transform.rotation);
+        Instantiate(getClassPrefab(className), gameObject.transform.position, gameObject.transform.rotation);
     }
 
     GameObject getClassPrefab(string className)

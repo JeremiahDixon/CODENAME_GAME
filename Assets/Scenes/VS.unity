@@ -2438,6 +2438,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameOverScreen: {fileID: 0}
   startPos: {fileID: 0}
+  classSos: []
+  currentClassSo: {fileID: 11400000, guid: f941f27d5a0de49739c22a8bd3344d4f, type: 2}
 --- !u!4 &872564491
 Transform:
   m_ObjectHideFlags: 0
@@ -16969,7 +16971,7 @@ MonoBehaviour:
   className: 
   playerControls: {fileID: 0}
   sprite: {fileID: 0}
-  classSo: {fileID: 11400000, guid: 0851459c76a0647d88e8d723c77c6b6c, type: 2}
+  classSo: {fileID: 0}
 --- !u!1 &1586791471
 GameObject:
   m_ObjectHideFlags: 0

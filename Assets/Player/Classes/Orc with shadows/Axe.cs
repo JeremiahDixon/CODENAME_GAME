@@ -36,7 +36,6 @@ public class Axe : MonoBehaviour
         rb.bodyType = RigidbodyType2D.Dynamic;
         roationSpeed = 1080;
         traveledDistance = 0;
-        Debug.Log("Landed Transform: " + transform.position);
         firstPass = true;
     }
 
@@ -45,7 +44,6 @@ public class Axe : MonoBehaviour
     {
         if(firstPass){
             thrownTransform = GameObject.Find("Player").transform.position;
-            Debug.Log("Thrown Transform: " + thrownTransform);
             firstPass = false;
         }
         if(!frozen){

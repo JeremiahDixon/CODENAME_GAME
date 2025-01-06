@@ -131,7 +131,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
     // Update is called once per frame
     void Update()
     {
-        if(GameManager.Instance.currentState != GameManager.GameState.GameOver)
+        if(GameManager.Instance.currentState == GameManager.GameState.Playing)
         {
             inputVector = move.ReadValue<Vector2>(); //new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
             if(dash.WasPressedThisFrame())
@@ -173,7 +173,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
 
     void FixedUpdate()
     {
-        if(GameManager.Instance.currentState != GameManager.GameState.GameOver)
+        if(GameManager.Instance.currentState == GameManager.GameState.Playing)
         {
             // Rigidbody2D affects physics so any ops on it should happen in FixedUpdate
             myRigid.MovePosition(myRigid.position + (inputVector * activeMovementSpeed * Time.fixedDeltaTime));

@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
+using System;
 
 public class GameManager: MonoBehaviour
 {
@@ -22,6 +23,10 @@ public class GameManager: MonoBehaviour
     private SceneLoader sceneLoader;
     [SerializeField]
     private Transform startPos;
+    [SerializeField]
+    ClassSO[] classSos;
+    [SerializeField]
+    ClassSO currentClassSo;
 
     private void Awake()
     {
@@ -41,7 +46,6 @@ public class GameManager: MonoBehaviour
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
-        thePlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<IPlayer>();
         sceneLoader = GameObject.Find("SceneLoader").GetComponent<SceneLoader>();
     }
 
@@ -49,17 +53,17 @@ public class GameManager: MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if(scene.name == "VS"){
+            thePlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<IPlayer>();
             LoadPlayScreen();
             resetPlayer();
         }
     }
 
-    // called 4th Start is called once before the first execution of Update after the MonoBehaviour is created
+    // called 4th
     void Start()
     {
     }
 
-    // called when the game is terminated
     void OnDisable()
     {
         SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -70,12 +74,6 @@ public class GameManager: MonoBehaviour
         gameOverScreen = GameObject.FindGameObjectWithTag("GameOverScreen").GetComponent<GameOverScreen>();
         startPos = GameObject.Find("StartPosition").transform;
     }
-
-    // Update is called once per frame
-    //void Update()
-    //{
-
-    //}
 
     public void Heal(int amount){
         int newHealthValue = this.playerHealth + amount;
@@ -109,18 +107,35 @@ public class GameManager: MonoBehaviour
         gameOverScreen.GameOver();
     }
 
-    public void ReloadPlayScene()
-    {
-        sceneLoader.ReloadCurrentScene();
-    }
-
     void resetPlayer()
     {
         thePlayer.ResetPlayer();
+        thePlayer.SetClassSo(currentClassSo);
         thePlayer.transform.position = startPos.position;
-        maxPlayerHealth = 10;
+        maxPlayerHealth = currentClassSo.baseHp;
         playerHealth = maxPlayerHealth;
         dead = false;
         currentState = GameState.Playing;
+    }
+
+    public void ReloadCurrentScene()
+    {
+        sceneLoader.ReloadCurrentScene();
+    }
+    public void LoadAScene(String sceneName){
+        sceneLoader.LoadScene(sceneName);
+    }
+
+    public void setPlayerClassSo(string className){
+        switch(className){
+            case "Soldier":
+                currentClassSo = classSos[0];
+                break;
+            case "Orc":
+                currentClassSo = classSos[1];
+                break;
+            default:
+                break;
+        }
     }
 }

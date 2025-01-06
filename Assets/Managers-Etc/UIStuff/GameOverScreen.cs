@@ -15,6 +15,6 @@ public class GameOverScreen : MonoBehaviour
     }
 
     public void Restart(){
-        GameManager.Instance.ReloadPlayScene();
+        GameManager.Instance.ReloadCurrentScene();
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
 
-public class PlayerOld : MonoBehaviour, IPlayer
+public class PlayerOld : MonoBehaviour
 {
     public Vector2 MovementSpeed = new Vector2(100.0f, 100.0f); // 2D Movement speed to have independant axis speed
     private Vector2 inputVector = new Vector2(0.0f, 0.0f);
