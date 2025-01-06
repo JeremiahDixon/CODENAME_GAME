@@ -6,4 +6,6 @@ public interface IPlayer
 
     public void Die();
     public void TakeDamage(int amount);
+    public void Heal(int amount);
+    public void ResetPlayer();
 }

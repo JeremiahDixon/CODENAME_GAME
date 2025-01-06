@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Basic Slime
   enemyLevel: 0
-  hp: 6
-  strength: 2
+  hp: 5
+  strength: 1
   speed: 1.5

@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - Enemy
+  - HealthBar
+  - GameOverScreen
+  - Axe
+  - Terrain
   layers:
   - Default
   - TransparentFX
@@ -14,7 +18,7 @@ TagManager:
   - UI
   - Enemy
   - PickupItem
-  - Arrow
+  - Projectile
   - 
   - 
   - 

@@ -1,15 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class VSPlayer : MonoBehaviour, IPlayer
 {
-    public Vector2 MovementSpeed = new Vector2(0.0f, 0.0f); // 2D Movement speed to have independant axis speed
-    private Vector2 inputVector = new Vector2(0.0f, 0.0f);
+    [SerializeField]
+    Vector2 movementSpeed = new Vector2(0.0f, 0.0f); // 2D Movement speed to have independant axis speed
+    Vector2 inputVector = new Vector2(0.0f, 0.0f);
     const string SWORD_TRIGGER = "isAttackingTrigger";
     const string WALKING = "isWalking";
     const string IDLE = "isIdle";
+    const string DEAD = "isDead";
     const string CAMERA_NAME = "PlayerCamera";
     const string ACTION_MAP = "Player";
     const string LOOK_ACTION = "Look";
@@ -22,24 +26,38 @@ public class VSPlayer : MonoBehaviour, IPlayer
     private Rigidbody2D myRigid;
     private bool facingRight = true;
     private Animator anim;
-    public float timeBtwAttack;
-    public float startTimeBtwAttack;
-    public Transform attackPos;
-    public Transform attackPosLeft;
-    public LayerMask whatIsEnemies;
-    public int whatIsPickupItem;
-    public float attackRange;
     [SerializeField]
-    private int strength;
-    private int currentStrength;
+    float timeBtwAttack;
+    [SerializeField]
+    float startTimeBtwAttack;
+    [SerializeField]
+    Transform attackPos;
+    [SerializeField]
+    Transform attackPosLeft;
+
+    [SerializeField]
+    LayerMask whatIsEnemies;
+    [SerializeField]
+    float attackRange;
+    [SerializeField]
+    private int baseAttackStrength;
+    [SerializeField]
+    private int currentAttackStrength;
+    [SerializeField]
+    private int baseHp;
     public bool shouldBeDamaging {get; private set;} = false;
     private List<IEnemy> damagedEnemies = new List<IEnemy>();
     public static VSPlayer Instance;
-    public Vector2 activeMovementSpeed;
-    public Vector2 dashSpeed;
-    public float dashLength = .5f, dashCooldown =1f;
+    [SerializeField]
+    Vector2 activeMovementSpeed;
+    [SerializeField]
+    Vector2 dashSpeed;
+    [SerializeField]
+    float dashLength, dashCooldown;
     private float dashCounter;
     private float dashCoolCounter;
+    [SerializeField]
+    string className;
     private CinemachineCamera playerCamera;
     private CinemachineImpulseSource impulseSource;
     public InputActionAsset playerControls;
@@ -49,14 +67,17 @@ public class VSPlayer : MonoBehaviour, IPlayer
     private InputAction swordAttack;
     private InputAction joysticklook;
     private PlayerInput playerInput;
-
     SpriteRenderer spriteRenderer;
+    [SerializeField]
+    Sprite sprite;
+    [SerializeField]
+    ClassSO classSo;
     private void Awake()
     {
         if (Instance == null)
         {
             Instance = this;
-            DontDestroyOnLoad(gameObject);  // Keeps this manager between scenes
+            DontDestroyOnLoad(gameObject);  // Keeps this player between scenes
         }
         else
         {
@@ -71,11 +92,12 @@ public class VSPlayer : MonoBehaviour, IPlayer
     {
         myRigid = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-        currentStrength = strength;
-        activeMovementSpeed = MovementSpeed;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        classSo.CreateClassInfo(this.gameObject);
+        currentAttackStrength = baseAttackStrength;
+        activeMovementSpeed = movementSpeed;
         playerCamera = GameObject.Find(CAMERA_NAME).GetComponent<CinemachineCamera>();
         impulseSource = GetComponent<CinemachineImpulseSource>();
-        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     private void OnEnable()
@@ -95,91 +117,100 @@ public class VSPlayer : MonoBehaviour, IPlayer
 
     private void OnDisable()
     {
-        //playerControls.Disable();
-        move.Disable();
-        look.Disable();
-        dash.Disable();
-        swordAttack.Disable();
-        joysticklook.Disable();
+        if(playerControls != null){
+            playerControls.Disable();
+            move.Disable();
+            look.Disable();
+            dash.Disable();
+            swordAttack.Disable();
+            joysticklook.Disable();
+        }
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        inputVector = move.ReadValue<Vector2>(); //new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+        if(GameManager.Instance.currentState != GameManager.GameState.GameOver)
+        {
+            inputVector = move.ReadValue<Vector2>(); //new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+            if(dash.WasPressedThisFrame())
+            {
+                if(dashCoolCounter <=0 && dashCounter <= 0)
+                {
+                    activeMovementSpeed = dashSpeed;
+                    dashCounter = dashLength;
+                }
+            }
+            if(dashCounter > 0)
+            {
+                dashCounter -= Time.deltaTime;
+
+                if(dashCounter <= 0)
+                {
+                    activeMovementSpeed = movementSpeed;
+                    dashCoolCounter = dashCooldown;
+                }
+            }
+
+            if(dashCoolCounter > 0)
+            {
+                dashCoolCounter -= Time.deltaTime;
+            }
+            if(timeBtwAttack <= 0)
+            {
+                if(swordAttack.WasPressedThisFrame())
+                {
+                    anim.SetTrigger(SWORD_TRIGGER);
+                }
+            }else
+            {
+                timeBtwAttack -= Time.deltaTime;
+            }
+        }
         
-        if(dash.WasPressedThisFrame())
-        {
-            if(dashCoolCounter <=0 && dashCounter <= 0)
-            {
-                activeMovementSpeed = dashSpeed;
-                dashCounter = dashLength;
-            }
-        }
-        if(dashCounter > 0)
-        {
-            dashCounter -= Time.deltaTime;
-
-            if(dashCounter <= 0)
-            {
-                activeMovementSpeed = MovementSpeed;
-                dashCoolCounter = dashCooldown;
-            }
-        }
-
-        if(dashCoolCounter > 0)
-        {
-            dashCoolCounter -= Time.deltaTime;
-        }
-        if(timeBtwAttack <= 0)
-        {
-            if(swordAttack.WasPressedThisFrame())
-            {
-                anim.SetTrigger(SWORD_TRIGGER);
-            }
-        }else
-        {
-            timeBtwAttack -= Time.deltaTime;
-        }
     }
 
     void FixedUpdate()
     {
-        // Rigidbody2D affects physics so any ops on it should happen in FixedUpdate
-        myRigid.MovePosition(myRigid.position + (inputVector * activeMovementSpeed * Time.fixedDeltaTime));
+        if(GameManager.Instance.currentState != GameManager.GameState.GameOver)
+        {
+            // Rigidbody2D affects physics so any ops on it should happen in FixedUpdate
+            myRigid.MovePosition(myRigid.position + (inputVector * activeMovementSpeed * Time.fixedDeltaTime));
 
-        if(playerInput.currentControlScheme == GAMEPAD_SCHEME){
-            Vector2 joystickPos = joysticklook.ReadValue<Vector2>();
-            if(joystickPos != new Vector2(0, 0)){
-                if(!facingRight && joystickPos.x > 0)
+            if(playerInput.currentControlScheme == GAMEPAD_SCHEME){
+                Vector2 joystickPos = joysticklook.ReadValue<Vector2>();
+                if(joystickPos != new Vector2(0, 0)){
+                    if(!facingRight && joystickPos.x > 0)
+                    {
+                        Flip();
+                    }else if(facingRight && joystickPos.x <= 0)
+                    {
+                        Flip();
+                    }
+                }
+            }else if(playerInput.currentControlScheme == KM_SCHEME){
+                Vector2 mousePosition = Camera.main.ScreenToWorldPoint(look.ReadValue<Vector2>());
+                if(!facingRight && mousePosition.x > transform.position.x)
                 {
                     Flip();
-                }else if(facingRight && joystickPos.x <= 0)
+                }else if(facingRight && mousePosition.x < transform.position.x)
                 {
                     Flip();
                 }
             }
-        }else if(playerInput.currentControlScheme == KM_SCHEME){
-            Vector2 mousePosition = Camera.main.ScreenToWorldPoint(look.ReadValue<Vector2>());
-            if(!facingRight && mousePosition.x > transform.position.x)
+
+            if(inputVector.x == 0 && inputVector.y == 0)
             {
-                Flip();
-            }else if(facingRight && mousePosition.x < transform.position.x)
+                anim.SetBool(WALKING, false);
+                anim.SetBool(IDLE, true);
+            }else
             {
-                Flip();
+                anim.SetBool(IDLE, false);
+                anim.SetBool(WALKING, true);
             }
         }
-
-        if(inputVector.x == 0 && inputVector.y == 0)
-        {
-            anim.SetBool(WALKING, false);
-            anim.SetBool(IDLE, true);
-        }else
-        {
-            anim.SetBool(IDLE, false);
-            anim.SetBool(WALKING, true);
-        }
+        
     }
 
     void Freeze()
@@ -226,7 +257,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
                         impulseSource.GenerateImpulse(new Vector3(0, -0.1f, 0));
                         shook = true;
                     }
-                    enemy.TakeDamage(strength);
+                    enemy.TakeDamage(currentAttackStrength);
                     damagedEnemies.Add(enemy);
                 }
             }
@@ -259,9 +290,14 @@ public class VSPlayer : MonoBehaviour, IPlayer
         GameManager.Instance.Heal(amount);
     }
 
-    public void EquipWeapon(int amount)
+    public void BoostStrength(int amount)
     {
-        currentStrength = strength + amount;
+        currentAttackStrength += amount;
+    }
+
+    public void DecreaseStrength(int amount)
+    {
+        currentAttackStrength -= amount;
     }
 
     public void TakeDamage(int amount)
@@ -273,6 +309,72 @@ public class VSPlayer : MonoBehaviour, IPlayer
     public void Die()
     {
         Debug.Log("DEAD!");
+        anim.SetBool(IDLE, false);
+        anim.SetBool(WALKING, false);
+        anim.SetTrigger(DEAD);
     }
 
+    public void ResetPlayer()
+    {
+        if(anim != null)
+        {
+            anim.SetBool(IDLE, true);
+        }
+    }
+
+    public void SetMovementSpeed(Vector2 movementSpeed)
+    {
+        this.movementSpeed = movementSpeed;
+    }
+
+    public void SetDashSpeed(Vector2 dashSpeed)
+    {
+        this.dashSpeed = dashSpeed;
+    }
+
+    public void SetClassName(string className)
+    {
+        this.className = className;
+    }
+
+    public void SetStartTimeBtwAttack(float startTimeBtwAttack)
+    {
+        this.startTimeBtwAttack = startTimeBtwAttack;
+    }
+
+    public void SetDashLength(float dashLength)
+    {
+        this.dashLength = dashLength;
+    }
+
+    public void SetDashCooldown(float dashCooldown)
+    {
+        this.dashCooldown = dashCooldown;
+    }
+
+    public void SetBaseAttackStrength(int baseAttackStrength)
+    {
+        this.baseAttackStrength = baseAttackStrength;
+    }
+
+    public void SetBaseHp(int baseHp)
+    {
+        this.baseHp = baseHp;
+    }
+
+    public void SetSprite(Sprite sprite)
+    {
+        spriteRenderer.sprite = sprite;
+        this.sprite = sprite;
+    }
+
+    public void SetClassSo(ClassSO classSo)
+    {
+        this.classSo = classSo;
+    }
+
+    public void SetAnimatorController(AnimatorController animController)
+    {
+        anim.runtimeAnimatorController = animController;
+    }
 }

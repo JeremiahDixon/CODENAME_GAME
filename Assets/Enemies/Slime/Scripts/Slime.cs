@@ -11,7 +11,7 @@ public class Slime : MonoBehaviour, IEnemy
     [SerializeField]
     private string enemyName;
     [SerializeField]
-    private Item[] loot;
+    private GameObject[] loot;
     [SerializeField]
     private EnemySO enemySo;
     private Animator anim;
@@ -103,12 +103,9 @@ public class Slime : MonoBehaviour, IEnemy
     {
         Vector3 objectPosition = transform.position;
         Vector3 randPoint = new Vector3(objectPosition.x + Random.Range(-1.0f, 1.0f), objectPosition.y + Random.Range(-1.0f, 1.0f));
-        if(randomInt < 10)
+        if(randomInt < 15)
         {
-            //Instantiate(loot[0], randPoint, Quaternion.identity);
-        }else if(randomInt >= 10 && randomInt <= 100)
-        {
-            //Instantiate(loot[1], randPoint, Quaternion.identity);
+            Instantiate(loot[0], randPoint, Quaternion.identity);
         }
     }
 
@@ -121,8 +118,8 @@ public class Slime : MonoBehaviour, IEnemy
         {
             IPlayer thePlayer = playerToDamage.collider.gameObject.GetComponent<IPlayer>();
             if(thePlayer != null && playerToDamage.collider is BoxCollider2D){
-            thePlayer.TakeDamage(strength);
-            //might need to add a bool playerBeenDamaged
+                thePlayer.TakeDamage(strength);
+                //might need to add a bool playerBeenDamaged
             }
         }
     }

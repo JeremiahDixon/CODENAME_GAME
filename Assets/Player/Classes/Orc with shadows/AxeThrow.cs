@@ -1,25 +1,30 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.Windows;
 
-public class Bow : MonoBehaviour
+public class AxeThrow : MonoBehaviour
 {
     [SerializeField]
-    private Transform shotPoint;
-    public GameObject arrow;
+    private Transform axePos;
+    public GameObject axe;
     public float launchForce;
-    private InputAction shoot;
+    private InputAction throwAxe;
     private InputAction look;
     private InputAction joysticklook;
     public InputActionAsset playerControls;
     private PlayerInput playerInput;
     const string ACTION_MAP = "Player";
     const string LOOK_ACTION = "Look";
-    const string SHOOT_ACTION = "Attack";
+    const string THROW_ACTION = "Attack";
     const string JOYSTICK_LOOK_ACTION = "JoystickLook";
     const string GAMEPAD_SCHEME = "Gamepad";
     const string KM_SCHEME = "Keyboard&Mouse";
     private IPlayer thePlayer;
+    private int axeLimit = 4;
+    private Queue<GameObject> axes = new Queue<GameObject>();
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -27,31 +32,41 @@ public class Bow : MonoBehaviour
         transform.parent = thePlayer.transform;
         playerInput = GetComponentInParent<PlayerInput>();
         playerControls = playerInput.actions;
-        shotPoint = transform.GetChild(1).gameObject.transform;
-    }
-    void Start()
-    {
-        
+        axePos = transform.GetChild(0).gameObject.transform;
     }
 
     private void OnEnable(){
+        SceneManager.sceneLoaded += OnSceneLoaded;
         playerControls.Enable();
         look = playerControls.FindActionMap(ACTION_MAP).FindAction(LOOK_ACTION);
-        shoot = playerControls.FindActionMap(ACTION_MAP).FindAction(SHOOT_ACTION);
+        throwAxe = playerControls.FindActionMap(ACTION_MAP).FindAction(THROW_ACTION);
         joysticklook = playerControls.FindActionMap(ACTION_MAP).FindAction(JOYSTICK_LOOK_ACTION);
-        shoot.Enable();
+        throwAxe.Enable();
         look.Enable();
         joysticklook.Enable();
-        shoot.performed += Shoot;
+        throwAxe.performed += ThrowAxe;
+    }
+    void Start()
+    {
+        CreateObjectPool();
     }
 
     private void OnDisable(){
         if(playerControls != null){
             playerControls.Disable();
-            shoot.Disable();
+            throwAxe.Disable();
             look.Disable();
             joysticklook.Disable();
-            shoot.performed -= Shoot;
+            throwAxe.performed -= ThrowAxe;
+        }
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if(scene.name == "VS"){
+            ClearTheQueue();
+            CreateObjectPool();
         }
     }
 
@@ -72,9 +87,36 @@ public class Bow : MonoBehaviour
 
     }
 
-    void Shoot(InputAction.CallbackContext context){
-        GameObject newArrow = Instantiate(arrow, shotPoint.position, shotPoint.rotation);
-        newArrow.GetComponent<Rigidbody2D>().linearVelocity = transform.right * launchForce;
+    void CreateObjectPool()
+    {
+        for (int i = 0; i < axeLimit; i++)
+        {
+            GameObject newAxe = Instantiate(axe, axePos.position, axePos.rotation);
+            newAxe.SetActive(false);
+            axes.Enqueue(newAxe);
+        }
+    }
+
+    void ClearTheQueue()
+    {
+        axes.Clear();
+    }
+
+    void ThrowAxe(InputAction.CallbackContext context){
+        if(axes.Count > 0){
+            GameObject newAxe = axes.Dequeue();
+            newAxe.SetActive(true);
+            newAxe.transform.position = axePos.position;
+            newAxe.transform.rotation = axePos.rotation;
+            newAxe.GetComponent<Rigidbody2D>().linearVelocity = transform.right * launchForce;
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other){
+        if(other.CompareTag("Axe")){
+            other.gameObject.SetActive(false);
+            axes.Enqueue(other.gameObject);
+        }
     }
 
 }

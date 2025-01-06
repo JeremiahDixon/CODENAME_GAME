@@ -118,8 +118,8 @@ public class Skull : MonoBehaviour, IEnemy
         {
             IPlayer thePlayer = playerToDamage.collider.gameObject.GetComponent<IPlayer>();
             if(thePlayer != null && playerToDamage.collider is BoxCollider2D){
-            thePlayer.TakeDamage(strength);
-            //might need to add a bool playerBeenDamaged
+                thePlayer.TakeDamage(strength);
+                //might need to add a bool playerBeenDamaged
             }
         }
     }

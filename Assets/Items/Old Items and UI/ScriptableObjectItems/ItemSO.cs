@@ -20,7 +20,7 @@ public class ItemSO : ScriptableObject
             case StatToChange.none:
                 break;
             case StatToChange.health:
-                GameObject.Find("Player").GetComponent<Player>().Heal(amountToChangeStat);
+                GameObject.Find("Player").GetComponent<PlayerOld>().Heal(amountToChangeStat);
                 break;
             case StatToChange.attack:
                 break;
