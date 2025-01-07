@@ -26,6 +26,10 @@ public class GameManager: MonoBehaviour
     [SerializeField]
     private Transform startPos;
     [SerializeField]
+    GameObject[] playerClasses;
+    [SerializeField]
+    GameObject currentClass;
+    [SerializeField]
     ClassSO[] classSos;
     [SerializeField]
     ClassSO currentClassSo;
@@ -57,13 +61,10 @@ public class GameManager: MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if(scene.name == "VS"){
-            thePlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<IPlayer>();
-            scoreText = GameObject.FindGameObjectWithTag("Score").GetComponent<TextMeshProUGUI>();
-            score = 0;
-            scoreText.text = score.ToString();
             LoadPlayScreen();
             resetPlayer();
             MonsterSpawner.Instance.RestSetSpawnTimes();
+            currentState = GameState.Playing;
         }
     }
 
@@ -81,6 +82,9 @@ public class GameManager: MonoBehaviour
         healthManager = GameObject.Find("HealthManager").GetComponent<HealthManager>();
         gameOverScreen = GameObject.FindGameObjectWithTag("GameOverScreen").GetComponent<GameOverScreen>();
         startPos = GameObject.Find("StartPosition").transform;
+        scoreText = GameObject.FindGameObjectWithTag("Score").GetComponent<TextMeshProUGUI>();
+        score = 0;
+        scoreText.text = score.ToString();
     }
 
     public void Heal(int amount){
@@ -117,13 +121,11 @@ public class GameManager: MonoBehaviour
 
     void resetPlayer()
     {
-        thePlayer.ResetPlayer();
-        thePlayer.SetClassSo(currentClassSo);
-        thePlayer.transform.position = startPos.position;
+        GameObject newPlayer = Instantiate(currentClass, startPos.position, startPos.rotation);
+        thePlayer = newPlayer.GetComponent<IPlayer>();
         maxPlayerHealth = currentClassSo.baseHp;
         playerHealth = maxPlayerHealth;
         dead = false;
-        currentState = GameState.Playing;
     }
 
     public void ReloadCurrentScene()
@@ -137,10 +139,12 @@ public class GameManager: MonoBehaviour
     public void setPlayerClassSo(string className){
         switch(className){
             case "Soldier":
-                currentClassSo = classSos[0];
+                currentClass = playerClasses[0];
+                currentClassSo = classSos [0];
                 break;
             case "Orc":
-                currentClassSo = classSos[1];
+                currentClass = playerClasses[1];
+                currentClassSo = classSos [1];
                 break;
             default:
                 break;

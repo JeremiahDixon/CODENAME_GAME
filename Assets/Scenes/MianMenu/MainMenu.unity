@@ -740,6 +740,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gameOverScreen: {fileID: 0}
   startPos: {fileID: 0}
+  playerClasses:
+  - {fileID: 6248635425898897705, guid: 823f1f90a68f34a4897bf0c7903750a4, type: 3}
+  - {fileID: 2823653483410812319, guid: 4255df7f1b34ef9449faa8aa7baff06b, type: 3}
+  currentClass: {fileID: 0}
   classSos:
   - {fileID: 11400000, guid: f941f27d5a0de49739c22a8bd3344d4f, type: 2}
   - {fileID: 11400000, guid: 0851459c76a0647d88e8d723c77c6b6c, type: 2}

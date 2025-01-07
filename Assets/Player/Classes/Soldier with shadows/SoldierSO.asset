@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5e0165caa9374b69ba54206b1d26817, type: 3}
-  m_Name: SoliderSO
+  m_Name: SoldierSO
   m_EditorClassIdentifier: 
   movementSpeed: {x: 3, y: 3}
-  className: Solider
+  className: Soldier
   startTimeBtwAttack: 0.5
   baseAttackStrength: 5
   dashSpeed: {x: 6, y: 6}
@@ -21,6 +21,3 @@ MonoBehaviour:
   dashCooldown: 2
   baseHp: 10
   sprite: {fileID: -7978735674136817684, guid: ef761efe4771643568cf0cb7fda59aba, type: 3}
-  animController: {fileID: 9100000, guid: a24dc6930aa607d4ba529974a73e2206, type: 2}
-  classPrefabs:
-  - {fileID: 2239474568825230318, guid: 61e9e9a0e59af4e5799972b777baf131, type: 3}

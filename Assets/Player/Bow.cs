@@ -24,7 +24,6 @@ public class Bow : MonoBehaviour
     private void Awake()
     {
         thePlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<IPlayer>();
-        transform.parent = thePlayer.transform;
         playerInput = GetComponentInParent<PlayerInput>();
         playerControls = playerInput.actions;
         shotPoint = transform.GetChild(1).gameObject.transform;

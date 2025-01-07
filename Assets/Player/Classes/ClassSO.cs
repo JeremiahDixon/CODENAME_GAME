@@ -1,4 +1,3 @@
-using UnityEditor.Animations;
 using UnityEngine;
 [CreateAssetMenu(fileName = "ClassSO", menuName = "Scriptable Objects/ClassSO")]
 public class ClassSO : ScriptableObject
@@ -12,8 +11,6 @@ public class ClassSO : ScriptableObject
     public float dashCooldown;
     public int baseHp;
     public Sprite sprite;
-    public AnimatorController animController;
-    public GameObject[] classPrefabs;
 
     public void CreateClassInfo(GameObject gameObject){
         gameObject.GetComponent<VSPlayer>().SetMovementSpeed(movementSpeed);
@@ -25,22 +22,6 @@ public class ClassSO : ScriptableObject
         gameObject.GetComponent<VSPlayer>().SetDashCooldown(dashCooldown);
         gameObject.GetComponent<VSPlayer>().SetBaseHp(baseHp);
         gameObject.GetComponent<VSPlayer>().SetSprite(sprite);
-        gameObject.GetComponent<VSPlayer>().SetAnimatorController(animController);
-        Instantiate(getClassPrefab(className), gameObject.transform.position, gameObject.transform.rotation);
     }
-
-    GameObject getClassPrefab(string className)
-    {
-        GameObject classPrefab = null;
-        for (int i = 0; i < classPrefabs.Length; i++)
-        {
-            if(classPrefabs[i].name == className){
-                classPrefab = classPrefabs[i];
-            }
-        }
-
-        return classPrefab;
-    }
-
     
 }

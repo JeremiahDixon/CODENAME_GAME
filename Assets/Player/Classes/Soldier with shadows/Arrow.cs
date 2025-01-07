@@ -1,6 +1,4 @@
 using System.Collections;
-using Unity.VisualScripting;
-using UnityEditor.Callbacks;
 using UnityEngine;
 
 public class Arrow : MonoBehaviour

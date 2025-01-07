@@ -43,7 +43,7 @@ public class Axe : MonoBehaviour
     void Update()
     {
         if(firstPass){
-            thrownTransform = GameObject.Find("Player").transform.position;
+            thrownTransform = GameObject.FindGameObjectWithTag("Player").transform.position;
             firstPass = false;
         }
         if(!frozen){

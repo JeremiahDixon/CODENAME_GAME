@@ -1,5 +1,3 @@
-using UnityEditor;
-using UnityEditor.Tilemaps;
 using UnityEngine;
 
 public class Slime : MonoBehaviour, IEnemy

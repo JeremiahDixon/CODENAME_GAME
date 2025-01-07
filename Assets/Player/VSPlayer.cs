@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 public class VSPlayer : MonoBehaviour, IPlayer
@@ -80,15 +78,6 @@ public class VSPlayer : MonoBehaviour, IPlayer
     float stepTimer;
     private void Awake()
     {
-        if (Instance == null)
-        {
-            Instance = this;
-            DontDestroyOnLoad(gameObject);  // Keeps this player between scenes
-        }
-        else
-        {
-            Destroy(gameObject);  // Prevent duplicates
-        }
         playerInput = GetComponent<PlayerInput>();
         playerControls = playerInput.actions;
     }
@@ -103,6 +92,8 @@ public class VSPlayer : MonoBehaviour, IPlayer
         currentAttackStrength = baseAttackStrength;
         activeMovementSpeed = movementSpeed;
         playerCamera = GameObject.Find(CAMERA_NAME).GetComponent<CinemachineCamera>();
+        playerCamera.Follow = this.gameObject.transform;
+        playerCamera.LookAt = this.gameObject.transform;
         impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
@@ -383,13 +374,4 @@ public class VSPlayer : MonoBehaviour, IPlayer
         this.sprite = sprite;
     }
 
-    public void SetClassSo(ClassSO classSo)
-    {
-        this.classSo = classSo;
-    }
-
-    public void SetAnimatorController(AnimatorController animController)
-    {
-        anim.runtimeAnimatorController = animController;
-    }
 }
