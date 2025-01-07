@@ -26,6 +26,10 @@ public class Skull : MonoBehaviour, IEnemy
     const string RUNNING = "isRunning";
     [SerializeField]
     private AudioClip damagedClip;
+    [SerializeField]
+    Transform attackPos;
+    [SerializeField]
+    float attackRange;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -116,7 +120,7 @@ public class Skull : MonoBehaviour, IEnemy
     void tryToHitPlayer()
     {
         //create a attackpos and replace transform
-        RaycastHit2D playerToDamage = Physics2D.CircleCast(transform.position, 0.75f, transform.right, 0f, whatIsPlayer);
+        RaycastHit2D playerToDamage = Physics2D.CircleCast(attackPos.position, attackRange, transform.right, 0f, whatIsPlayer);
         if( playerToDamage )
         {
             IPlayer thePlayer = playerToDamage.collider.gameObject.GetComponent<IPlayer>();
@@ -125,6 +129,11 @@ public class Skull : MonoBehaviour, IEnemy
                 //might need to add a bool playerBeenDamaged
             }
         }
+    }
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(attackPos.position, attackRange);
     }
     public int getHp()
     {
