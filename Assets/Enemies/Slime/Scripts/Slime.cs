@@ -28,7 +28,7 @@ public class Slime : MonoBehaviour, IEnemy
     const string ATTACKING_TRIGGER = "isAttackingTrigger";
     const string RUNNING = "isRunning";
     [SerializeField]
-    private AudioClip damagedClip;
+    private AudioClip[] damagedClips;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -85,7 +85,8 @@ public class Slime : MonoBehaviour, IEnemy
     public void TakeDamage (int damage)
     {
         hp -= damage;
-        SoundManager.Instance.PlaySoundEffect(damagedClip, transform, 1.0f);
+        int randInt = Random.Range(0, damagedClips.Length);
+        SoundManager.Instance.PlaySoundEffect(damagedClips[randInt], transform, 1.0f);
         if (hp <= 0)
         {
             int randomInt = Random.Range(1, 101);

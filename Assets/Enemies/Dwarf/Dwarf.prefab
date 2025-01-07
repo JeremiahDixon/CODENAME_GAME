@@ -135,7 +135,9 @@ MonoBehaviour:
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 8
-  damagedClip: {fileID: 8300000, guid: 02a55b19bf252446493f86cfd48f3ca6, type: 3}
+  damagedClips:
+  - {fileID: 8300000, guid: 6e4bd0dc8e1d10549b5bcc6da1504cf7, type: 3}
+  - {fileID: 8300000, guid: 0e7a4c6d62772b44f82c719969a5a711, type: 3}
 --- !u!50 &8779204353243513447
 Rigidbody2D:
   serializedVersion: 5

@@ -5,7 +5,8 @@ public class MonsterSpawner : MonoBehaviour
     public static MonsterSpawner Instance;
     public GameObject[] mobs;
     public float timeBtwSpawn;
-    public float startTimeBtwSpawn;
+    [SerializeField]
+    private float startTimeBtwSpawn;
 
     private void Awake()
     {
@@ -44,15 +45,29 @@ public class MonsterSpawner : MonoBehaviour
         if(screenSide == 1){
             Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(1.1f, 1.4f), 0));
             GameObject mob = Instantiate(mobs[randomMob], v3Pos, Quaternion.identity);
+            SetNextSpawnTime(randomMob);
         }else if(screenSide == 2){
             Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(1.1f, 1.4f), Random.Range(0.0f, 1.0f), 0));
             GameObject mob = Instantiate(mobs[randomMob], v3Pos, Quaternion.identity);
+            SetNextSpawnTime(randomMob);
         }else if(screenSide == 3){
             Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(0.0f, -0.4f), 0));
             GameObject mob = Instantiate(mobs[randomMob], v3Pos, Quaternion.identity);
+            SetNextSpawnTime(randomMob);
         }else if(screenSide == 4){
             Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, -0.4f), Random.Range(0.0f, 1f), 0));
             GameObject mob = Instantiate(mobs[randomMob], v3Pos, Quaternion.identity);
+            SetNextSpawnTime(randomMob);
+        }
+    }
+
+    void SetNextSpawnTime(int randomMob){
+        if(randomMob == 0){
+            startTimeBtwSpawn = 1.0f;
+        }else if(randomMob == 1){
+            startTimeBtwSpawn = 0.15f;
+        }else if(randomMob == 2){
+            startTimeBtwSpawn = 0.5f;
         }
     }
 
