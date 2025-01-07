@@ -89,6 +89,7 @@ public class Skull : MonoBehaviour, IEnemy
         SoundManager.Instance.PlaySoundEffect(damagedClip, transform, 1.0f);
         if (hp <= 0)
         {
+            GameManager.Instance.IncreaseScore(15);
             int randomInt = Random.Range(1, 101);
             dropLoot(randomInt);
             Destroy(gameObject);

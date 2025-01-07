@@ -5,6 +5,8 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.SceneManagement;
 using System;
+using TMPro;
+using System.Net.Sockets;
 
 public class GameManager: MonoBehaviour
 {
@@ -27,6 +29,8 @@ public class GameManager: MonoBehaviour
     ClassSO[] classSos;
     [SerializeField]
     ClassSO currentClassSo;
+    TextMeshProUGUI scoreText;
+    int score = 0;
 
     private void Awake()
     {
@@ -54,8 +58,12 @@ public class GameManager: MonoBehaviour
     {
         if(scene.name == "VS"){
             thePlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<IPlayer>();
+            scoreText = GameObject.FindGameObjectWithTag("Score").GetComponent<TextMeshProUGUI>();
+            score = 0;
+            scoreText.text = score.ToString();
             LoadPlayScreen();
             resetPlayer();
+            MonsterSpawner.Instance.RestSetSpawnTimes();
         }
     }
 
@@ -137,5 +145,10 @@ public class GameManager: MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void IncreaseScore(int scoreValue){
+        score += scoreValue;
+        scoreText.text = score.ToString();
     }
 }

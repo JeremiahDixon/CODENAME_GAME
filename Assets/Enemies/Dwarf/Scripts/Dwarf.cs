@@ -93,6 +93,7 @@ public class Dwarf : MonoBehaviour, IEnemy
         SoundManager.Instance.PlaySoundEffect(damagedClips[randInt], transform, 1.0f);
         if (hp <= 0)
         {
+            GameManager.Instance.IncreaseScore(10);
             int randomInt = Random.Range(1, 101);
             dropLoot(randomInt);
             Destroy(gameObject);

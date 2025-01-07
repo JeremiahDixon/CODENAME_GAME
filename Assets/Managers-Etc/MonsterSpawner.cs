@@ -7,6 +7,12 @@ public class MonsterSpawner : MonoBehaviour
     public float timeBtwSpawn;
     [SerializeField]
     private float startTimeBtwSpawn;
+    [SerializeField]
+    public float spawnAfterSlime;
+    [SerializeField]
+    public float spawnAfterDwarf;
+    [SerializeField]
+    public float spawnAfterSkull;
 
     private void Awake()
     {
@@ -23,13 +29,13 @@ public class MonsterSpawner : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        RestSetSpawnTimes();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(GameManager.Instance.currentState != GameManager.GameState.GameOver){
+        if(GameManager.Instance.currentState == GameManager.GameState.Playing){
             if(timeBtwSpawn <= 0){
                 Spawn();
                 timeBtwSpawn = startTimeBtwSpawn;
@@ -63,12 +69,18 @@ public class MonsterSpawner : MonoBehaviour
 
     void SetNextSpawnTime(int randomMob){
         if(randomMob == 0){
-            startTimeBtwSpawn = 1.0f;
+            startTimeBtwSpawn = spawnAfterSkull;
         }else if(randomMob == 1){
-            startTimeBtwSpawn = 0.15f;
+            startTimeBtwSpawn = spawnAfterDwarf;
         }else if(randomMob == 2){
-            startTimeBtwSpawn = 0.5f;
+            startTimeBtwSpawn = spawnAfterSlime;
         }
+    }
+
+    public void RestSetSpawnTimes(){
+        spawnAfterSlime = 0.2f;
+        spawnAfterDwarf = 0.5f;
+        spawnAfterSkull = 1.0f;
     }
 
 }
