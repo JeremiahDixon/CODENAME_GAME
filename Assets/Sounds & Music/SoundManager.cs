@@ -3,6 +3,7 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
     public static SoundManager Instance;
+    [SerializeField] private AudioSource soundEffectObject;
     private void Awake()
     {
         if (Instance == null)
@@ -16,15 +17,19 @@ public class SoundManager : MonoBehaviour
             Destroy(gameObject);  // Prevent duplicates
         }
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
+    public void PlaySoundEffect(AudioClip soundClip, Transform spawnTransform, float volume)
     {
-        
+        AudioSource audioSource = Instantiate(soundEffectObject, spawnTransform.position, Quaternion.identity);
+
+        audioSource.clip = soundClip;
+
+        audioSource.volume = volume;
+
+        audioSource.Play();
+
+        float clipLength = audioSource.clip.length;
+
+        Destroy(audioSource.gameObject, clipLength);
     }
 }
