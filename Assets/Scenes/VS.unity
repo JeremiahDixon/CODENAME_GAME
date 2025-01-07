@@ -16972,6 +16972,11 @@ MonoBehaviour:
   playerControls: {fileID: 0}
   sprite: {fileID: 0}
   classSo: {fileID: 0}
+  steppingClips:
+  - {fileID: 8300000, guid: a3daccf8cda48409eaff84ee1c9a1183, type: 3}
+  - {fileID: 8300000, guid: 24b638802ac9a4f5982d27e45d92273f, type: 3}
+  stepLength: 0.3
+  stepTimer: 0
 --- !u!1 &1586791471
 GameObject:
   m_ObjectHideFlags: 0

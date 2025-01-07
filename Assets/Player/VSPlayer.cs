@@ -72,6 +72,12 @@ public class VSPlayer : MonoBehaviour, IPlayer
     Sprite sprite;
     [SerializeField]
     ClassSO classSo;
+    [SerializeField]
+    AudioClip[] steppingClips;
+    [SerializeField]
+    float stepLength;
+    [SerializeField]
+    float stepTimer;
     private void Awake()
     {
         if (Instance == null)
@@ -204,10 +210,19 @@ public class VSPlayer : MonoBehaviour, IPlayer
             {
                 anim.SetBool(WALKING, false);
                 anim.SetBool(IDLE, true);
+                stepTimer = 0f;
             }else
             {
                 anim.SetBool(IDLE, false);
                 anim.SetBool(WALKING, true);
+                stepTimer += Time.deltaTime;
+
+                if (stepTimer > stepLength)
+                {
+                    int rand = UnityEngine.Random.Range(0, steppingClips.Length);
+                    SoundManager.Instance.PlaySoundEffect(steppingClips[rand], transform, 1.0f);
+                    stepTimer = 0f;
+                }
             }
         }
         
