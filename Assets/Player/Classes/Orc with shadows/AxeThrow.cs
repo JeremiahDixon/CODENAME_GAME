@@ -112,11 +112,10 @@ public class AxeThrow : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D other){
-        if(other.CompareTag("Axe")){
-            other.gameObject.SetActive(false);
-            axes.Enqueue(other.gameObject);
-        }
+    public void RequeueAxe(GameObject axe)
+    {
+        axe.SetActive(false);
+        axes.Enqueue(axe);
     }
 
 }

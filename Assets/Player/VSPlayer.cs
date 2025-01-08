@@ -135,7 +135,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
             {
                 if(dashCoolCounter <=0 && dashCounter <= 0)
                 {
-                    activeMovementSpeed = dashSpeed;
+                    activeMovementSpeed += dashSpeed;
                     dashCounter = dashLength;
                 }
             }
@@ -145,7 +145,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
 
                 if(dashCounter <= 0)
                 {
-                    activeMovementSpeed = movementSpeed;
+                    activeMovementSpeed -= dashSpeed;
                     dashCoolCounter = dashCooldown;
                 }
             }
@@ -158,6 +158,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
             {
                 if(swordAttack.WasPressedThisFrame())
                 {
+                    timeBtwAttack = startTimeBtwAttack;
                     anim.SetTrigger(SWORD_TRIGGER);
                 }
             }else
@@ -240,7 +241,6 @@ public class VSPlayer : MonoBehaviour, IPlayer
     {
         //myRigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
         shouldBeDamaging = true;
-        timeBtwAttack = startTimeBtwAttack;
         bool shook = false;
 
         while(shouldBeDamaging)
@@ -331,6 +331,16 @@ public class VSPlayer : MonoBehaviour, IPlayer
     public void SetMovementSpeed(Vector2 movementSpeed)
     {
         this.movementSpeed = movementSpeed;
+    }
+
+    public void SetActiveMovementSpeed(Vector2 movementSpeed)
+    {
+        this.activeMovementSpeed = movementSpeed;
+    }
+
+    public Vector2 GetActiveMovementSpeed()
+    {
+        return activeMovementSpeed;
     }
 
     public void SetDashSpeed(Vector2 dashSpeed)

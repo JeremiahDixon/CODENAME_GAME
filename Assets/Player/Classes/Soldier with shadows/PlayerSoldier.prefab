@@ -112,6 +112,8 @@ MonoBehaviour:
   arrow: {fileID: 3090291246410387136, guid: 055c20d3ee5194f51b3bfddc791f32ee, type: 3}
   launchForce: 10
   playerControls: {fileID: 0}
+  timeBtwAttack: 0
+  startTimeBtwAttack: 0.3
 --- !u!1 &6248635425898897705
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,11 +16,8 @@ MonoBehaviour:
   className: Orc
   startTimeBtwAttack: 3
   baseAttackStrength: 8
-  dashSpeed: {x: 6, y: 6}
-  dashLength: 0.6
+  dashSpeed: {x: 3, y: 3}
+  dashLength: 0.75
   dashCooldown: 1.5
   baseHp: 12
   sprite: {fileID: 5120410236738981136, guid: 68fc90e4ed1b44150a0134bd68a6173e, type: 3}
-  animController: {fileID: 9100000, guid: a87839e0a504248c19175d19d9c1bb88, type: 2}
-  classPrefabs:
-  - {fileID: 2770450269082142501, guid: c5ecdcd618355458bad5d69e34e7dd5e, type: 3}

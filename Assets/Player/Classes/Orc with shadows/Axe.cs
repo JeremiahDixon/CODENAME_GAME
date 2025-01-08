@@ -7,7 +7,6 @@ public class Axe : MonoBehaviour
     [SerializeField]
     private int damage;
     private bool frozen = false;
-    int count = 0;
     [SerializeField]
     Vector3 thrownTransform;
     [SerializeField]
@@ -53,7 +52,6 @@ public class Axe : MonoBehaviour
         if(traveledDistance >= 4.0f)
         {
             Freeze();
-            count = 0;
         }
         
     }
@@ -61,15 +59,8 @@ public class Axe : MonoBehaviour
     void OnCollisionEnter2D(Collision2D other){
         if(!frozen)
         {
-            count += 1;
             if(other.gameObject.CompareTag(ENEMY_TAG)){
                 other.gameObject.GetComponent<IEnemy>().TakeDamage(damage);
-            }
-            if(count == 3){
-                Freeze();
-            }else{
-                rb.linearVelocity -= rb.linearVelocity * 0.2f;
-                roationSpeed -= 360;
             }
         }
         if(other.gameObject.CompareTag("Terrain")){

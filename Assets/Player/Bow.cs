@@ -20,6 +20,10 @@ public class Bow : MonoBehaviour
     const string GAMEPAD_SCHEME = "Gamepad";
     const string KM_SCHEME = "Keyboard&Mouse";
     private IPlayer thePlayer;
+    [SerializeField]
+    float timeBtwAttack;
+    [SerializeField]
+    float startTimeBtwAttack;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -41,7 +45,7 @@ public class Bow : MonoBehaviour
         shoot.Enable();
         look.Enable();
         joysticklook.Enable();
-        shoot.performed += Shoot;
+        //shoot.performed += Shoot;
     }
 
     private void OnDisable(){
@@ -50,7 +54,7 @@ public class Bow : MonoBehaviour
             shoot.Disable();
             look.Disable();
             joysticklook.Disable();
-            shoot.performed -= Shoot;
+            //shoot.performed -= Shoot;
         }
     }
 
@@ -69,9 +73,27 @@ public class Bow : MonoBehaviour
             transform.right = direction;
         }
 
+        if(timeBtwAttack <= 0)
+        {
+            if(shoot.WasPressedThisFrame())
+            {
+                timeBtwAttack = startTimeBtwAttack;
+                Shoot();
+            }
+
+        }else
+        {
+            timeBtwAttack -= Time.deltaTime;
+        }
+
     }
 
-    void Shoot(InputAction.CallbackContext context){
+    // void Shoot(InputAction.CallbackContext context){
+    //     GameObject newArrow = Instantiate(arrow, shotPoint.position, shotPoint.rotation);
+    //     newArrow.GetComponent<Rigidbody2D>().linearVelocity = transform.right * launchForce;
+    // }
+
+    void Shoot(){
         GameObject newArrow = Instantiate(arrow, shotPoint.position, shotPoint.rotation);
         newArrow.GetComponent<Rigidbody2D>().linearVelocity = transform.right * launchForce;
     }
