@@ -10,6 +10,7 @@ TagManager:
   - Axe
   - Terrain
   - Score
+  - Spawner
   layers:
   - Default
   - TransparentFX

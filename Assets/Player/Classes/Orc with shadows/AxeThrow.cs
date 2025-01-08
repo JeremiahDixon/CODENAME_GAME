@@ -23,8 +23,12 @@ public class AxeThrow : MonoBehaviour
     const string GAMEPAD_SCHEME = "Gamepad";
     const string KM_SCHEME = "Keyboard&Mouse";
     private IPlayer thePlayer;
-    private int axeLimit = 4;
+    private int axeLimit = 10;
     private Queue<GameObject> axes = new Queue<GameObject>();
+    [SerializeField]
+    float timeBtwAttack;
+    [SerializeField]
+    float startTimeBtwAttack;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -44,7 +48,7 @@ public class AxeThrow : MonoBehaviour
         throwAxe.Enable();
         look.Enable();
         joysticklook.Enable();
-        throwAxe.performed += ThrowAxe;
+        //throwAxe.performed += ThrowAxe;
     }
     void Start()
     {
@@ -57,7 +61,7 @@ public class AxeThrow : MonoBehaviour
             throwAxe.Disable();
             look.Disable();
             joysticklook.Disable();
-            throwAxe.performed -= ThrowAxe;
+            //throwAxe.performed -= ThrowAxe;
         }
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
@@ -85,6 +89,19 @@ public class AxeThrow : MonoBehaviour
             transform.right = direction;
         }
 
+        if(timeBtwAttack <= 0)
+        {
+            if(throwAxe.WasPressedThisFrame())
+            {
+                timeBtwAttack = startTimeBtwAttack;
+                ThrowAxe();
+            }
+
+        }else
+        {
+            timeBtwAttack -= Time.deltaTime;
+        }
+
     }
 
     void CreateObjectPool()
@@ -102,20 +119,29 @@ public class AxeThrow : MonoBehaviour
         axes.Clear();
     }
 
-    void ThrowAxe(InputAction.CallbackContext context){
+    void ThrowAxe(){
         if(axes.Count > 0){
             GameObject newAxe = axes.Dequeue();
             newAxe.SetActive(true);
             newAxe.transform.position = axePos.position;
             newAxe.transform.rotation = axePos.rotation;
             newAxe.GetComponent<Rigidbody2D>().linearVelocity = transform.right * launchForce;
+            StartCoroutine(RequeueAfterDelay(5, newAxe));
         }
     }
 
     public void RequeueAxe(GameObject axe)
     {
         axe.SetActive(false);
-        axes.Enqueue(axe);
+        if(!axes.Contains(axe)){
+            axes.Enqueue(axe);
+        }
+    }
+
+    private IEnumerator RequeueAfterDelay(int seconds, GameObject axe)
+    {
+        yield return new WaitForSeconds(seconds);
+        RequeueAxe(axe);
     }
 
 }

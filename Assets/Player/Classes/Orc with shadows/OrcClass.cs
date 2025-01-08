@@ -6,7 +6,6 @@ public class OrcClass : MonoBehaviour
     bool boosted = false;
     private void OnCollisionEnter2D(Collision2D other){
         if(other.gameObject.CompareTag("Axe")){
-            other.gameObject.SetActive(false);
             GetComponentInChildren<AxeThrow>().RequeueAxe(other.gameObject);
             AxePickupBoost();
         }

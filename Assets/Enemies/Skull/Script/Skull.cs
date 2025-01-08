@@ -1,31 +1,12 @@
 using UnityEngine;
 
-public class Skull : MonoBehaviour, IEnemy
+public class Skull : Enemy
 {
-    [SerializeField]
-    private int hp;
-    [SerializeField]
-    private int strength;
-    [SerializeField]
-    private string enemyName;
-    [SerializeField]
-    private Item[] loot;
-    [SerializeField]
-    private EnemySO enemySo;
     private Animator anim;
-    private Transform playerPos;
-    private IPlayer player;
     [SerializeField]
     private float timeBtwAttack;
     private bool facingRight = false;
-    [SerializeField]
-    private float speed;
-    [SerializeField]
-    private LayerMask whatIsPlayer;
-    const string PLAYER_TAG = "Player";
     const string RUNNING = "isRunning";
-    [SerializeField]
-    private AudioClip damagedClip;
     [SerializeField]
     Transform attackPos;
     [SerializeField]
@@ -83,40 +64,6 @@ public class Skull : MonoBehaviour, IEnemy
         transform.localScale = Scaler;
     }
 
-    public void TakeDamage (int damage)
-    {
-        hp -= damage;
-        SoundManager.Instance.PlaySoundEffect(damagedClip, transform, 1.0f);
-        if (hp <= 0)
-        {
-            GameManager.Instance.IncreaseScore(15);
-            int randomInt = Random.Range(1, 101);
-            dropLoot(randomInt);
-            Destroy(gameObject);
-        }
-    }
-
-    // private void OnTriggerEnter2D(Collider2D other)
-    // {
-    // }
-
-    // private void OnTriggerExit2D(Collider2D other)
-    // {
-    // }
-
-    void dropLoot(int randomInt)
-    {
-        Vector3 objectPosition = transform.position;
-        Vector3 randPoint = new Vector3(objectPosition.x + Random.Range(-1.0f, 1.0f), objectPosition.y + Random.Range(-1.0f, 1.0f));
-        if(randomInt < 10)
-        {
-            //Instantiate(loot[0], randPoint, Quaternion.identity);
-        }else if(randomInt >= 10 && randomInt <= 100)
-        {
-            //Instantiate(loot[1], randPoint, Quaternion.identity);
-        }
-    }
-
     //call this durring animation event to check if hit
     void tryToHitPlayer()
     {
@@ -135,44 +82,5 @@ public class Skull : MonoBehaviour, IEnemy
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(attackPos.position, attackRange);
-    }
-    public int getHp()
-    {
-        return this.hp;
-    }
-
-    public void setHp(int hp)
-    {
-        this.hp = hp;
-    }
-
-    public int getStrength()
-    {
-        return this.strength;
-    }
-
-    public void setStrength(int strength)
-    {
-        this.strength = strength;
-    }
-
-    public float getSpeed()
-    {
-        return this.speed;
-    }
-
-    public void setSpeed(float speed)
-    {
-        this.speed = speed;
-    }
-
-    public string getEnemyName()
-    {
-        return enemyName;
-    }
-
-    public void setEnemyName(string enemyName)
-    {
-        this.enemyName = enemyName;
     }
 }

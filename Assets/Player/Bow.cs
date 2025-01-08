@@ -88,11 +88,6 @@ public class Bow : MonoBehaviour
 
     }
 
-    // void Shoot(InputAction.CallbackContext context){
-    //     GameObject newArrow = Instantiate(arrow, shotPoint.position, shotPoint.rotation);
-    //     newArrow.GetComponent<Rigidbody2D>().linearVelocity = transform.right * launchForce;
-    // }
-
     void Shoot(){
         GameObject newArrow = Instantiate(arrow, shotPoint.position, shotPoint.rotation);
         newArrow.GetComponent<Rigidbody2D>().linearVelocity = transform.right * launchForce;

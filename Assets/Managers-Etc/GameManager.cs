@@ -63,7 +63,6 @@ public class GameManager: MonoBehaviour
         if(scene.name == "VS"){
             LoadPlayScreen();
             resetPlayer();
-            MonsterSpawner.Instance.RestSetSpawnTimes();
             currentState = GameState.Playing;
         }
     }

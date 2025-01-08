@@ -2520,7 +2520,7 @@ GameObject:
   - component: {fileID: 875662352}
   m_Layer: 0
   m_Name: Spawner
-  m_TagString: Untagged
+  m_TagString: Spawner
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2537,15 +2537,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecd0781672251de4e8f001192466492d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  mob1: Small Slime
+  mob2: Basic Slime
+  mob3: Basic Skull
+  mob4: Basic Dwarf
+  mob1Int: 0
+  mob2Int: 1
+  mob3Int: 4
+  mob4Int: 7
   mobs:
-  - {fileID: 2885276216655954593, guid: b6fa37a6da4aacf4c99a33ece18c705f, type: 3}
+  - {fileID: 3664486787692968098, guid: 9547a7c8926a6034e82a973f7f91b293, type: 3}
   - {fileID: 8112522797563040343, guid: c3024387eba541940a4bf566e1c0b4dc, type: 3}
+  - {fileID: 4163842975639771652, guid: 471b0bcd3b6d70c40bae4796871fd5ca, type: 3}
+  - {fileID: 558362672080133649, guid: f96a6db94d086504dbce38f74bdce4d9, type: 3}
+  - {fileID: 5732870863236921878, guid: 4464b21607ef2c8418e666c037873e60, type: 3}
+  - {fileID: 2885276216655954593, guid: b6fa37a6da4aacf4c99a33ece18c705f, type: 3}
+  - {fileID: 2419425593626201824, guid: bd4e6af56e199cf498ead5498e2e3d02, type: 3}
   - {fileID: 1590680851717841368, guid: d7540fc956a6b48498248e70cb4dd376, type: 3}
-  timeBtwSpawn: 5
-  startTimeBtwSpawn: 0.25
-  spawnAfterSlime: 0
-  spawnAfterDwarf: 0
-  spawnAfterSkull: 0
+  basicTimeBtwSpawn: 5
+  startBasicTimeBtwSpawn: 0.3
+  intermediateTimeBtwSpawn: 5
+  startIntermediateTimeBtwSpawn: 5
+  advancedTimeBtwSpawn: 10
+  startAdvancedTimeBtwSpawn: 10
+  legendaryTimeBtwSpawn: 0
+  startLegendaryTimeBtwSpawn: 0
+  intermediateMobs:
+  - {fileID: 2885276216655954593, guid: b6fa37a6da4aacf4c99a33ece18c705f, type: 3}
+  - {fileID: 4163842975639771652, guid: 471b0bcd3b6d70c40bae4796871fd5ca, type: 3}
+  advancedMobs:
+  - {fileID: 2419425593626201824, guid: bd4e6af56e199cf498ead5498e2e3d02, type: 3}
+  - {fileID: 558362672080133649, guid: f96a6db94d086504dbce38f74bdce4d9, type: 3}
 --- !u!4 &875662353
 Transform:
   m_ObjectHideFlags: 0
