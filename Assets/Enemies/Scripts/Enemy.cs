@@ -13,12 +13,12 @@ public class Enemy : MonoBehaviour, IEnemy
     public EnemySO enemySo;
     public Transform playerPos;
     public IPlayer player;
-    MonsterSpawner ms;
+    MobSpawner ms;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
-        ms = GameObject.Find("Spawner").GetComponent<MonsterSpawner>();
+        ms = GameObject.Find("Spawner").GetComponent<MobSpawner>();
     }
 
     void Start()

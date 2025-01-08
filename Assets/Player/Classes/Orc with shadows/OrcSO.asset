@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e0165caa9374b69ba54206b1d26817, type: 3}
   m_Name: OrcSO
   m_EditorClassIdentifier: 
-  movementSpeed: {x: 2.5, y: 2.5}
+  movementSpeed: {x: 3, y: 3}
   className: Orc
   startTimeBtwAttack: 3
   baseAttackStrength: 8
   dashSpeed: {x: 3, y: 3}
   dashLength: 0.75
-  dashCooldown: 1.5
-  baseHp: 12
+  dashCooldown: 1.25
+  baseHp: 15
   sprite: {fileID: 5120410236738981136, guid: 68fc90e4ed1b44150a0134bd68a6173e, type: 3}

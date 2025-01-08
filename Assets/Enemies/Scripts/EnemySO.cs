@@ -7,7 +7,9 @@ public class EnemySO : ScriptableObject
     public EnemyLevel enemyLevel = new EnemyLevel();
     public int hp;
     public int strength;
-    public float speed;
+    float speed;
+    public float minSpeed;
+    public float maxSpeed;
     public GameObject[] loot;
 
     public enum EnemyLevel{
@@ -18,11 +20,13 @@ public class EnemySO : ScriptableObject
     };
 
     public void CreateStats(GameObject gameObject){
-        gameObject.GetComponent<Enemy>().hp = hp;
-        gameObject.GetComponent<Enemy>().strength = strength;
-        gameObject.GetComponent<Enemy>().enemyName = enemyName;
-        gameObject.GetComponent<Enemy>().speed = speed;
-        gameObject.GetComponent<Enemy>().loot = loot;
+        Enemy enemy = gameObject.GetComponent<Enemy>();
+        speed = Random.Range(minSpeed, maxSpeed);
+        enemy.hp = hp;
+        enemy.strength = strength;
+        enemy.enemyName = enemyName;
+        enemy.speed = speed;
+        enemy.loot = loot;
     }
 
 }

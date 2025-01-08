@@ -31,8 +31,11 @@ public class Arrow : MonoBehaviour
         transform.parent = other.transform;
         if(other.gameObject.CompareTag(ENEMY_TAG)){
             other.gameObject.GetComponent<IEnemy>().TakeDamage(damage);
+            Destroy(gameObject);
+        }else{
+            transform.parent = other.transform;
+            StartCoroutine(DestroyAfterDelay(5));
         }
-        StartCoroutine(DestroyAfterDelay(5));
     }
 
     private IEnumerator DestroyAfterDelay(int seconds)

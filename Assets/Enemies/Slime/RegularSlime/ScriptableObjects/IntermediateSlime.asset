@@ -16,6 +16,7 @@ MonoBehaviour:
   enemyLevel: 1
   hp: 18
   strength: 2
-  speed: 1.5
+  minSpeed: 2
+  maxSpeed: 3
   loot:
   - {fileID: 7819942442154613351, guid: d84e0f138a1524ef28ad842bbd41ccd1, type: 3}

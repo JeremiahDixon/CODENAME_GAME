@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterSpawner : MonoBehaviour
+public class MobSpawner : MonoBehaviour
 {
     [SerializeField]
     string mob1;
@@ -19,7 +19,6 @@ public class MonsterSpawner : MonoBehaviour
     int mob3Int = 0;
     [SerializeField]
     int mob4Int = 0;
-    //public static MonsterSpawner Instance;
     [SerializeField]
     GameObject[] mobs;
     public float basicTimeBtwSpawn;
@@ -37,11 +36,12 @@ public class MonsterSpawner : MonoBehaviour
     public float legendaryTimeBtwSpawn;
     [SerializeField]
     private float startLegendaryTimeBtwSpawn;
-    private int basicLimit = 20;
+    private int basicLimit = 30;
     private Queue<GameObject> basicMob1 = new Queue<GameObject>();
     private Queue<GameObject> basicMob2 = new Queue<GameObject>();
     private Queue<GameObject> basicMob3 = new Queue<GameObject>();
     private Queue<GameObject> basicMob4 = new Queue<GameObject>();
+    public GameObject[] basicMobs;
     public GameObject[] intermediateMobs;
     public GameObject[] advancedMobs;
 
