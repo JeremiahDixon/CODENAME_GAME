@@ -32,7 +32,7 @@ public class PlayerOld : MonoBehaviour
     public float dashLength = .5f, dashCooldown =1f;
     private float dashCounter;
     private float dashCoolCounter;
-    private CinemachineCamera camera;
+    //private CinemachineCamera camera;
     private CinemachineImpulseSource impulseSource;
     public Transform shotPoint;
     public GameObject arrow;
@@ -57,7 +57,7 @@ public class PlayerOld : MonoBehaviour
         anim = GetComponent<Animator>();
         currentStrength = strength;
         activeMovementSpeed = MovementSpeed;
-        camera = GameObject.Find(CAMERA_NAME).GetComponent<CinemachineCamera>();
+        //camera = GameObject.Find(CAMERA_NAME).GetComponent<CinemachineCamera>();
         impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 

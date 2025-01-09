@@ -3,9 +3,6 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
-using ca.HenrySoftware.Rage;
-using Unity.VisualScripting;
-using System.Numerics;
 public class ItemSlot : MonoBehaviour, IPointerClickHandler
 {
     //item data
