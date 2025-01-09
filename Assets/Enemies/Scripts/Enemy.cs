@@ -54,6 +54,8 @@ public class Enemy : MonoBehaviour, IEnemy
             playManager.IncreaseScore(scoreValue);
             float randomInt = Random.Range(0f, 100.0f);
             dropLoot(randomInt);
+            GetComponent<SpriteRenderer>().color = Color.white;
+            currentSpeed = speed;
             ms.RequeueMob(this.gameObject);
         }
     }

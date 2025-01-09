@@ -14,7 +14,9 @@ public class IceArrow : Arrow
         if(other.gameObject.CompareTag(ENEMY_TAG)){
             other.gameObject.GetComponent<IEnemy>().TakeDamage(damage);
             if(other.gameObject.activeInHierarchy){
-                other.gameObject.GetComponent<IEnemy>().Freeze(freezeTime);
+                if(Random.Range(1, 101) > 75){
+                    other.gameObject.GetComponent<IEnemy>().Freeze(freezeTime);
+                }
             }
             Destroy(gameObject);
         }else{
