@@ -13,15 +13,15 @@ public class ClassSO : ScriptableObject
     public Sprite sprite;
 
     public void CreateClassInfo(GameObject gameObject){
-        gameObject.GetComponent<VSPlayer>().SetMovementSpeed(movementSpeed);
-        gameObject.GetComponent<VSPlayer>().SetClassName(className);
-        gameObject.GetComponent<VSPlayer>().SetStartTimeBtwAttack(startTimeBtwAttack);
-        gameObject.GetComponent<VSPlayer>().SetBaseAttackStrength(baseAttackStrength);
-        gameObject.GetComponent<VSPlayer>().SetDashSpeed(dashSpeed);
-        gameObject.GetComponent<VSPlayer>().SetDashLength(dashLength);
-        gameObject.GetComponent<VSPlayer>().SetDashCooldown(dashCooldown);
-        gameObject.GetComponent<VSPlayer>().SetBaseHp(baseHp);
-        gameObject.GetComponent<VSPlayer>().SetSprite(sprite);
+        gameObject.GetComponent<IPlayer>().SetMovementSpeed(movementSpeed);
+        gameObject.GetComponent<IPlayer>().SetClassName(className);
+        gameObject.GetComponent<IPlayer>().SetStartTimeBtwAttack(startTimeBtwAttack);
+        gameObject.GetComponent<IPlayer>().SetBaseAttackStrength(baseAttackStrength);
+        gameObject.GetComponent<IPlayer>().SetDashSpeed(dashSpeed);
+        gameObject.GetComponent<IPlayer>().SetDashLength(dashLength);
+        gameObject.GetComponent<IPlayer>().SetDashCooldown(dashCooldown);
+        gameObject.GetComponent<IPlayer>().SetBaseHp(baseHp);
+        gameObject.GetComponent<IPlayer>().SetSprite(sprite);
     }
     
 }

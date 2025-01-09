@@ -15,7 +15,7 @@ public class OrcClass : MonoBehaviour
     {
         if(!boosted){
             boosted = true;
-            GetComponent<VSPlayer>().SetActiveMovementSpeed(GetComponent<VSPlayer>().GetActiveMovementSpeed() + new Vector2(2.0f, 2.0f));
+            GetComponent<IPlayer>().SetActiveMovementSpeed(GetComponent<IPlayer>().GetActiveMovementSpeed() + new Vector2(2.0f, 2.0f));
             StartCoroutine(BoostFinished(2));
         }
     }
@@ -24,6 +24,6 @@ public class OrcClass : MonoBehaviour
     {
         yield return new WaitForSeconds(seconds);
         boosted = false;
-        GetComponent<VSPlayer>().SetActiveMovementSpeed(GetComponent<VSPlayer>().GetActiveMovementSpeed() - new Vector2(2.0f, 2.0f));
+        GetComponent<IPlayer>().SetActiveMovementSpeed(GetComponent<IPlayer>().GetActiveMovementSpeed() - new Vector2(2.0f, 2.0f));
     }
 }

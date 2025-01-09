@@ -13,7 +13,7 @@ public class GameManager: MonoBehaviour
     private bool shoplocked{get; set;}
     public int playerHealth{get; private set;} = 10;
     public int maxPlayerHealth{get; private set;} = 10;
-    private IPlayer thePlayer;
+    public IPlayer thePlayer;
     private HealthManager healthManager;
     [SerializeField]
     private GameOverScreen gameOverScreen;
@@ -29,8 +29,6 @@ public class GameManager: MonoBehaviour
     ClassSO[] classSos;
     [SerializeField]
     ClassSO currentClassSo;
-    TextMeshProUGUI scoreText;
-    int score = 0;
 
     private void Awake()
     {
@@ -77,9 +75,6 @@ public class GameManager: MonoBehaviour
         healthManager = GameObject.Find("HealthManager").GetComponent<HealthManager>();
         gameOverScreen = GameObject.FindGameObjectWithTag("GameOverScreen").GetComponent<GameOverScreen>();
         startPos = GameObject.Find("StartPosition").transform;
-        scoreText = GameObject.FindGameObjectWithTag("Score").GetComponent<TextMeshProUGUI>();
-        score = 0;
-        scoreText.text = score.ToString();
     }
 
     public void Heal(int amount){
@@ -146,8 +141,4 @@ public class GameManager: MonoBehaviour
         }
     }
 
-    public void IncreaseScore(int scoreValue){
-        score += scoreValue;
-        scoreText.text = score.ToString();
-    }
 }

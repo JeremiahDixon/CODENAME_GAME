@@ -1668,6 +1668,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5aa7f63a8c0301c4d81a906f1b656915, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timePlayed: 0
+  playedThirtySeconds: 30
+  playedOneMin: 60
+  playedTwoMin: 120
+  playedThreeMin: 180
+  playedFiveMin: 300
 --- !u!4 &255891813
 Transform:
   m_ObjectHideFlags: 0
@@ -2485,11 +2491,11 @@ MonoBehaviour:
   playerClasses:
   - {fileID: 6248635425898897705, guid: 823f1f90a68f34a4897bf0c7903750a4, type: 3}
   - {fileID: 2823653483410812319, guid: 4255df7f1b34ef9449faa8aa7baff06b, type: 3}
-  currentClass: {fileID: 2823653483410812319, guid: 4255df7f1b34ef9449faa8aa7baff06b, type: 3}
+  currentClass: {fileID: 6248635425898897705, guid: 823f1f90a68f34a4897bf0c7903750a4, type: 3}
   classSos:
   - {fileID: 11400000, guid: f941f27d5a0de49739c22a8bd3344d4f, type: 2}
   - {fileID: 11400000, guid: 0851459c76a0647d88e8d723c77c6b6c, type: 2}
-  currentClassSo: {fileID: 11400000, guid: 0851459c76a0647d88e8d723c77c6b6c, type: 2}
+  currentClassSo: {fileID: 11400000, guid: f941f27d5a0de49739c22a8bd3344d4f, type: 2}
 --- !u!4 &872564491
 Transform:
   m_ObjectHideFlags: 0
@@ -2534,14 +2540,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecd0781672251de4e8f001192466492d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  basicTimeBtwSpawn: 5
-  startBasicTimeBtwSpawn: 0.3
-  intermediateTimeBtwSpawn: 5
-  startIntermediateTimeBtwSpawn: 5
-  advancedTimeBtwSpawn: 10
-  startAdvancedTimeBtwSpawn: 10
-  legendaryTimeBtwSpawn: 15
-  startLegendaryTimeBtwSpawn: 15
+  basicTimeBtwSpawn: 0
+  startBasicTimeBtwSpawn: 0.75
+  intermediateTimeBtwSpawn: 10
+  startIntermediateTimeBtwSpawn: 10
+  advancedTimeBtwSpawn: 20
+  startAdvancedTimeBtwSpawn: 20
+  legendaryTimeBtwSpawn: 29
+  startLegendaryTimeBtwSpawn: 29
   basicMobs:
   - {fileID: 3664486787692968098, guid: 9547a7c8926a6034e82a973f7f91b293, type: 3}
   - {fileID: 8112522797563040343, guid: c3024387eba541940a4bf566e1c0b4dc, type: 3}

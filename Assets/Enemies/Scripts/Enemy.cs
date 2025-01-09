@@ -6,6 +6,7 @@ public class Enemy : MonoBehaviour, IEnemy
     public int strength;
     public string enemyName;
     public float speed;
+    public int scoreValue;
     public AudioClip[] damagedClips;
     public LayerMask whatIsPlayer;
     public const string PLAYER_TAG = "Player";
@@ -15,6 +16,7 @@ public class Enemy : MonoBehaviour, IEnemy
     public IPlayer player;
     MobSpawner ms;
     public EnemyLevel enemyLevel = new EnemyLevel();
+    PlaySystemManager playManager;
 
     public enum EnemyLevel{
         basic,
@@ -27,6 +29,8 @@ public class Enemy : MonoBehaviour, IEnemy
     void Awake()
     {
         ms = GameObject.Find("Spawner").GetComponent<MobSpawner>();
+        playManager = GameObject.Find("PlaySystemManager").GetComponent<PlaySystemManager>();
+
     }
 
     void Start()
@@ -56,7 +60,7 @@ public class Enemy : MonoBehaviour, IEnemy
         SoundManager.Instance.PlaySoundEffect(damagedClips[randInt], transform, 1.0f);
         if (hp <= 0)
         {
-            GameManager.Instance.IncreaseScore(10);
+            playManager.IncreaseScore(scoreValue);
             float randomInt = Random.Range(0f, 100.0f);
             dropLoot(randomInt);
             ms.RequeueMob(this.gameObject);

@@ -4,17 +4,13 @@ using UnityEngine;
 public class MobSpawner : MonoBehaviour
 {
     public float basicTimeBtwSpawn;
-    [SerializeField]
-    private float startBasicTimeBtwSpawn;
+    public float startBasicTimeBtwSpawn;
     public float intermediateTimeBtwSpawn;
-    [SerializeField]
-    private float startIntermediateTimeBtwSpawn;
+    public float startIntermediateTimeBtwSpawn;
     public float advancedTimeBtwSpawn;
-    [SerializeField]
-    private float startAdvancedTimeBtwSpawn;
+    public float startAdvancedTimeBtwSpawn;
     public float legendaryTimeBtwSpawn;
-    [SerializeField]
-    private float startLegendaryTimeBtwSpawn;
+    public float startLegendaryTimeBtwSpawn;
     private int basicLimit = 30;
     public GameObject[] basicMobs;
     public GameObject[] intermediateMobs;

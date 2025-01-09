@@ -16,6 +16,7 @@ MonoBehaviour:
   enemyLevel: 2
   hp: 20
   strength: 3
+  scoreValue: 15
   minSpeed: 3
   maxSpeed: 5
   loot: []

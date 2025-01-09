@@ -130,6 +130,7 @@ GameObject:
   - component: {fileID: 7061335205537869862}
   - component: {fileID: 561312990809713307}
   - component: {fileID: 7483288273184238996}
+  - component: {fileID: 3174345456604695798}
   m_Layer: 3
   m_Name: PlayerSoldier
   m_TagString: Player
@@ -429,6 +430,19 @@ MonoBehaviour:
   m_DefaultActionMap: Player
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &3174345456604695798
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6248635425898897705}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dcc627c020ae2b4ca1c3e3a5025628f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  iceBow: {fileID: 8374271587910678415, guid: ab44a0f18b777224c81a939a239fad5e, type: 3}
 --- !u!1 &6789598584254104784
 GameObject:
   m_ObjectHideFlags: 0

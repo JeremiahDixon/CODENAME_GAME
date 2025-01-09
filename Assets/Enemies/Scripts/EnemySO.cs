@@ -7,6 +7,7 @@ public class EnemySO : ScriptableObject
     public EnemyLevel enemyLevel;
     public int hp;
     public int strength;
+    public int scoreValue;
     float speed;
     public float minSpeed;
     public float maxSpeed;
@@ -24,6 +25,7 @@ public class EnemySO : ScriptableObject
         speed = Random.Range(minSpeed, maxSpeed);
         enemy.hp = hp;
         enemy.strength = strength;
+        enemy.scoreValue = scoreValue;
         enemy.enemyName = enemyName;
         enemy.speed = speed;
         enemy.loot = loot;
