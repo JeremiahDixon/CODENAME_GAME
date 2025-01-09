@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 2783611220945489624}
   - component: {fileID: 5637183693814043510}
   - component: {fileID: 9194462220143788553}
-  - component: {fileID: 5773914765672340274}
+  - component: {fileID: 1231430123304938052}
   m_Layer: 8
   m_Name: IceArrow
   m_TagString: Untagged
@@ -108,7 +108,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.19211152, y: 0.07211156}
   m_EdgeRadius: 0
---- !u!114 &5773914765672340274
+--- !u!114 &1231430123304938052
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -117,10 +117,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2361550646970634507}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: be8d9d90de5784db5995221b5cf24a2f, type: 3}
+  m_Script: {fileID: 11500000, guid: 19485b39f092f834782c46a553933fe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 4
+  rb: {fileID: 0}
+  damage: 5
+  freezeTime: 1.5
 --- !u!1 &9093247985643559640
 GameObject:
   m_ObjectHideFlags: 0
@@ -198,7 +200,7 @@ SpriteRenderer:
   m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: 21301524, guid: 4e799e9a72d583c4ebba9f2e35c2a5f4, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.5235849, g: 0.98505366, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0

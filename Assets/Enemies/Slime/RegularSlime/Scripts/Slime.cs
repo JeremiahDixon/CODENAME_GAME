@@ -18,6 +18,7 @@ public class Slime : Enemy
     void Start()
     {
         enemySo.CreateStats(gameObject);
+        currentSpeed = speed;
         anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag(PLAYER_TAG).GetComponent<IPlayer>();
         playerPos = player.transform;
@@ -31,7 +32,7 @@ public class Slime : Enemy
     {
         if(Vector2.Distance(anim.transform.position, playerPos.position) > 0.75f)
         {
-            anim.transform.position = Vector2.MoveTowards(anim.transform.position, playerPos.position, speed * Time.deltaTime);
+            anim.transform.position = Vector2.MoveTowards(anim.transform.position, playerPos.position, currentSpeed * Time.deltaTime);
         }
         if(Vector2.Distance(transform.position, playerPos.position) <= 0.75f)
         {

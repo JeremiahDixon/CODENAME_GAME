@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IEnemy
@@ -6,6 +7,7 @@ public class Enemy : MonoBehaviour, IEnemy
     public int strength;
     public string enemyName;
     public float speed;
+    public float currentSpeed;
     public int scoreValue;
     public AudioClip[] damagedClips;
     public LayerMask whatIsPlayer;
@@ -40,17 +42,6 @@ public class Enemy : MonoBehaviour, IEnemy
     // Update is called once per frame
     // void FixedUpdate()
     // {
-    //     if(transform.position.x < Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x
-    //     || transform.position.x > Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x)
-    //     {
-    //         ms.RequeueMob(this.gameObject);
-    //     }
-
-    //     if(transform.position.y < Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).y
-    //     || transform.position.y > Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).y)
-    //     {
-    //         ms.RequeueMob(this.gameObject);
-    //     }
     // }
 
     public void TakeDamage (int damage)
@@ -70,6 +61,19 @@ public class Enemy : MonoBehaviour, IEnemy
     public virtual void dropLoot(float randomInt)
     {
 
+    }
+
+    public void Freeze(float time)
+    {
+        StartCoroutine(FreezeForX(time));
+    }
+    IEnumerator FreezeForX(float time)
+    {
+        GetComponent<SpriteRenderer>().color = Color.blue;
+        currentSpeed = 0;
+        yield return new WaitForSeconds(time);
+        GetComponent<SpriteRenderer>().color = Color.white;
+        currentSpeed = speed;
     }
 
     //this works if i decide to despawn the mob after leaves camera bounds

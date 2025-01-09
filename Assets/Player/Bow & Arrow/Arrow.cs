@@ -3,11 +3,10 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
-    Rigidbody2D rb;
+    public Rigidbody2D rb;
     private float timeToDestroy = 20.0f;
     const string ENEMY_TAG = "Enemy";
-    [SerializeField]
-    private int damage;
+    public int damage;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -38,7 +37,7 @@ public class Arrow : MonoBehaviour
         }
     }
 
-    private IEnumerator DestroyAfterDelay(int seconds)
+    public IEnumerator DestroyAfterDelay(int seconds)
     {
         yield return new WaitForSeconds(seconds);
         Destroy(gameObject);
