@@ -38,24 +38,19 @@ public class MobSpawner : MonoBehaviour
     {
         if(GameManager.Instance.currentState == GameManager.GameState.Playing){
             if(basicTimeBtwSpawn <= 0){
-                Spawn();
+                Spawn(basicMobsList);
                 basicTimeBtwSpawn = startBasicTimeBtwSpawn;
             }else{
                 basicTimeBtwSpawn -= Time.deltaTime;
             }
-
             if(intermediateTimeBtwSpawn <= 0){
-                int randomMob = Random.Range(0, intermediateMobs.Length);
-                Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(1.1f, 1.4f), 0));
-                GameObject mob = Instantiate(intermediateMobs[randomMob], v3Pos, Quaternion.identity);
+                Spawn(intermediateMobsList);
                 intermediateTimeBtwSpawn = startIntermediateTimeBtwSpawn;
             }else{
                 intermediateTimeBtwSpawn -= Time.deltaTime;
             }
             if(advancedTimeBtwSpawn <= 0){
-                int randomMob = Random.Range(0, advancedMobs.Length);
-                Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(1.1f, 1.4f), 0));
-                GameObject mob = Instantiate(advancedMobs[randomMob], v3Pos, Quaternion.identity);
+                Spawn(advancedMobsList);
                 advancedTimeBtwSpawn = startAdvancedTimeBtwSpawn;
             }else{
                 advancedTimeBtwSpawn -= Time.deltaTime;
@@ -64,38 +59,38 @@ public class MobSpawner : MonoBehaviour
         }
     }
 
-    void Spawn(){
+    void Spawn(ArrayList mobList){
         int screenSide = Random.Range(1, 5);
-        int randomMob = Random.Range(0, basicMobsList.Count);
+        int randomMob = Random.Range(0, mobList.Count);
         if(screenSide == 1){
             Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(1.1f, 1.4f), 0));
-             if(basicMobsList.Count > 0){
-                GameObject mob = (GameObject)basicMobsList[randomMob];
-                basicMobsList.RemoveAt(randomMob);
+             if(mobList.Count > 0){
+                GameObject mob = (GameObject)mobList[randomMob];
+                mobList.RemoveAt(randomMob);
                 mob.transform.position = v3Pos;
                 mob.SetActive(true);
             }
         }else if(screenSide == 2){
             Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(1.1f, 1.4f), Random.Range(0.0f, 1.0f), 0));
-            if(basicMobsList.Count > 0){
-                GameObject mob = (GameObject)basicMobsList[randomMob];
-                basicMobsList.RemoveAt(randomMob);
+            if(mobList.Count > 0){
+                GameObject mob = (GameObject)mobList[randomMob];
+                mobList.RemoveAt(randomMob);
                 mob.transform.position = v3Pos;
                 mob.SetActive(true);
             }
         }else if(screenSide == 3){
             Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(0.0f, -0.4f), 0));
-            if(basicMobsList.Count > 0){
-                GameObject mob = (GameObject)basicMobsList[randomMob];
-                basicMobsList.RemoveAt(randomMob);
+            if(mobList.Count > 0){
+                GameObject mob = (GameObject)mobList[randomMob];
+                mobList.RemoveAt(randomMob);
                 mob.transform.position = v3Pos;
                 mob.SetActive(true);
             }
         }else if(screenSide == 4){
             Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, -0.4f), Random.Range(0.0f, 1f), 0));
-            if(basicMobsList.Count > 0){
-                GameObject mob = (GameObject)basicMobsList[randomMob];
-                basicMobsList.RemoveAt(randomMob);
+            if(mobList.Count > 0){
+                GameObject mob = (GameObject)mobList[randomMob];
+                mobList.RemoveAt(randomMob);
                 mob.transform.position = v3Pos;
                 mob.SetActive(true);
             }
