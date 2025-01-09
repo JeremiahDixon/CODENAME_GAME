@@ -1,49 +1,28 @@
-using System.Collections.Generic;
+using System.Collections;
 using UnityEngine;
 
 public class MobSpawner : MonoBehaviour
 {
-    [SerializeField]
-    string mob1;
-    [SerializeField]
-    string mob2;
-    [SerializeField]
-    string mob3;
-    [SerializeField]
-    string mob4;
-    [SerializeField]
-    int mob1Int = 0;
-    [SerializeField]
-    int mob2Int = 0;
-    [SerializeField]
-    int mob3Int = 0;
-    [SerializeField]
-    int mob4Int = 0;
-    [SerializeField]
-    GameObject[] mobs;
     public float basicTimeBtwSpawn;
     [SerializeField]
     private float startBasicTimeBtwSpawn;
-    [SerializeField]
     public float intermediateTimeBtwSpawn;
     [SerializeField]
     private float startIntermediateTimeBtwSpawn;
-    [SerializeField]
     public float advancedTimeBtwSpawn;
     [SerializeField]
     private float startAdvancedTimeBtwSpawn;
-    [SerializeField]
     public float legendaryTimeBtwSpawn;
     [SerializeField]
     private float startLegendaryTimeBtwSpawn;
     private int basicLimit = 30;
-    private Queue<GameObject> basicMob1 = new Queue<GameObject>();
-    private Queue<GameObject> basicMob2 = new Queue<GameObject>();
-    private Queue<GameObject> basicMob3 = new Queue<GameObject>();
-    private Queue<GameObject> basicMob4 = new Queue<GameObject>();
     public GameObject[] basicMobs;
     public GameObject[] intermediateMobs;
     public GameObject[] advancedMobs;
+    public ArrayList basicMobsList = new ArrayList();
+    public ArrayList intermediateMobsList = new ArrayList();
+    public ArrayList advancedMobsList = new ArrayList();
+    public ArrayList legendaryMobsList = new ArrayList();
 
     private void Awake()
     {
@@ -87,104 +66,95 @@ public class MobSpawner : MonoBehaviour
 
     void Spawn(){
         int screenSide = Random.Range(1, 5);
-        int randomMob = Random.Range(1, 5);
+        int randomMob = Random.Range(0, basicMobsList.Count);
         if(screenSide == 1){
             Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(1.1f, 1.4f), 0));
-             if(GetAQueue(randomMob).Count > 0){
-                GameObject mob = GetAQueue(randomMob).Dequeue();
+             if(basicMobsList.Count > 0){
+                GameObject mob = (GameObject)basicMobsList[randomMob];
+                basicMobsList.RemoveAt(randomMob);
                 mob.transform.position = v3Pos;
                 mob.SetActive(true);
             }
         }else if(screenSide == 2){
-            Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(1.1f, 1.4f), 0));
-            if(GetAQueue(randomMob).Count > 0){
-                GameObject mob = GetAQueue(randomMob).Dequeue();
+            Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(1.1f, 1.4f), Random.Range(0.0f, 1.0f), 0));
+            if(basicMobsList.Count > 0){
+                GameObject mob = (GameObject)basicMobsList[randomMob];
+                basicMobsList.RemoveAt(randomMob);
                 mob.transform.position = v3Pos;
                 mob.SetActive(true);
             }
         }else if(screenSide == 3){
-            Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(1.1f, 1.4f), 0));
-            if(GetAQueue(randomMob).Count > 0){
-                GameObject mob = GetAQueue(randomMob).Dequeue();
+            Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(0.0f, -0.4f), 0));
+            if(basicMobsList.Count > 0){
+                GameObject mob = (GameObject)basicMobsList[randomMob];
+                basicMobsList.RemoveAt(randomMob);
                 mob.transform.position = v3Pos;
                 mob.SetActive(true);
             }
         }else if(screenSide == 4){
-            Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(1.1f, 1.4f), 0));
-            if(GetAQueue(randomMob).Count > 0){
-                GameObject mob = GetAQueue(randomMob).Dequeue();
+            Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, -0.4f), Random.Range(0.0f, 1f), 0));
+            if(basicMobsList.Count > 0){
+                GameObject mob = (GameObject)basicMobsList[randomMob];
+                basicMobsList.RemoveAt(randomMob);
                 mob.transform.position = v3Pos;
                 mob.SetActive(true);
             }
         }
     }
 
-    Queue<GameObject> GetAQueue(int randInt){
-        if(randInt == 1){
-            return basicMob1;
-        }else if(randInt == 2){
-            return basicMob2;
-        }else if(randInt == 3){
-            return basicMob3;
-        }else if(randInt == 4){
-            return basicMob4;
-        }
-        return null;
-    }
-
     void CreateObjectPools()
     {
-        for (int i = 0; i < basicLimit; i++)
-        {
-            GameObject newBasicMob1 = Instantiate(mobs[mob1Int], this.transform.position, this.transform.rotation);
-            newBasicMob1.SetActive(false);
-            basicMob1.Enqueue(newBasicMob1);
+        for(int x = 0; x < basicMobs.Length; x++){
+            for (int i = 0; i < basicLimit; i++)
+            {
+                GameObject newBasicMob = Instantiate(basicMobs[x], this.transform.position, this.transform.rotation);
+                newBasicMob.SetActive(false);
+                basicMobsList.Add(newBasicMob);
+            }
         }
 
-        for (int i = 0; i < basicLimit; i++)
-        {
-            GameObject newBasicMob2 = Instantiate(mobs[mob2Int], this.transform.position, this.transform.rotation);
-            newBasicMob2.SetActive(false);
-            basicMob2.Enqueue(newBasicMob2);
+        for(int x = 0; x < intermediateMobs.Length; x++){
+            for (int i = 0; i < basicLimit; i++)
+            {
+                GameObject newIntermediateMob = Instantiate(intermediateMobs[x], this.transform.position, this.transform.rotation);
+                newIntermediateMob.SetActive(false);
+                intermediateMobsList.Add(newIntermediateMob);
+            }
         }
 
-        for (int i = 0; i < basicLimit; i++)
-        {
-            GameObject newBasicMob3 = Instantiate(mobs[mob3Int], this.transform.position, this.transform.rotation);
-            newBasicMob3.SetActive(false);
-            basicMob3.Enqueue(newBasicMob3);
-        }
-
-        for (int i = 0; i < basicLimit; i++)
-        {
-            GameObject newBasicMob4 = Instantiate(mobs[mob4Int], this.transform.position, this.transform.rotation);
-            newBasicMob4.SetActive(false);
-            basicMob4.Enqueue(newBasicMob4);
+        for(int x = 0; x < advancedMobs.Length; x++){
+            for (int i = 0; i < basicLimit; i++)
+            {
+                GameObject newAdvancedMob = Instantiate(advancedMobs[x], this.transform.position, this.transform.rotation);
+                newAdvancedMob.SetActive(false);
+                advancedMobsList.Add(newAdvancedMob);
+            }
         }
 
     }
 
     public void RequeueMob(GameObject mob)
     {
-        if(mob.GetComponent<Enemy>().enemyName == mob1)
+        switch(mob.GetComponent<Enemy>().enemyLevel)
         {
-            mob.SetActive(false);
-            basicMob1.Enqueue(mob);
-        }else if(mob.GetComponent<Enemy>().enemyName == mob2)
-        {
-            mob.SetActive(false);
-            basicMob2.Enqueue(mob);
-        }else if(mob.GetComponent<Enemy>().enemyName == mob3)
-        {
-            mob.SetActive(false);
-            basicMob3.Enqueue(mob);
-        }else if(mob.GetComponent<Enemy>().enemyName == mob4)
-        {
-            mob.SetActive(false);
-            basicMob4.Enqueue(mob);
-        }else{
-            Destroy(mob);
+            case Enemy.EnemyLevel.basic:
+                mob.SetActive(false);
+                basicMobsList.Add(mob);
+                break;
+            case Enemy.EnemyLevel.intermediate:
+                mob.SetActive(false);
+                intermediateMobsList.Add(mob);
+                break;
+            case Enemy.EnemyLevel.advanced:
+                mob.SetActive(false);
+                advancedMobsList.Add(mob);
+                break;
+            case Enemy.EnemyLevel.legendary:
+                mob.SetActive(false);
+                legendaryMobsList.Add(mob);
+                break;
         }
+        
     }
 
 }

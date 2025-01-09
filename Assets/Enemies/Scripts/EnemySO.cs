@@ -4,7 +4,7 @@ using UnityEngine;
 public class EnemySO : ScriptableObject
 {
     public string enemyName;
-    public EnemyLevel enemyLevel = new EnemyLevel();
+    public EnemyLevel enemyLevel;
     public int hp;
     public int strength;
     float speed;
@@ -27,6 +27,24 @@ public class EnemySO : ScriptableObject
         enemy.enemyName = enemyName;
         enemy.speed = speed;
         enemy.loot = loot;
+        enemy.enemyLevel = GetEnemyLevel(enemyLevel);
+    }
+
+    public Enemy.EnemyLevel GetEnemyLevel(EnemyLevel enemyLevel)
+    {
+        switch(enemyLevel)
+        {
+            case EnemyLevel.basic:
+                return Enemy.EnemyLevel.basic;
+            case EnemyLevel.intermediate:
+                return Enemy.EnemyLevel.intermediate;
+            case EnemyLevel.advanced:
+                return Enemy.EnemyLevel.advanced;
+            case EnemyLevel.legendary:
+                return Enemy.EnemyLevel.legendary;
+            default:
+                return Enemy.EnemyLevel.basic;
+        }
     }
 
 }

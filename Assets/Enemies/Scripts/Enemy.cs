@@ -14,6 +14,14 @@ public class Enemy : MonoBehaviour, IEnemy
     public Transform playerPos;
     public IPlayer player;
     MobSpawner ms;
+    public EnemyLevel enemyLevel = new EnemyLevel();
+
+    public enum EnemyLevel{
+        basic,
+        intermediate,
+        advanced,
+        legendary
+    };
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -43,7 +51,6 @@ public class Enemy : MonoBehaviour, IEnemy
             float randomInt = Random.Range(0f, 100.0f);
             dropLoot(randomInt);
             ms.RequeueMob(this.gameObject);
-            //Destroy(gameObject);
         }
     }
 

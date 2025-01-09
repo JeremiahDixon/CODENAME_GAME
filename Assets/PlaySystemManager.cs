@@ -3,11 +3,11 @@ using UnityEngine;
 
 public class PlaySystemManager : MonoBehaviour
 {
-    public float timePlayed = 0;
-    [SerializeField]
-    private float playedOneMin = 60.0f;
-    [SerializeField]
-    private float playedThreeMin = 180.0f;
+    // public float timePlayed = 0;
+    // [SerializeField]
+    // private float playedOneMin = 60.0f;
+    // [SerializeField]
+    // private float playedThreeMin = 180.0f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
