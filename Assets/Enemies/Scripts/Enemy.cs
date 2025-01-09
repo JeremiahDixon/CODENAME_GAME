@@ -34,11 +34,20 @@ public class Enemy : MonoBehaviour, IEnemy
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    // void FixedUpdate()
+    // {
+    //     if(transform.position.x < Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x
+    //     || transform.position.x > Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x)
+    //     {
+    //         ms.RequeueMob(this.gameObject);
+    //     }
 
-        
-    }
+    //     if(transform.position.y < Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).y
+    //     || transform.position.y > Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).y)
+    //     {
+    //         ms.RequeueMob(this.gameObject);
+    //     }
+    // }
 
     public void TakeDamage (int damage)
     {
@@ -57,6 +66,21 @@ public class Enemy : MonoBehaviour, IEnemy
     public virtual void dropLoot(float randomInt)
     {
 
+    }
+
+    //this works if i decide to despawn the mob after leaves camera bounds
+    public void CheckBounds(){
+        if(transform.position.x < Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x
+        || transform.position.x > Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x)
+        {
+            ms.RequeueMob(this.gameObject);
+        }
+
+        if(transform.position.y < Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).y
+        || transform.position.y > Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).y)
+        {
+            ms.RequeueMob(this.gameObject);
+        }
     }
 
 }
