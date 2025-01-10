@@ -7,7 +7,7 @@ public class SoldierClass : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        StartCoroutine(SpawnIceBow());
+        // StartCoroutine(SpawnIceBow());
     }
 
     // Update is called once per frame
@@ -16,9 +16,9 @@ public class SoldierClass : MonoBehaviour
         
     }
 
-    private IEnumerator SpawnIceBow()
-    {
-        yield return new WaitForSeconds(5);
-        Instantiate(iceBow, transform.position, Quaternion.identity);
-    }
+    // private IEnumerator SpawnIceBow()
+    // {
+    //     yield return new WaitForSeconds(5);
+    //     Instantiate(iceBow, transform.position, Quaternion.identity);
+    // }
 }

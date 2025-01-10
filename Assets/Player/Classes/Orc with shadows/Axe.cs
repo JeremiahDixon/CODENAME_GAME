@@ -1,12 +1,10 @@
 using System;
 using System.Collections;
 using UnityEngine;
-public class Axe : MonoBehaviour
+public class Axe : Projectile
 {
     Rigidbody2D rb;
     const string ENEMY_TAG = "Enemy";
-    [SerializeField]
-    private int damage;
     private bool frozen = false;
     [SerializeField]
     Vector3 thrownTransform;
@@ -15,17 +13,13 @@ public class Axe : MonoBehaviour
     int roationSpeed = 1080;
     bool firstPass;
 
-    void Awake(){
+    void OnEnable()
+    {
         rb = GetComponent<Rigidbody2D>();
-    }
-
-    void OnEnable(){
-        
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
     }
     
     void OnDisable()
@@ -61,7 +55,8 @@ public class Axe : MonoBehaviour
         if(!frozen)
         {
             if(other.gameObject.CompareTag(ENEMY_TAG)){
-                other.gameObject.GetComponent<IEnemy>().TakeDamage(damage);
+                other.gameObject.GetComponent<IEnemy>().TakeDamage(damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.damageModifier));
+                Debug.Log("Dealing x damage: " + (damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.damageModifier)));
             }
         }
         if(other.gameObject.CompareTag("Terrain")){

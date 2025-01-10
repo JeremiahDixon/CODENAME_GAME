@@ -39,8 +39,8 @@ public class VSPlayer : MonoBehaviour, IPlayer
     float attackRange;
     [SerializeField]
     private int baseAttackStrength;
-    [SerializeField]
-    private int currentAttackStrength;
+    public int currentAttackStrength{get; set;}
+    public float damageModifier { get; set;} = 0;
     [SerializeField]
     private int baseHp;
     public bool shouldBeDamaging {get; private set;} = false;
@@ -263,7 +263,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
                         impulseSource.GenerateImpulse(new Vector3(0, -0.1f, 0));
                         shook = true;
                     }
-                    enemy.TakeDamage(currentAttackStrength);
+                    enemy.TakeDamage(currentAttackStrength + Mathf.RoundToInt(currentAttackStrength * damageModifier));
                     damagedEnemies.Add(enemy);
                 }
             }

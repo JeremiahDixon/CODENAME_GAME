@@ -175,4 +175,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be8d9d90de5784db5995221b5cf24a2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 4
+  damage: 0
+  projectileName: 
+  pso: {fileID: 11400000, guid: dda8fa5b0b9932f47a93d79cf5ce1620, type: 2}
+  rb: {fileID: 0}

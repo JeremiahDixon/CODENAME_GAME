@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class HealthPod : MonoBehaviour
 {
+    public int healAmount;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -16,7 +17,7 @@ public class HealthPod : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other){
         if(other.gameObject.tag == "Player"){
-            other.gameObject.GetComponent<IPlayer>().Heal(4);
+            other.gameObject.GetComponent<IPlayer>().Heal(healAmount);
             Destroy(gameObject);
         }
     }

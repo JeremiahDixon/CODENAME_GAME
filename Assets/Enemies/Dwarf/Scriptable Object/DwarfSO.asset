@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Basic Dwarf
   enemyLevel: 0
-  hp: 8
-  strength: 2
+  hp: 80
+  strength: 20
   scoreValue: 10
   minSpeed: 1
   maxSpeed: 3

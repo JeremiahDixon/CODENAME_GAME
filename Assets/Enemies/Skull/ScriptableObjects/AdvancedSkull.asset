@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Advanced Skull
   enemyLevel: 2
-  hp: 20
-  strength: 3
+  hp: 200
+  strength: 30
   scoreValue: 15
   minSpeed: 3
   maxSpeed: 5

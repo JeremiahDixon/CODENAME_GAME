@@ -1,12 +1,11 @@
 using System.Collections;
 using UnityEngine;
 
-public class Arrow : MonoBehaviour
+public class Arrow : Projectile
 {
     public Rigidbody2D rb;
     private float timeToDestroy = 20.0f;
     const string ENEMY_TAG = "Enemy";
-    public int damage;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -29,7 +28,8 @@ public class Arrow : MonoBehaviour
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
         transform.parent = other.transform;
         if(other.gameObject.CompareTag(ENEMY_TAG)){
-            other.gameObject.GetComponent<IEnemy>().TakeDamage(damage);
+            other.gameObject.GetComponent<IEnemy>().TakeDamage(damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.damageModifier));
+            Debug.Log("Dealing x damage: " + (damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.damageModifier)));
             Destroy(gameObject);
         }else{
             transform.parent = other.transform;

@@ -11,6 +11,7 @@ public class Powerup : MonoBehaviour
     public PowerupSO powerupSO;
     public bool classSpecific;
     public ClassSO[] usableClasses; 
+    public string description;
 
     public void IncreaseLevel()
     {

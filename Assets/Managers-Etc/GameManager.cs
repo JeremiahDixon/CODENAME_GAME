@@ -27,8 +27,7 @@ public class GameManager: MonoBehaviour
     GameObject currentClass;
     [SerializeField]
     ClassSO[] classSos;
-    [SerializeField]
-    ClassSO currentClassSo;
+    public ClassSO currentClassSo;
 
     private void Awake()
     {

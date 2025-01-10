@@ -3,7 +3,8 @@ using UnityEngine;
 public interface IPlayer
 {
     Transform transform { get; }
-
+    public int currentAttackStrength { get; set;}
+    public float damageModifier { get; set;}
     public void Die();
     public void TakeDamage(int amount);
     public void Heal(int amount);

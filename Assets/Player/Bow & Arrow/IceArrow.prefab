@@ -101,7 +101,7 @@ BoxCollider2D:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
     oldSize: {x: 1, y: 1}
-    newSize: {x: 0.21, y: 0.09}
+    newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -120,8 +120,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 19485b39f092f834782c46a553933fe1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  damage: 0
+  projectileName: 
+  pso: {fileID: 11400000, guid: 82b220180c3381f43b038cc857c52c25, type: 2}
   rb: {fileID: 0}
-  damage: 5
   freezeTime: 1.5
 --- !u!1 &9093247985643559640
 GameObject:

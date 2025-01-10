@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Basic Slime
   enemyLevel: 0
-  hp: 4
-  strength: 1
+  hp: 40
+  strength: 10
   scoreValue: 5
   minSpeed: 1
   maxSpeed: 3

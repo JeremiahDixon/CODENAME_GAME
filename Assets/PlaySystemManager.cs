@@ -17,6 +17,8 @@ public class PlaySystemManager : MonoBehaviour
     int score = 0;
     TextMeshProUGUI scoreText;
     MobSpawner ms;
+    PowerupMenu pum;
+    int powerupCount = 0;
 
     void Awake()
     {
@@ -24,6 +26,7 @@ public class PlaySystemManager : MonoBehaviour
         score = 0;
         scoreText.text = score.ToString();
         ms = GameObject.Find("Spawner").GetComponent<MobSpawner>();
+        pum = GameObject.Find("PowerupCanvas").GetComponent<PowerupMenu>();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -73,12 +76,18 @@ public class PlaySystemManager : MonoBehaviour
 
     void TrackScore()
     {
-        if(score == 100)
+        if(score >= 100 && powerupCount == 0 )
         {
-            //upgrade!
-        }else if(score == 500)
+            powerupCount ++;
+            pum.PowerUp();
+        }else if(score >= 200 && powerupCount == 1)
         {
-            //upgrade!
+            powerupCount ++;
+            pum.PowerUp();
+        }else if(score >= 300 && powerupCount == 2)
+        {
+            powerupCount ++;
+            pum.PowerUp();
         }
     }
 

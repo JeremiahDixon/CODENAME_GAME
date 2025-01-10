@@ -103,7 +103,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 611f5a178e705490993337fc91fe5ead, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 5
+  damage: 0
+  projectileName: 
+  pso: {fileID: 11400000, guid: 3bc434d40dce36740a2848ca7aa91718, type: 2}
   thrownTransform: {x: 0, y: 0, z: 0}
   traveledDistance: 0
 --- !u!50 &2089130442675245778

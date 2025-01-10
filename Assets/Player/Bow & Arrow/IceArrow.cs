@@ -12,7 +12,8 @@ public class IceArrow : Arrow
         gameObject.GetComponent<BoxCollider2D>().enabled = false;
         transform.parent = other.transform;
         if(other.gameObject.CompareTag(ENEMY_TAG)){
-            other.gameObject.GetComponent<IEnemy>().TakeDamage(damage);
+            other.gameObject.GetComponent<IEnemy>().TakeDamage(damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.damageModifier));
+            Debug.Log("Dealing x damage: " + (damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.damageModifier)));
             if(other.gameObject.activeInHierarchy){
                 if(Random.Range(1, 101) > 75){
                     other.gameObject.GetComponent<IEnemy>().Freeze(freezeTime);
