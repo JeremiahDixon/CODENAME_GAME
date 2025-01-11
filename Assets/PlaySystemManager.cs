@@ -80,11 +80,35 @@ public class PlaySystemManager : MonoBehaviour
         {
             powerupCount ++;
             pum.PowerUp();
-        }else if(score >= 200 && powerupCount == 1)
+        }else if(score >= 300 && powerupCount == 1)
         {
             powerupCount ++;
             pum.PowerUp();
-        }else if(score >= 300 && powerupCount == 2)
+        }else if(score >= 500 && powerupCount == 2)
+        {
+            powerupCount ++;
+            pum.PowerUp();
+        }
+        else if(score >= 800 && powerupCount == 3)
+        {
+            powerupCount ++;
+            pum.PowerUp();
+        }
+        else if(score >= 1000 && powerupCount == 4)
+        {
+            powerupCount ++;
+            pum.PowerUp();
+        }
+        else if(score >= 1250 && powerupCount == 5)
+        {
+            powerupCount ++;
+            pum.PowerUp();
+        }else if(score >= 1500 && powerupCount == 6)
+        {
+            powerupCount ++;
+            pum.PowerUp();
+        }
+        else if(score >= 2000 && powerupCount == 7)
         {
             powerupCount ++;
             pum.PowerUp();

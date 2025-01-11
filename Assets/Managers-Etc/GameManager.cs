@@ -9,10 +9,8 @@ public class GameManager: MonoBehaviour
     public static GameManager Instance;
     public enum GameState { MainMenu, Playing, Paused, Storage, GameOver }
     public GameState currentState{get; private set;}
-    private bool innLocked{get; set;}
-    private bool shoplocked{get; set;}
-    public int playerHealth{get; private set;} = 10;
-    public int maxPlayerHealth{get; private set;} = 10;
+    public int playerHealth{get; set;}
+    public int maxPlayerHealth{get; set;}
     public IPlayer thePlayer;
     private HealthManager healthManager;
     [SerializeField]
