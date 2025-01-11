@@ -1,7 +1,9 @@
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows;
 
 public class Bow : MonoBehaviour
 {
@@ -21,6 +23,9 @@ public class Bow : MonoBehaviour
     const string GAMEPAD_SCHEME = "Gamepad";
     const string KM_SCHEME = "Keyboard&Mouse";
     private IPlayer thePlayer;
+    int arrowLimit = 40;
+    private Queue<GameObject> arrows = new Queue<GameObject>();
+    List<GameObject> dequeuedArrows = new List<GameObject>();
     [SerializeField]
     float timeBtwAttack;
     [SerializeField]
@@ -32,6 +37,7 @@ public class Bow : MonoBehaviour
         playerInput = GetComponentInParent<PlayerInput>();
         playerControls = playerInput.actions;
         shotPoint = transform.GetChild(1).gameObject.transform;
+        CreateArrowPool(arrow);
     }
     void Start()
     {
@@ -46,7 +52,6 @@ public class Bow : MonoBehaviour
         shoot.Enable();
         look.Enable();
         joysticklook.Enable();
-        //shoot.performed += Shoot;
     }
 
     private void OnDisable(){
@@ -55,7 +60,6 @@ public class Bow : MonoBehaviour
             shoot.Disable();
             look.Disable();
             joysticklook.Disable();
-            //shoot.performed -= Shoot;
         }
     }
 
@@ -90,8 +94,77 @@ public class Bow : MonoBehaviour
     }
 
     void Shoot(){
-        GameObject newArrow = Instantiate(arrow, shotPoint.position, shotPoint.rotation);
-        newArrow.GetComponent<Rigidbody2D>().linearVelocity = transform.right * launchForce;
+
+        if(arrows.Count > 0){
+            GameObject newArrow = arrows.Dequeue();
+            dequeuedArrows.Add(newArrow);
+            newArrow.SetActive(true);
+            newArrow.GetComponent<BoxCollider2D>().enabled = true;
+            newArrow.transform.position = shotPoint.position;
+            newArrow.transform.rotation = shotPoint.rotation;
+            newArrow.GetComponent<Rigidbody2D>().linearVelocity = transform.right * launchForce;
+            StartCoroutine(RequeueAfterDelay(5, newArrow));
+        }
+
+    }
+
+    // public void RequeueArrow(GameObject arrow)
+    // {
+    //     dequeuedArrows.Remove(arrow);
+    //     arrow.SetActive(false);
+    //     arrows.Enqueue(arrow);
+    // }
+
+    private IEnumerator RequeueAfterDelay(int seconds, GameObject arrow)
+    {
+        yield return new WaitForSeconds(seconds);
+        if(arrow != null)
+        {
+            dequeuedArrows.Remove(arrow);
+            arrow.transform.parent = null;
+            arrow.SetActive(false);
+            arrows.Enqueue(arrow);
+        }
+    }
+
+    void CreateArrowPool(GameObject arrow)
+    {
+        for (int i = 0; i < arrowLimit; i++)
+        {
+            GameObject newArrow = Instantiate(arrow, shotPoint.position, shotPoint.rotation);
+            newArrow.SetActive(false);
+            arrows.Enqueue(newArrow);
+        }
+    }
+
+    public void ClearAndRepopulateArrowQueue(GameObject arrow)
+    {
+        foreach (GameObject gObj in arrows)
+        {
+            Destroy(gObj);
+        }
+        arrows.Clear();
+        foreach (GameObject gObj in dequeuedArrows)
+        {
+            Destroy(gObj);
+        }
+        dequeuedArrows.Clear();
+        CreateArrowPool(arrow);
+    }
+
+    public void IcreaseArrowStat(string stat, float amount)
+    {
+        switch(stat)
+        {
+            case "Freeze Time":
+                foreach (GameObject arrow in arrows)
+                {
+                    arrow.GetComponent<IceArrow>().freezeTime += amount;
+                }
+                break;
+            default:
+                break;
+        }
     }
 
 }

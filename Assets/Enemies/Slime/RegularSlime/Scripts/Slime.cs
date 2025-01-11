@@ -18,6 +18,7 @@ public class Slime : Enemy
     void Start()
     {
         enemySo.CreateStats(gameObject);
+        hp = maxHp;
         currentSpeed = speed;
         anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag(PLAYER_TAG).GetComponent<IPlayer>();

@@ -14,25 +14,23 @@ public class IceBow : Powerup
         player = GameManager.Instance.thePlayer;
         bow = GameObject.Find("Bow").GetComponent<Bow>();
         setLWeaponBowGFX = GameObject.Find("SetLWeaponBowGFX").GetComponent<SpriteRenderer>();
-        CreateSelf();
+    }
+
+    public override void PowerupSelected()
+    {
         IncreaseLevel();
-    }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void CreateSelf()
-    {
-        setLWeaponBowGFX.sprite = this.sprite;
-        bow.arrow = this.arrow;
+        if(powerupLevel == 1)
+        {
+            Debug.Log("IceBow selected for first time");
+            description = "Increase the chance to freeze and damage dealt.";
+            setLWeaponBowGFX.sprite = this.sprite;
+            bow.arrow = this.arrow;
+            bow.ClearAndRepopulateArrowQueue(arrow);
+        }else
+        {
+            Debug.Log("IceBow selected for subsequent time");
+            GameManager.Instance.thePlayer.damageModifier += 0.1f;
+            bow.IcreaseArrowStat("Freeze Time", 0.5f);
+        }
     }
 }

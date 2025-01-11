@@ -2,8 +2,12 @@ using UnityEngine;
 
 public class MaxHealthUp : Powerup
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
+    {
+        powerupSO.CreateInfo(this.gameObject);
+    }
+
+    public override void PowerupSelected()
     {
         int increaseBy = Mathf.RoundToInt(GameManager.Instance.maxPlayerHealth * 0.20f);
         GameManager.Instance.maxPlayerHealth += increaseBy;

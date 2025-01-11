@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Intermediate Skull
   enemyLevel: 1
-  hp: 90
+  maxHp: 80
   strength: 20
   scoreValue: 10
   minSpeed: 2

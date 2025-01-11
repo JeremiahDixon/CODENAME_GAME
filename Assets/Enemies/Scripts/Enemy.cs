@@ -4,6 +4,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, IEnemy
 {
     public int hp;
+    public int maxHp;
     public int strength;
     public string enemyName;
     public float speed;
@@ -32,7 +33,6 @@ public class Enemy : MonoBehaviour, IEnemy
     {
         ms = GameObject.Find("Spawner").GetComponent<MobSpawner>();
         playManager = GameObject.Find("PlaySystemManager").GetComponent<PlaySystemManager>();
-
     }
 
     void Start()
@@ -56,6 +56,7 @@ public class Enemy : MonoBehaviour, IEnemy
             dropLoot(randomInt);
             GetComponent<SpriteRenderer>().color = Color.white;
             currentSpeed = speed;
+            hp = maxHp;
             ms.RequeueMob(this.gameObject);
         }
     }

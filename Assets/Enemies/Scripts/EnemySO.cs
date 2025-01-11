@@ -5,7 +5,7 @@ public class EnemySO : ScriptableObject
 {
     public string enemyName;
     public EnemyLevel enemyLevel;
-    public int hp;
+    public int maxHp;
     public int strength;
     public int scoreValue;
     float speed;
@@ -23,7 +23,7 @@ public class EnemySO : ScriptableObject
     public void CreateStats(GameObject gameObject){
         Enemy enemy = gameObject.GetComponent<Enemy>();
         speed = Random.Range(minSpeed, maxSpeed);
-        enemy.hp = hp;
+        enemy.maxHp = maxHp;
         enemy.strength = strength;
         enemy.scoreValue = scoreValue;
         enemy.enemyName = enemyName;

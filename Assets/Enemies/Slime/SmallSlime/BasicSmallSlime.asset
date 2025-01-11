@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Small Slime
   enemyLevel: 0
-  hp: 20
+  maxHp: 30
   strength: 10
   scoreValue: 3
   minSpeed: 1

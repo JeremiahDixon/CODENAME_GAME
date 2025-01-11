@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Basic Skull
   enemyLevel: 0
-  hp: 30
+  maxHp: 40
   strength: 10
   scoreValue: 5
   minSpeed: 1

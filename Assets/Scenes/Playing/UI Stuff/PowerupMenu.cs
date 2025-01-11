@@ -21,9 +21,12 @@ public class PowerupMenu : MonoBehaviour
         healthManager = GameObject.Find("HealthCanvas");
         foreach (GameObject powerup in allPowerups)
         {
-            if( !powerup.GetComponent<Powerup>().powerupSO.classSpecific || powerup.GetComponent<Powerup>().powerupSO.usableClasses.Contains(GameManager.Instance.currentClassSo))
+            if( !powerup.GetComponent<Powerup>().powerupSO.classSpecific )
             {
-                possiblePowerups.Add(powerup);
+                possiblePowerups.Add(Instantiate(powerup, transform.position, transform.rotation));
+            }else if(powerup.GetComponent<Powerup>().powerupSO.usableClasses.Contains(GameManager.Instance.currentClassSo))
+            {
+                possiblePowerups.Add(Instantiate(powerup, transform.position, transform.rotation));
             }
         }
     }
@@ -49,36 +52,24 @@ public class PowerupMenu : MonoBehaviour
         option2 = GameObject.Find("Option2");
         option3 = GameObject.Find("Option3");
         randomPowerup1 = Random.Range(0, possiblePowerups.Count);
-        option1.GetComponent<Image>().sprite = possiblePowerups[randomPowerup1].GetComponent<Powerup>().powerupSO.sprite;
-        option1.GetComponentInChildren<TextMeshProUGUI>().text = possiblePowerups[randomPowerup1].GetComponent<Powerup>().powerupSO.powerupName + " : " + possiblePowerups[randomPowerup1].GetComponent<Powerup>().powerupSO.description;
+        option1.GetComponent<Image>().sprite = possiblePowerups[randomPowerup1].GetComponent<Powerup>().sprite;
+        option1.GetComponentInChildren<TextMeshProUGUI>().text = possiblePowerups[randomPowerup1].GetComponent<Powerup>().powerupName + " : " + possiblePowerups[randomPowerup1].GetComponent<Powerup>().description;
         randomPowerup2 = Random.Range(0, possiblePowerups.Count);
-        option2.GetComponent<Image>().sprite = possiblePowerups[randomPowerup2].GetComponent<Powerup>().powerupSO.sprite;
-        option2.GetComponentInChildren<TextMeshProUGUI>().text = possiblePowerups[randomPowerup2].GetComponent<Powerup>().powerupSO.powerupName + " : " + possiblePowerups[randomPowerup2].GetComponent<Powerup>().powerupSO.description;
+        option2.GetComponent<Image>().sprite = possiblePowerups[randomPowerup2].GetComponent<Powerup>().sprite;
+        option2.GetComponentInChildren<TextMeshProUGUI>().text = possiblePowerups[randomPowerup2].GetComponent<Powerup>().powerupName + " : " + possiblePowerups[randomPowerup2].GetComponent<Powerup>().description;
         randomPowerup3 = Random.Range(0, possiblePowerups.Count);
-        option3.GetComponent<Image>().sprite = possiblePowerups[randomPowerup3].GetComponent<Powerup>().powerupSO.sprite;
-        option3.GetComponentInChildren<TextMeshProUGUI>().text = possiblePowerups[randomPowerup3].GetComponent<Powerup>().powerupSO.powerupName + " : " + possiblePowerups[randomPowerup3].GetComponent<Powerup>().powerupSO.description;
+        option3.GetComponent<Image>().sprite = possiblePowerups[randomPowerup3].GetComponent<Powerup>().sprite;
+        option3.GetComponentInChildren<TextMeshProUGUI>().text = possiblePowerups[randomPowerup3].GetComponent<Powerup>().powerupName + " : " + possiblePowerups[randomPowerup3].GetComponent<Powerup>().description;
     }
 
     public void PowerupSelected(int powerup)
     {
         if(powerup == 1){
-            Instantiate(possiblePowerups[randomPowerup1], transform.position, transform.rotation);
-            // if(possiblePowerups[randomPowerup1].GetComponent<Powerup>().powerupName == "Ice Bow")
-            // {
-            //     possiblePowerups.Remove(possiblePowerups[randomPowerup1]);
-            // }
+            possiblePowerups[randomPowerup1].GetComponent<Powerup>().PowerupSelected();
         }else if(powerup ==2){
-            Instantiate(possiblePowerups[randomPowerup2], transform.position, transform.rotation);
-            // if(possiblePowerups[randomPowerup2].GetComponent<Powerup>().powerupName == "Ice Bow")
-            // {
-            //     possiblePowerups.Remove(possiblePowerups[randomPowerup2]);
-            // }
+            possiblePowerups[randomPowerup2].GetComponent<Powerup>().PowerupSelected();
         }else if(powerup == 3){
-            Instantiate(possiblePowerups[randomPowerup3], transform.position, transform.rotation);
-            // if(possiblePowerups[randomPowerup3].GetComponent<Powerup>().powerupName == "Ice Bow")
-            // {
-            //     possiblePowerups.Remove(possiblePowerups[randomPowerup3]);
-            // }
+            possiblePowerups[randomPowerup3].GetComponent<Powerup>().PowerupSelected();
         }
         foreach (Transform child in transform) {
             child.gameObject.SetActive(false);

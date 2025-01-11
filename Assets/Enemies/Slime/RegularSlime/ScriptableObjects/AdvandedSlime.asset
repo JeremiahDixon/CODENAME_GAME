@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Advanced Slime
   enemyLevel: 2
-  hp: 250
+  maxHp: 150
   strength: 30
   scoreValue: 15
   minSpeed: 2

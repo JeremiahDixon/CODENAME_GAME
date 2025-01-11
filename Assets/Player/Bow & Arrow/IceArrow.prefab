@@ -124,7 +124,7 @@ MonoBehaviour:
   projectileName: 
   pso: {fileID: 11400000, guid: 82b220180c3381f43b038cc857c52c25, type: 2}
   rb: {fileID: 0}
-  freezeTime: 1.5
+  freezeTime: 1
 --- !u!1 &9093247985643559640
 GameObject:
   m_ObjectHideFlags: 0

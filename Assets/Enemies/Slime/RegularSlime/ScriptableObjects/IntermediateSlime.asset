@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Intermediate Slime
   enemyLevel: 1
-  hp: 180
+  maxHp: 100
   strength: 20
   scoreValue: 10
   minSpeed: 2
