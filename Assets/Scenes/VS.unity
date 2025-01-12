@@ -60921,6 +60921,7 @@ MonoBehaviour:
   - {fileID: 8374271587910678415, guid: ab44a0f18b777224c81a939a239fad5e, type: 3}
   - {fileID: 4379922112471556457, guid: aefc3ea6bef9fcb40a1c0a339b1a2de3, type: 3}
   - {fileID: 4791925070798943499, guid: e6da73876ece00a4a9ee035b727da966, type: 3}
+  - {fileID: 315499973876021060, guid: f46904ca573d44743b4190c690f4943c, type: 3}
   possiblePowerups: []
 --- !u!1 &1113147524
 GameObject:

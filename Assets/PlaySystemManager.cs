@@ -99,16 +99,16 @@ public class PlaySystemManager : MonoBehaviour
             powerupCount ++;
             pum.PowerUp();
         }
-        else if(score >= 1250 && powerupCount == 5)
+        else if(score >= 350 && powerupCount == 5)
         {
             powerupCount ++;
             pum.PowerUp();
-        }else if(score >= 1500 && powerupCount == 6)
+        }else if(score >= 400 && powerupCount == 6)
         {
             powerupCount ++;
             pum.PowerUp();
         }
-        else if(score >= 2000 && powerupCount == 7)
+        else if(score >= 450 && powerupCount == 7)
         {
             powerupCount ++;
             pum.PowerUp();

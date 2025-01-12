@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour, IEnemy
@@ -57,13 +58,17 @@ public class Enemy : MonoBehaviour, IEnemy
             GetComponent<SpriteRenderer>().color = Color.white;
             currentSpeed = speed;
             hp = maxHp;
+            foreach(Projectile arrow in GetComponentsInChildren<Projectile>().ToList())
+            {
+                arrow.gameObject.transform.parent = null;
+                arrow.gameObject.SetActive(false);
+            }
             ms.RequeueMob(this.gameObject);
         }
     }
 
     public virtual void dropLoot(float randomInt)
     {
-
     }
 
     public void Freeze(float time)
