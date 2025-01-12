@@ -18,3 +18,4 @@ MonoBehaviour:
   usableClasses:
   - {fileID: 11400000, guid: f941f27d5a0de49739c22a8bd3344d4f, type: 2}
   description: Arrows will have a 25 percent chance to freeze the enemy.
+  maxPowerupLevel: 4

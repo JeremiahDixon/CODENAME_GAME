@@ -95,6 +95,10 @@ public class AxeThrow : MonoBehaviour
             {
                 timeBtwAttack = startTimeBtwAttack;
                 ThrowAxe();
+                if(GameManager.Instance.thePlayer.isDoubleProjectile)
+                {
+                    StartCoroutine(ThrowAgain(0.3f));
+                }
             }
 
         }else
@@ -103,6 +107,13 @@ public class AxeThrow : MonoBehaviour
         }
 
     }
+
+    private IEnumerator ThrowAgain(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        ThrowAxe();
+    }
+
 
     void CreateObjectPool()
     {

@@ -14,7 +14,7 @@ public class SpeedUp : Powerup
         
     }
 
-     public override void PowerupSelected()
+    public override void PowerupSelected()
     {
         IncreaseLevel();
         player.SetActiveMovementSpeed(player.GetActiveMovementSpeed() + new Vector2(0.5f, 0.5f));

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dd478e3db48c18e44a124749f551b4b3, type: 3}
-  m_Name: MaxHealthSO
+  m_Name: DoubleProjectileSO
   m_EditorClassIdentifier: 
-  powerupName: Max Health Up
-  sprite: {fileID: 21300000, guid: 50f10800049962b48a21230f84fdb2ae, type: 3}
+  powerupName: Double Projectile
+  sprite: {fileID: 21300634, guid: 4e799e9a72d583c4ebba9f2e35c2a5f4, type: 3}
   classSpecific: 0
   usableClasses: []
-  description: Increase max hp by 20 percent.
-  maxPowerupLevel: 5
+  description: Now throw 2 projectiles.
+  maxPowerupLevel: 1

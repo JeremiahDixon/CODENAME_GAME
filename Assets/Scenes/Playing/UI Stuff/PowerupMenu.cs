@@ -66,10 +66,22 @@ public class PowerupMenu : MonoBehaviour
     {
         if(powerup == 1){
             possiblePowerups[randomPowerup1].GetComponent<Powerup>().PowerupSelected();
+            if(possiblePowerups[randomPowerup1].GetComponent<Powerup>().powerupLevel > possiblePowerups[randomPowerup1].GetComponent<Powerup>().maxPowerupLevel)
+            {
+                possiblePowerups.Remove(possiblePowerups[randomPowerup1]);
+            }
         }else if(powerup ==2){
             possiblePowerups[randomPowerup2].GetComponent<Powerup>().PowerupSelected();
+            if(possiblePowerups[randomPowerup2].GetComponent<Powerup>().powerupLevel > possiblePowerups[randomPowerup2].GetComponent<Powerup>().maxPowerupLevel)
+            {
+                possiblePowerups.Remove(possiblePowerups[randomPowerup2]);
+            }
         }else if(powerup == 3){
             possiblePowerups[randomPowerup3].GetComponent<Powerup>().PowerupSelected();
+            if(possiblePowerups[randomPowerup3].GetComponent<Powerup>().powerupLevel > possiblePowerups[randomPowerup3].GetComponent<Powerup>().maxPowerupLevel)
+            {
+                possiblePowerups.Remove(possiblePowerups[randomPowerup3]);
+            }
         }
         foreach (Transform child in transform) {
             child.gameObject.SetActive(false);

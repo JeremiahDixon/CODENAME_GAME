@@ -17,3 +17,4 @@ MonoBehaviour:
   classSpecific: 0
   usableClasses: []
   description: Increase speed by 0.5f, 0.5f.
+  maxPowerupLevel: 3

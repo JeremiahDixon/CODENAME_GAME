@@ -76,6 +76,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
     float stepLength;
     [SerializeField]
     float stepTimer;
+    public bool isDoubleProjectile { get; set;} = false;
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();

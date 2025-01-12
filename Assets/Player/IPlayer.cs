@@ -4,6 +4,7 @@ public interface IPlayer
 {
     Transform transform { get; }
     public int currentAttackStrength { get; set;}
+    public bool isDoubleProjectile { get; set;}
     public float damageModifier { get; set;}
     public void Die();
     public void TakeDamage(int amount);

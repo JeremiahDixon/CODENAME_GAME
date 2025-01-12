@@ -8,6 +8,7 @@ public class Powerup : MonoBehaviour
 
     public string powerupName;
     public int powerupLevel = 0;
+    public int maxPowerupLevel;
     public Sprite sprite;
     public PowerupSO powerupSO;
     public bool classSpecific;

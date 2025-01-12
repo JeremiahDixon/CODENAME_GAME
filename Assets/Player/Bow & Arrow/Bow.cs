@@ -84,6 +84,10 @@ public class Bow : MonoBehaviour
             {
                 timeBtwAttack = startTimeBtwAttack;
                 Shoot();
+                if(GameManager.Instance.thePlayer.isDoubleProjectile)
+                {
+                    StartCoroutine(ShootAgain(0.3f));
+                }
             }
 
         }else
@@ -125,6 +129,12 @@ public class Bow : MonoBehaviour
             arrow.SetActive(false);
             arrows.Enqueue(arrow);
         }
+    }
+
+    private IEnumerator ShootAgain(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        Shoot();
     }
 
     void CreateArrowPool(GameObject arrow)

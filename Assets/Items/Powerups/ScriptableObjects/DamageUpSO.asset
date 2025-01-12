@@ -17,3 +17,4 @@ MonoBehaviour:
   classSpecific: 0
   usableClasses: []
   description: All damage output will be increased by 15% of the base damage.
+  maxPowerupLevel: 5

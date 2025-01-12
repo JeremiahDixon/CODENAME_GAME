@@ -8,6 +8,7 @@ public class PowerupSO : ScriptableObject
     public bool classSpecific;
     public ClassSO[] usableClasses; 
     public string description;
+    public int maxPowerupLevel;
 
     public void CreateInfo(GameObject gameObject)
     {
@@ -16,6 +17,7 @@ public class PowerupSO : ScriptableObject
         gameObject.GetComponent<Powerup>().classSpecific = classSpecific;
         gameObject.GetComponent<Powerup>().usableClasses = usableClasses;
         gameObject.GetComponent<Powerup>().description = description;
+        gameObject.GetComponent<Powerup>().maxPowerupLevel = maxPowerupLevel;
     }
 
 }

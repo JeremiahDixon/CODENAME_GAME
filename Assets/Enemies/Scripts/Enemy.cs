@@ -40,11 +40,6 @@ public class Enemy : MonoBehaviour, IEnemy
     {
     }
 
-    // Update is called once per frame
-    // void FixedUpdate()
-    // {
-    // }
-
     public void TakeDamage (int damage)
     {
         hp -= damage;
