@@ -86,7 +86,7 @@ public class Bow : MonoBehaviour
                 Shoot();
                 if(GameManager.Instance.thePlayer.isDoubleProjectile)
                 {
-                    StartCoroutine(ShootAgain(0.3f));
+                    StartCoroutine(ShootAgain(0.25f));
                 }
             }
 

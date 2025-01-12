@@ -379,9 +379,8 @@ MonoBehaviour:
   whatIsEnemies:
     serializedVersion: 2
     m_Bits: 64
-  attackRange: 0.41
+  attackRange: 0.6
   baseAttackStrength: 5
-  currentAttackStrength: 5
   baseHp: 0
   activeMovementSpeed: {x: 0, y: 0}
   dashSpeed: {x: 6, y: 6}
