@@ -27,11 +27,15 @@ public class HealthManager : MonoBehaviour
     }
 
     public void TakeDamage(float damage){
+        maxHealth = GameManager.Instance.maxPlayerHealth;
+        healthAmount = GameManager.Instance.playerHealth;
         healthAmount -= damage;
         healthBar.fillAmount = healthAmount / maxHealth;
     }
 
     public void Heal(int amount){
+        maxHealth = GameManager.Instance.maxPlayerHealth;
+        healthAmount = GameManager.Instance.playerHealth;
         healthAmount += amount;
         healthAmount = Mathf.Clamp(healthAmount, 0, maxHealth);
 

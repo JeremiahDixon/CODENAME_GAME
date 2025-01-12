@@ -91,7 +91,7 @@ public class AxeThrow : MonoBehaviour
 
         if(timeBtwAttack <= 0)
         {
-            if(throwAxe.WasPressedThisFrame())
+            if(throwAxe.IsPressed())
             {
                 timeBtwAttack = startTimeBtwAttack;
                 ThrowAxe();

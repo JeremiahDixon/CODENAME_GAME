@@ -80,7 +80,7 @@ public class Bow : MonoBehaviour
 
         if(timeBtwAttack <= 0)
         {
-            if(shoot.WasPressedThisFrame())
+            if(shoot.IsPressed())
             {
                 timeBtwAttack = startTimeBtwAttack;
                 Shoot();

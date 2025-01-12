@@ -290,20 +290,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: {x: 0, y: 0}
   timeBtwAttack: 0
-  startTimeBtwAttack: 0.5
+  startTimeBtwAttack: 0
   attackPos: {fileID: 7595460628529479780}
   attackPosLeft: {fileID: 5243317056081026121}
   whatIsEnemies:
     serializedVersion: 2
     m_Bits: 64
   attackRange: 0.65
-  baseAttackStrength: 5
-  currentAttackStrength: 5
+  baseAttackStrength: 0
   baseHp: 0
   activeMovementSpeed: {x: 0, y: 0}
-  dashSpeed: {x: 6, y: 6}
-  dashLength: 0.3
-  dashCooldown: 1
+  dashSpeed: {x: 0, y: 0}
+  dashLength: 0
+  dashCooldown: 0
   className: 
   playerControls: {fileID: 0}
   sprite: {fileID: 0}
@@ -440,7 +439,7 @@ MonoBehaviour:
   launchForce: 10
   playerControls: {fileID: 0}
   timeBtwAttack: 0
-  startTimeBtwAttack: 0.5
+  startTimeBtwAttack: 0.8
 --- !u!1 &7086288870655123564
 GameObject:
   m_ObjectHideFlags: 0
