@@ -16,5 +16,5 @@ MonoBehaviour:
   sprite: {fileID: 21300000, guid: e5e6c0f4becb97f479c9de852ec0ede2, type: 3}
   classSpecific: 0
   usableClasses: []
-  description: Increase speed by 0.5f, 0.5f.
-  maxPowerupLevel: 3
+  description: Increase speed.
+  maxPowerupLevel: 5

@@ -23,12 +23,10 @@ public class Skull : Enemy
         playerPos = player.transform;
         anim.SetBool(RUNNING, true);
     }
-    // void FixedUpdate()
-    // {
-    // }
 
     void Update()
     {
+        //PreventOverlap();
         if(Vector2.Distance(anim.transform.position, playerPos.position) > 0.75f)
         {
             anim.transform.position = Vector2.MoveTowards(anim.transform.position, playerPos.position, currentSpeed * Time.deltaTime);

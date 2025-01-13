@@ -21,7 +21,9 @@ public class Enemy : MonoBehaviour, IEnemy
     MobSpawner ms;
     public EnemyLevel enemyLevel = new EnemyLevel();
     PlaySystemManager playManager;
-
+    public float detectionRadius = 5.0f; // Radius for overlap detection
+    public float separationStrength = 5.0f; // Force to push enemies apart
+    public LayerMask enemyLayer; // Layer to detect other enemies
     public enum EnemyLevel{
         basic,
         intermediate,
@@ -38,6 +40,29 @@ public class Enemy : MonoBehaviour, IEnemy
 
     void Start()
     {
+    }
+
+    void FixedUpdate()
+    {
+        PreventOverlap();
+    }
+
+    public void PreventOverlap()
+    {
+        // Detect nearby colliders within the detection radius
+        Collider2D[] nearbyEnemies = Physics2D.OverlapCircleAll(transform.position, detectionRadius, enemyLayer);
+
+        foreach (Collider2D enemy in nearbyEnemies)
+        {
+            // Ignore self-collision
+            if (enemy.gameObject == gameObject) continue;
+
+            // Calculate direction away from the other enemy
+            Vector2 directionAway = (transform.position - enemy.transform.position).normalized;
+
+            // Apply a small displacement to separate the objects
+            transform.position += (Vector3)(directionAway * separationStrength * Time.fixedDeltaTime);
+        }
     }
 
     public void TakeDamage (int damage)

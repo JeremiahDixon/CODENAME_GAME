@@ -15,6 +15,18 @@ public class GameOverScreen : MonoBehaviour
     }
 
     public void Restart(){
+        Time.timeScale = 1;
         GameManager.Instance.ReloadCurrentScene();
+    }
+
+    public void Exit(){
+        Time.timeScale = 1;
+        Application.Quit();
+    }
+
+    public void MainMenu()
+    {
+        Time.timeScale = 1;
+        GameManager.Instance.LoadAScene("MainMenu");
     }
 }

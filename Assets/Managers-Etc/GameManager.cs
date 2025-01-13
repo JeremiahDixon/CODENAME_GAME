@@ -104,6 +104,7 @@ public class GameManager: MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         gameOverScreen.GameOver();
+        Time.timeScale = 0;
     }
 
     void resetPlayer()

@@ -23,7 +23,7 @@ public class AxeThrow : MonoBehaviour
     const string GAMEPAD_SCHEME = "Gamepad";
     const string KM_SCHEME = "Keyboard&Mouse";
     private IPlayer thePlayer;
-    private int axeLimit = 10;
+    private int axeLimit = 20;
     private Queue<GameObject> axes = new Queue<GameObject>();
     [SerializeField]
     float timeBtwAttack;

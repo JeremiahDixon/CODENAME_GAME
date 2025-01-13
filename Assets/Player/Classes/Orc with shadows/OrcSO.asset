@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e0165caa9374b69ba54206b1d26817, type: 3}
   m_Name: OrcSO
   m_EditorClassIdentifier: 
-  movementSpeed: {x: 2.5, y: 2.5}
+  movementSpeed: {x: 2, y: 2}
   className: Orc
   startTimeBtwAttack: 3
   baseAttackStrength: 80

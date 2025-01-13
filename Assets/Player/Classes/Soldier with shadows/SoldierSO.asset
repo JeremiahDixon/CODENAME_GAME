@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d5e0165caa9374b69ba54206b1d26817, type: 3}
   m_Name: SoldierSO
   m_EditorClassIdentifier: 
-  movementSpeed: {x: 2.7, y: 2.7}
+  movementSpeed: {x: 2, y: 2}
   className: Soldier
   startTimeBtwAttack: 0.5
   baseAttackStrength: 50
-  dashSpeed: {x: 2.5, y: 2.5}
+  dashSpeed: {x: 2, y: 2}
   dashLength: 0.5
   dashCooldown: 3
   baseHp: 100

@@ -39,7 +39,7 @@ public class PowerupMenu : MonoBehaviour
 
     public void PowerUp()
     {
-        Time. timeScale = 0;
+        Time.timeScale = 0;
         Debug.Log("Powerup enabled!");
         healthManager.SetActive(false);
         foreach (Transform child in transform) {
@@ -53,13 +53,16 @@ public class PowerupMenu : MonoBehaviour
         option3 = GameObject.Find("Option3");
         randomPowerup1 = Random.Range(0, possiblePowerups.Count);
         option1.GetComponent<Image>().sprite = possiblePowerups[randomPowerup1].GetComponent<Powerup>().sprite;
-        option1.GetComponentInChildren<TextMeshProUGUI>().text = possiblePowerups[randomPowerup1].GetComponent<Powerup>().powerupName + " : " + possiblePowerups[randomPowerup1].GetComponent<Powerup>().description;
+        option1.GetComponentInChildren<TextMeshProUGUI>().text = possiblePowerups[randomPowerup1].GetComponent<Powerup>().powerupName + " : " + possiblePowerups[randomPowerup1].GetComponent<Powerup>().description + 
+            " : " + possiblePowerups[randomPowerup1].GetComponent<Powerup>().powerupLevel + " out of " + possiblePowerups[randomPowerup1].GetComponent<Powerup>().maxPowerupLevel;
         randomPowerup2 = Random.Range(0, possiblePowerups.Count);
         option2.GetComponent<Image>().sprite = possiblePowerups[randomPowerup2].GetComponent<Powerup>().sprite;
-        option2.GetComponentInChildren<TextMeshProUGUI>().text = possiblePowerups[randomPowerup2].GetComponent<Powerup>().powerupName + " : " + possiblePowerups[randomPowerup2].GetComponent<Powerup>().description;
+        option2.GetComponentInChildren<TextMeshProUGUI>().text = possiblePowerups[randomPowerup2].GetComponent<Powerup>().powerupName + " : " + possiblePowerups[randomPowerup2].GetComponent<Powerup>().description + 
+            " : " + possiblePowerups[randomPowerup2].GetComponent<Powerup>().powerupLevel + " out of " + possiblePowerups[randomPowerup2].GetComponent<Powerup>().maxPowerupLevel;
         randomPowerup3 = Random.Range(0, possiblePowerups.Count);
         option3.GetComponent<Image>().sprite = possiblePowerups[randomPowerup3].GetComponent<Powerup>().sprite;
-        option3.GetComponentInChildren<TextMeshProUGUI>().text = possiblePowerups[randomPowerup3].GetComponent<Powerup>().powerupName + " : " + possiblePowerups[randomPowerup3].GetComponent<Powerup>().description;
+        option3.GetComponentInChildren<TextMeshProUGUI>().text = possiblePowerups[randomPowerup3].GetComponent<Powerup>().powerupName + " : " + possiblePowerups[randomPowerup3].GetComponent<Powerup>().description + 
+            " : " + possiblePowerups[randomPowerup3].GetComponent<Powerup>().powerupLevel + " out of " + possiblePowerups[randomPowerup3].GetComponent<Powerup>().maxPowerupLevel;
     }
 
     public void PowerupSelected(int powerup)
@@ -90,6 +93,6 @@ public class PowerupMenu : MonoBehaviour
             }
         }
         healthManager.SetActive(true);
-        Time. timeScale = 1;
+        Time.timeScale = 1;
     }
 }

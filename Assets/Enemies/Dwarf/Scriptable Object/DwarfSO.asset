@@ -17,6 +17,6 @@ MonoBehaviour:
   maxHp: 80
   strength: 20
   scoreValue: 10
-  minSpeed: 1
-  maxSpeed: 3
+  minSpeed: 0.75
+  maxSpeed: 1.9
   loot: []

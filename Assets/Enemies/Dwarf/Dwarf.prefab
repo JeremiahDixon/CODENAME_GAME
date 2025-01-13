@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4595001749574302015}
   - component: {fileID: 3381873660739485610}
   - component: {fileID: 3869501005070735457}
-  - component: {fileID: 8779204353243513447}
   - component: {fileID: 8750102685415248468}
   m_Layer: 6
   m_Name: Dwarf
@@ -127,47 +126,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 0
+  maxHp: 0
   strength: 0
   enemyName: 
-  loot: []
-  enemySo: {fileID: 11400000, guid: 68cf798b24bff4f6dbe904ab40363cc5, type: 2}
-  timeBtwAttack: 0
   speed: 0
-  whatIsPlayer:
-    serializedVersion: 2
-    m_Bits: 8
+  currentSpeed: 0
+  scoreValue: 0
   damagedClips:
   - {fileID: 8300000, guid: 6e4bd0dc8e1d10549b5bcc6da1504cf7, type: 3}
   - {fileID: 8300000, guid: 0e7a4c6d62772b44f82c719969a5a711, type: 3}
+  whatIsPlayer:
+    serializedVersion: 2
+    m_Bits: 8
+  loot: []
+  enemySo: {fileID: 11400000, guid: 68cf798b24bff4f6dbe904ab40363cc5, type: 2}
+  playerPos: {fileID: 0}
+  enemyLevel: 0
+  detectionRadius: 0.2
+  separationStrength: 1
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  timeBtwAttack: 0
   attackPos: {fileID: 5503563829884814610}
   attackRange: 0.4
---- !u!50 &8779204353243513447
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1590680851717841368}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!60 &8750102685415248468
 PolygonCollider2D:
   m_ObjectHideFlags: 0

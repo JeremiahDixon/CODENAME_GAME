@@ -19,6 +19,7 @@ public class MobSpawner : MonoBehaviour
     public ArrayList intermediateMobsList = new ArrayList();
     public ArrayList advancedMobsList = new ArrayList();
     public ArrayList legendaryMobsList = new ArrayList();
+    public LayerMask enemyLayer; // Layer to detect other enemies
 
     private void Awake()
     {
@@ -60,7 +61,7 @@ public class MobSpawner : MonoBehaviour
         int randomMob = Random.Range(0, mobList.Count);
         if(screenSide == 1){
             Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(1.1f, 1.4f), 0));
-             if(mobList.Count > 0){
+             if(mobList.Count > 0 && CanSpawn(v3Pos, 1.0f)){
                 GameObject mob = (GameObject)mobList[randomMob];
                 mobList.RemoveAt(randomMob);
                 mob.transform.position = v3Pos;
@@ -68,7 +69,7 @@ public class MobSpawner : MonoBehaviour
             }
         }else if(screenSide == 2){
             Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(1.1f, 1.4f), Random.Range(0.0f, 1.0f), 0));
-            if(mobList.Count > 0){
+            if(mobList.Count > 0 && CanSpawn(v3Pos, 1.0f)){
                 GameObject mob = (GameObject)mobList[randomMob];
                 mobList.RemoveAt(randomMob);
                 mob.transform.position = v3Pos;
@@ -76,7 +77,7 @@ public class MobSpawner : MonoBehaviour
             }
         }else if(screenSide == 3){
             Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(0.0f, -0.4f), 0));
-            if(mobList.Count > 0){
+            if(mobList.Count > 0 && CanSpawn(v3Pos, 1.0f)){
                 GameObject mob = (GameObject)mobList[randomMob];
                 mobList.RemoveAt(randomMob);
                 mob.transform.position = v3Pos;
@@ -84,7 +85,7 @@ public class MobSpawner : MonoBehaviour
             }
         }else if(screenSide == 4){
             Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, -0.4f), Random.Range(0.0f, 1f), 0));
-            if(mobList.Count > 0){
+            if(mobList.Count > 0 && CanSpawn(v3Pos, 1.0f)){
                 GameObject mob = (GameObject)mobList[randomMob];
                 mobList.RemoveAt(randomMob);
                 mob.transform.position = v3Pos;
@@ -93,6 +94,10 @@ public class MobSpawner : MonoBehaviour
         }
     }
 
+    bool CanSpawn(Vector3 position, float radius)
+    {
+        return Physics2D.OverlapCircle(position, radius, enemyLayer) == null;
+    }
     void CreateObjectPools()
     {
         for(int x = 0; x < basicMobs.Length; x++){

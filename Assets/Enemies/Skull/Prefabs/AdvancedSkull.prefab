@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8349326733494794232}
   - component: {fileID: 5337484665678381267}
   - component: {fileID: 3900846705831737506}
-  - component: {fileID: 1037708156142037846}
   - component: {fileID: 5324504403019341437}
   m_Layer: 6
   m_Name: AdvancedSkull
@@ -127,9 +126,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hp: 0
+  maxHp: 0
   strength: 0
   enemyName: 
   speed: 0
+  currentSpeed: 0
+  scoreValue: 0
   damagedClips:
   - {fileID: 8300000, guid: 02a55b19bf252446493f86cfd48f3ca6, type: 3}
   whatIsPlayer:
@@ -138,36 +140,15 @@ MonoBehaviour:
   loot: []
   enemySo: {fileID: 11400000, guid: 81a5a62ece30cf94e8b7e0b2f513ea0e, type: 2}
   playerPos: {fileID: 0}
+  enemyLevel: 0
+  detectionRadius: 0.2
+  separationStrength: 1
+  enemyLayer:
+    serializedVersion: 2
+    m_Bits: 64
   timeBtwAttack: 0
   attackPos: {fileID: 668911233445732123}
   attackRange: 0.33
---- !u!50 &1037708156142037846
-Rigidbody2D:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2419425593626201824}
-  m_BodyType: 1
-  m_Simulated: 1
-  m_UseFullKinematicContacts: 0
-  m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDamping: 0
-  m_AngularDamping: 0.05
-  m_GravityScale: 0
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_Interpolate: 0
-  m_SleepingMode: 1
-  m_CollisionDetection: 0
-  m_Constraints: 4
 --- !u!60 &5324504403019341437
 PolygonCollider2D:
   m_ObjectHideFlags: 0
