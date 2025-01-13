@@ -122,12 +122,21 @@ public class PlaySystemManager : MonoBehaviour
         {
             powerupCount ++;
             pum.PowerUp();
+            ms.startBasicTimeBtwSpawn = 0.25f;
+            ms.startIntermediateTimeBtwSpawn = 10;
+            ms.startAdvancedTimeBtwSpawn = 15;
+            ms.startLegendaryTimeBtwSpawn = 20;
         }
     }
 
     public void IncreaseScore(int scoreValue){
         score += scoreValue;
         scoreText.text = score.ToString();
-        TrackScore();
+        if(scoreValue == 500)
+        {
+            GameManager.Instance.GameWin();
+        }else{
+            TrackScore();
+        }
     }
 }

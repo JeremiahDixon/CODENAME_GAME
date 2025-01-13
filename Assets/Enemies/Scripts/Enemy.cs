@@ -21,8 +21,11 @@ public class Enemy : MonoBehaviour, IEnemy
     MobSpawner ms;
     public EnemyLevel enemyLevel = new EnemyLevel();
     PlaySystemManager playManager;
-    public float detectionRadius = 5.0f; // Radius for overlap detection
-    public float separationStrength = 5.0f; // Force to push enemies apart
+    public float detectionRadius; // Radius for overlap detection
+    public float separationStrength; // Force to push enemies apart
+    public Animator anim;
+    const string RUNNING = "isRunning";
+    public bool facingRight = false;
     public LayerMask enemyLayer; // Layer to detect other enemies
     public enum EnemyLevel{
         basic,
@@ -38,8 +41,15 @@ public class Enemy : MonoBehaviour, IEnemy
         playManager = GameObject.Find("PlaySystemManager").GetComponent<PlaySystemManager>();
     }
 
+    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        enemySo.CreateStats(gameObject);
+        hp = maxHp;
+        currentSpeed = speed;
+        anim = GetComponent<Animator>();
+        player = GameObject.FindGameObjectWithTag(PLAYER_TAG).GetComponent<IPlayer>();
+        playerPos = player.transform;
     }
 
     void FixedUpdate()
@@ -65,11 +75,14 @@ public class Enemy : MonoBehaviour, IEnemy
         }
     }
 
-    public void TakeDamage (int damage)
+    public virtual void TakeDamage (int damage)
     {
         hp -= damage;
-        int randInt = Random.Range(0, damagedClips.Length);
-        SoundManager.Instance.PlaySoundEffect(damagedClips[randInt], transform, 1.0f);
+        if(damagedClips.Length > 0)
+        {
+            int randInt = Random.Range(0, damagedClips.Length);
+            SoundManager.Instance.PlaySoundEffect(damagedClips[randInt], transform, 1.0f);
+        }
         if (hp <= 0)
         {
             playManager.IncreaseScore(scoreValue);
@@ -119,4 +132,11 @@ public class Enemy : MonoBehaviour, IEnemy
         }
     }
 
+    public void Flip()
+    {
+        facingRight = !facingRight;
+        Vector3 Scaler = transform.localScale;
+        Scaler.x *= -1;
+        transform.localScale = Scaler;
+    }
 }

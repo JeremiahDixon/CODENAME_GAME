@@ -10,13 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e6e6797af7db8c4e9b36f601789e3fc, type: 3}
-  m_Name: AdvancedSkull
+  m_Name: AirBossSO
   m_EditorClassIdentifier: 
-  enemyName: Advanced Skull
-  enemyLevel: 2
-  maxHp: 120
-  strength: 30
-  scoreValue: 15
-  minSpeed: 2
-  maxSpeed: 2.3
+  enemyName: Air Boss
+  enemyLevel: 3
+  maxHp: 2000
+  strength: 15
+  scoreValue: 500
+  minSpeed: 1.75
+  maxSpeed: 1.75
   loot: []

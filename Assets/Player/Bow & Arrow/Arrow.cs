@@ -15,11 +15,7 @@ public class Arrow : Projectile
     // Update is called once per frame
     void Update()
     {
-        // if(timeToDestroy <= 0){
-        //     StartCoroutine(DestroyAfterDelay(1));
-        // }else{
-        //     timeToDestroy -= Time.deltaTime;
-        // }
+
     }
 
     void OnCollisionEnter2D(Collision2D other)
@@ -32,7 +28,6 @@ public class Arrow : Projectile
             Debug.Log("Dealing x damage: " + (damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.damageModifier)));
         }else{
             transform.parent = other.transform;
-            //StartCoroutine(DestroyAfterDelay(5));
         }
     }
 

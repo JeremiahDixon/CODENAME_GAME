@@ -112,13 +112,6 @@ public class Bow : MonoBehaviour
 
     }
 
-    // public void RequeueArrow(GameObject arrow)
-    // {
-    //     dequeuedArrows.Remove(arrow);
-    //     arrow.SetActive(false);
-    //     arrows.Enqueue(arrow);
-    // }
-
     private IEnumerator RequeueAfterDelay(int seconds, GameObject arrow)
     {
         yield return new WaitForSeconds(seconds);

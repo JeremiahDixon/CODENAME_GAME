@@ -12,9 +12,11 @@ public class MobSpawner : MonoBehaviour
     public float legendaryTimeBtwSpawn;
     public float startLegendaryTimeBtwSpawn;
     private int basicLimit = 30;
+    private int legendaryLimit = 1;
     public GameObject[] basicMobs;
     public GameObject[] intermediateMobs;
     public GameObject[] advancedMobs;
+    public GameObject[] legendaryMobs;
     public ArrayList basicMobsList = new ArrayList();
     public ArrayList intermediateMobsList = new ArrayList();
     public ArrayList advancedMobsList = new ArrayList();
@@ -127,6 +129,15 @@ public class MobSpawner : MonoBehaviour
             }
         }
 
+        for(int x = 0; x < legendaryMobs.Length; x++){
+            for (int i = 0; i < legendaryLimit; i++)
+            {
+                GameObject newLegendaryMob = Instantiate(legendaryMobs[x], this.transform.position, this.transform.rotation);
+                newLegendaryMob.SetActive(false);
+                legendaryMobsList.Add(newLegendaryMob);
+            }
+        }
+
     }
 
     public void RequeueMob(GameObject mob)
@@ -151,6 +162,17 @@ public class MobSpawner : MonoBehaviour
                 break;
         }
         
+    }
+
+    public void SpawnBoss()
+    {
+        Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(1.1f, 1.4f), 0));
+        if(legendaryMobsList.Count > 0){
+            GameObject mob = (GameObject)legendaryMobsList[0];
+            legendaryMobsList.RemoveAt(0);
+            mob.transform.position = v3Pos;
+            mob.SetActive(true);
+        }
     }
 
 }

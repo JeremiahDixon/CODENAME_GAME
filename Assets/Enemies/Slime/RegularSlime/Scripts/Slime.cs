@@ -2,33 +2,16 @@ using UnityEngine;
 
 public class Slime : Enemy
 {
-    private Animator anim;
     [SerializeField]
     private float timeBtwAttack;
-    private bool facingRight = false;
     const string ATTACKING_TRIGGER = "isAttackingTrigger";
     const string RUNNING = "isRunning";
     [SerializeField]
     Transform attackPos;
     [SerializeField]
     float attackRange;
-
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        enemySo.CreateStats(gameObject);
-        hp = maxHp;
-        currentSpeed = speed;
-        anim = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag(PLAYER_TAG).GetComponent<IPlayer>();
-        playerPos = player.transform;
-        anim.SetBool(RUNNING, true);
-    }
-
     void Update()
     {
-        //PreventOverlap();
         if(Vector2.Distance(anim.transform.position, playerPos.position) > 0.75f)
         {
             anim.transform.position = Vector2.MoveTowards(anim.transform.position, playerPos.position, currentSpeed * Time.deltaTime);
@@ -58,24 +41,6 @@ public class Slime : Enemy
         }
     }
 
-    void Flip()
-    {
-        facingRight = !facingRight;
-        Vector3 Scaler = transform.localScale;
-        Scaler.x *= -1;
-        transform.localScale = Scaler;
-    }
-
-    // void dropLoot(int randomInt)
-    // {
-    //     Vector3 objectPosition = transform.position;
-    //     Vector3 randPoint = new Vector3(objectPosition.x + Random.Range(-1.0f, 1.0f), objectPosition.y + Random.Range(-1.0f, 1.0f));
-    //     if(randomInt < 15)
-    //     {
-    //         Instantiate(loot[0], randPoint, Quaternion.identity);
-    //     }
-    // }
-
     public override void dropLoot(float randomFloat)
     {
         Vector3 objectPosition = transform.position;
@@ -103,7 +68,7 @@ public class Slime : Enemy
             }
         }
     }
-        void OnDrawGizmosSelected()
+    void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(attackPos.position, attackRange);

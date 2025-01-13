@@ -15,6 +15,8 @@ public class GameManager: MonoBehaviour
     private HealthManager healthManager;
     [SerializeField]
     private GameOverScreen gameOverScreen;
+    [SerializeField]
+    private GameWinScreen gameWinScreen;
     public bool dead{get; private set;} = false;
     private SceneLoader sceneLoader;
     [SerializeField]
@@ -71,6 +73,7 @@ public class GameManager: MonoBehaviour
     void LoadPlayScreen(){
         healthManager = GameObject.Find("HealthManager").GetComponent<HealthManager>();
         gameOverScreen = GameObject.FindGameObjectWithTag("GameOverScreen").GetComponent<GameOverScreen>();
+        gameWinScreen = GameObject.FindGameObjectWithTag("GameWinScreen").GetComponent<GameWinScreen>();
         startPos = GameObject.Find("StartPosition").transform;
     }
 
@@ -104,6 +107,12 @@ public class GameManager: MonoBehaviour
     {
         yield return new WaitForSeconds(1);
         gameOverScreen.GameOver();
+        Time.timeScale = 0;
+    }
+
+    public void GameWin()
+    {
+        gameWinScreen.GameWin();
         Time.timeScale = 0;
     }
 

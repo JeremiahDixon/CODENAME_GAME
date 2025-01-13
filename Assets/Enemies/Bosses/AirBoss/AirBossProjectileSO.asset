@@ -9,14 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e6e6797af7db8c4e9b36f601789e3fc, type: 3}
-  m_Name: AdvancedSkull
+  m_Script: {fileID: 11500000, guid: aa770acd968824c49ba46950dbe7872d, type: 3}
+  m_Name: AirBossProjectileSO
   m_EditorClassIdentifier: 
-  enemyName: Advanced Skull
-  enemyLevel: 2
-  maxHp: 120
-  strength: 30
-  scoreValue: 15
-  minSpeed: 2
-  maxSpeed: 2.3
-  loot: []
+  projectileName: Air Boss Projectile
+  damage: 10

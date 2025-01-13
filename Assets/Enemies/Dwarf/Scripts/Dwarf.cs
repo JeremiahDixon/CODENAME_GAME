@@ -2,10 +2,8 @@ using UnityEngine;
 
 public class Dwarf : Enemy
 {
-    private Animator anim;
     [SerializeField]
     private float timeBtwAttack;
-    private bool facingRight = false;
     const string ATTACKING_TRIGGER = "isAttackingTrigger";
     const string RUNNING = "isRunning";
     [SerializeField]
@@ -13,20 +11,9 @@ public class Dwarf : Enemy
     [SerializeField]
     float attackRange;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        enemySo.CreateStats(gameObject);
-        hp = maxHp;
-        currentSpeed = speed;
-        anim = GetComponent<Animator>();
-        player = GameObject.FindGameObjectWithTag(PLAYER_TAG).GetComponent<IPlayer>();
-        playerPos = player.transform;
-        anim.SetBool(RUNNING, true);
-    }
 
     void Update()
     {
-        //PreventOverlap();
         if(Vector2.Distance(anim.transform.position, playerPos.position) > 0.75f)
         {
             anim.transform.position = Vector2.MoveTowards(anim.transform.position, playerPos.position, currentSpeed * Time.deltaTime);
@@ -54,14 +41,6 @@ public class Dwarf : Enemy
         {
             Flip();
         }
-    }
-
-    void Flip()
-    {
-        facingRight = !facingRight;
-        Vector3 Scaler = transform.localScale;
-        Scaler.x *= -1;
-        transform.localScale = Scaler;
     }
 
     //call this durring animation event to check if hit
