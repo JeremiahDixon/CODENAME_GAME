@@ -122,6 +122,7 @@ public class PlaySystemManager : MonoBehaviour
         {
             powerupCount ++;
             pum.PowerUp();
+            ms.SpawnBoss();
             ms.startBasicTimeBtwSpawn = 0.25f;
             ms.startIntermediateTimeBtwSpawn = 10;
             ms.startAdvancedTimeBtwSpawn = 15;
