@@ -14,13 +14,15 @@ public class IceArrow : Arrow
             other.gameObject.GetComponent<IEnemy>().TakeDamage(damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.damageModifier));
             Debug.Log("Dealing x damage: " + (damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.damageModifier)));
             if(other.gameObject.activeInHierarchy){
-                if(Random.Range(1, 101) > 75){
-                    other.gameObject.GetComponent<IEnemy>().Freeze(freezeTime);
+                if(other.gameObject.GetComponent<Enemy>().isFreezable)
+                {
+                    if(Random.Range(1, 101) > 75){
+                        other.gameObject.GetComponent<IEnemy>().Freeze(freezeTime);
+                    }
                 }
             }
-        }else{
+        }else if(other.gameObject.CompareTag("Terrain")){
             transform.parent = other.transform;
-            //StartCoroutine(DestroyAfterDelay(5));
         }
     }
 }

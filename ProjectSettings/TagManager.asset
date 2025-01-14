@@ -12,6 +12,7 @@ TagManager:
   - Score
   - Spawner
   - GameWinScreen
+  - PlayerCamera
   layers:
   - Default
   - TransparentFX

@@ -121,11 +121,16 @@ public class AirBoss : Enemy
             bottomTargetToUse = leftRightBottomTarget;
         }
 
-        if(Vector2.Distance(anim.transform.position, playerPos.position) > 2.5f)
+        // if(Vector2.Distance(anim.transform.position, playerPos.position) > 8f)
+        // {
+        //     anim.transform.position = Vector2.MoveTowards(anim.transform.position, playerPos.position, currentSpeed * Time.deltaTime);
+        // }
+        if(playerPos.position.y - anim.transform.position.y > 0.2f || playerPos.position.y - anim.transform.position.y < -0.2f)
         {
-            anim.transform.position = Vector2.MoveTowards(anim.transform.position, playerPos.position, currentSpeed * Time.deltaTime);
+            anim.transform.position = Vector2.MoveTowards(anim.transform.position, new Vector2(Camera.main.ViewportToWorldPoint(new Vector3(0.8f, playerPos.position.y, 0)).x, playerPos.position.y), currentSpeed * Time.deltaTime);
         }
 
+        //Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(1.1f, 1.4f), 0));
         // if(Vector2.Distance(transform.position, playerPos.position) <= 2.5f)
         // {
         //     if(timeBtwAttack <= 0)

@@ -1,4 +1,5 @@
 using System.Collections;
+using Unity.Cinemachine;
 using UnityEngine;
 
 public class TheCamera : MonoBehaviour
@@ -39,5 +40,11 @@ public class TheCamera : MonoBehaviour
         }
 
         transform.localPosition = originalPosition;
+    }
+
+    public void LockCamera()
+    {
+        GetComponent<CinemachineCamera>().Follow = null;
+        GetComponent<CinemachineCamera>().LookAt = null;
     }
 }

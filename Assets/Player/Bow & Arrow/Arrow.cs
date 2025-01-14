@@ -26,7 +26,7 @@ public class Arrow : Projectile
             transform.parent = other.transform;
             other.gameObject.GetComponent<IEnemy>().TakeDamage(damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.damageModifier));
             Debug.Log("Dealing x damage: " + (damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.damageModifier)));
-        }else{
+        }else if(other.gameObject.CompareTag("Terrain")){
             transform.parent = other.transform;
         }
     }

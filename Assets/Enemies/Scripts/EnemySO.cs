@@ -9,6 +9,7 @@ public class EnemySO : ScriptableObject
     public int strength;
     public int scoreValue;
     float speed;
+    public bool isFreezable;
     public float minSpeed;
     public float maxSpeed;
     public GameObject[] loot;
@@ -29,6 +30,7 @@ public class EnemySO : ScriptableObject
         enemy.enemyName = enemyName;
         enemy.speed = speed;
         enemy.loot = loot;
+        enemy.isFreezable = isFreezable;
         enemy.enemyLevel = GetEnemyLevel(enemyLevel);
     }
 

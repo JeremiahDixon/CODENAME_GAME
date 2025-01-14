@@ -11,6 +11,7 @@ public class Enemy : MonoBehaviour, IEnemy
     public float speed;
     public float currentSpeed;
     public int scoreValue;
+    public bool isFreezable;
     public AudioClip[] damagedClips;
     public LayerMask whatIsPlayer;
     public const string PLAYER_TAG = "Player";

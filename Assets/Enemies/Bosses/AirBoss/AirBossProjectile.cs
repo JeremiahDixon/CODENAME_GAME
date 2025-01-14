@@ -19,6 +19,14 @@ public class AirBossProjectile : Projectile
             other.gameObject.GetComponent<IPlayer>().TakeDamage(damage);
             this.gameObject.SetActive(false);
             Debug.Log("Dealing x damage: " + damage);
+        }else if(other.gameObject.CompareTag("PlayerCamera"))
+        {
+            // Get the collision normal (direction of the wall)
+            Vector2 normal = other.contacts[0].normal;
+            // Calculate the new velocity by reflecting the current velocity off the normal
+            Vector2 newVelocity = Vector2.Reflect(rb.linearVelocity, normal);
+            // Set the new velocity
+            rb.linearVelocity = newVelocity;
         }
     }
 }

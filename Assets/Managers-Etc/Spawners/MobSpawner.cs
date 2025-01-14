@@ -21,7 +21,10 @@ public class MobSpawner : MonoBehaviour
     public ArrayList intermediateMobsList = new ArrayList();
     public ArrayList advancedMobsList = new ArrayList();
     public ArrayList legendaryMobsList = new ArrayList();
+    public ArrayList spawnedMobs = new ArrayList();
     public LayerMask enemyLayer; // Layer to detect other enemies
+    public enum PlayState { Bossfight, MobWaves }
+    public PlayState currentState;
 
     private void Awake()
     {
@@ -29,13 +32,14 @@ public class MobSpawner : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        currentState = PlayState.MobWaves;
         CreateObjectPools();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(GameManager.Instance.currentState == GameManager.GameState.Playing){
+        if(GameManager.Instance.currentState == GameManager.GameState.Playing && currentState == PlayState.MobWaves){
             if(basicTimeBtwSpawn <= 0){
                 Spawn(basicMobsList);
                 basicTimeBtwSpawn = startBasicTimeBtwSpawn;
@@ -66,6 +70,7 @@ public class MobSpawner : MonoBehaviour
              if(mobList.Count > 0 && CanSpawn(v3Pos, 1.0f)){
                 GameObject mob = (GameObject)mobList[randomMob];
                 mobList.RemoveAt(randomMob);
+                spawnedMobs.Add(mob);
                 mob.transform.position = v3Pos;
                 mob.SetActive(true);
             }
@@ -74,6 +79,7 @@ public class MobSpawner : MonoBehaviour
             if(mobList.Count > 0 && CanSpawn(v3Pos, 1.0f)){
                 GameObject mob = (GameObject)mobList[randomMob];
                 mobList.RemoveAt(randomMob);
+                spawnedMobs.Add(mob);
                 mob.transform.position = v3Pos;
                 mob.SetActive(true);
             }
@@ -82,6 +88,7 @@ public class MobSpawner : MonoBehaviour
             if(mobList.Count > 0 && CanSpawn(v3Pos, 1.0f)){
                 GameObject mob = (GameObject)mobList[randomMob];
                 mobList.RemoveAt(randomMob);
+                spawnedMobs.Add(mob);
                 mob.transform.position = v3Pos;
                 mob.SetActive(true);
             }
@@ -90,6 +97,7 @@ public class MobSpawner : MonoBehaviour
             if(mobList.Count > 0 && CanSpawn(v3Pos, 1.0f)){
                 GameObject mob = (GameObject)mobList[randomMob];
                 mobList.RemoveAt(randomMob);
+                spawnedMobs.Add(mob);
                 mob.transform.position = v3Pos;
                 mob.SetActive(true);
             }
@@ -147,18 +155,22 @@ public class MobSpawner : MonoBehaviour
             case Enemy.EnemyLevel.basic:
                 mob.SetActive(false);
                 basicMobsList.Add(mob);
+                spawnedMobs.Remove(mob);
                 break;
             case Enemy.EnemyLevel.intermediate:
                 mob.SetActive(false);
                 intermediateMobsList.Add(mob);
+                spawnedMobs.Remove(mob);
                 break;
             case Enemy.EnemyLevel.advanced:
                 mob.SetActive(false);
                 advancedMobsList.Add(mob);
+                spawnedMobs.Remove(mob);
                 break;
             case Enemy.EnemyLevel.legendary:
                 mob.SetActive(false);
                 legendaryMobsList.Add(mob);
+                spawnedMobs.Remove(mob);
                 break;
         }
         
@@ -166,6 +178,8 @@ public class MobSpawner : MonoBehaviour
 
     public void SpawnBoss()
     {
+        currentState = PlayState.Bossfight;
+        DespawnAll();
         Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(1.1f, 1.4f), 0));
         if(legendaryMobsList.Count > 0){
             GameObject mob = (GameObject)legendaryMobsList[0];
@@ -175,4 +189,12 @@ public class MobSpawner : MonoBehaviour
         }
     }
 
+    public void DespawnAll()
+    {
+        foreach (GameObject mob in spawnedMobs)
+        {
+            mob.SetActive(false);
+        }
+        
+    }
 }

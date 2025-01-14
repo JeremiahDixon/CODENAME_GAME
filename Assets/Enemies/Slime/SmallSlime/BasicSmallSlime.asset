@@ -17,6 +17,7 @@ MonoBehaviour:
   maxHp: 30
   strength: 10
   scoreValue: 3
+  isFreezable: 1
   minSpeed: 0.5
   maxSpeed: 1.5
   loot:
