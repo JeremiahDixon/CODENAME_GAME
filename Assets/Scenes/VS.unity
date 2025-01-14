@@ -2424,7 +2424,7 @@ GameObject:
   - component: {fileID: 324996528}
   - component: {fileID: 324996527}
   - component: {fileID: 324996526}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: PlayerCamera
   m_TagString: PlayerCamera
   m_Icon: {fileID: 0}

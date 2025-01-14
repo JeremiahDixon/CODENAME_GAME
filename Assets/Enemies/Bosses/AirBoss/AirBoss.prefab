@@ -203,6 +203,7 @@ MonoBehaviour:
   speed: 0
   currentSpeed: 0
   scoreValue: 0
+  isFreezable: 0
   damagedClips: []
   whatIsPlayer:
     serializedVersion: 2

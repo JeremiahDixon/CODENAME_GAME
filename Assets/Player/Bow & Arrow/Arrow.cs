@@ -20,13 +20,15 @@ public class Arrow : Projectile
 
     void OnCollisionEnter2D(Collision2D other)
     {
-        rb.linearVelocity = Vector2.zero;
-        gameObject.GetComponent<BoxCollider2D>().enabled = false;
         if(other.gameObject.CompareTag(ENEMY_TAG)){
+            rb.linearVelocity = Vector2.zero;
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
             transform.parent = other.transform;
             other.gameObject.GetComponent<IEnemy>().TakeDamage(damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.damageModifier));
             Debug.Log("Dealing x damage: " + (damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.damageModifier)));
         }else if(other.gameObject.CompareTag("Terrain")){
+            rb.linearVelocity = Vector2.zero;
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
             transform.parent = other.transform;
         }
     }

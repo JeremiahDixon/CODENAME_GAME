@@ -80,8 +80,6 @@ public class PlaySystemManager : MonoBehaviour
         {
             powerupCount ++;
             pum.PowerUp();
-            ms.SpawnBoss();
-            GameObject.Find("PlayerCamera").GetComponent<TheCamera>().LockCamera();
         }else if(score >= 200 && powerupCount == 1)
         {
             powerupCount ++;
@@ -125,7 +123,7 @@ public class PlaySystemManager : MonoBehaviour
             powerupCount ++;
             pum.PowerUp();
             ms.SpawnBoss();
-            //GameObject.Find("PlayerCamera").GetComponent<TheCamera>().LockCamera();
+            GameObject.Find("PlayerCamera").GetComponent<TheCamera>().LockCamera();
         }
     }
 
