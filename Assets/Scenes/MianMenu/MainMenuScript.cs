@@ -1,24 +1,29 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MainMenuScript : MonoBehaviour
 {
-    bool classSelected = false;
+    [SerializeField] GameObject classSelectMenu;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         
     }
 
-    public void LoadPlayScene(){
-        if(classSelected){
-            GameManager.Instance.LoadAScene("VS");
-        }else{
-            Debug.Log("You gotta select a class man");
+    public void LoadClassSelectMenu(){
+        foreach (Transform child in transform) {
+            child.gameObject.SetActive(false);
         }
+        GetComponent<Image>().enabled = false;
+        classSelectMenu.SetActive(true);
     }
 
-    public void SelectClass(string className){
-        GameManager.Instance.setPlayerClassSo(className);
-        classSelected = true;
+    public void Exit(){
+        Application.Quit();
+    }
+
+    public void LoadSettingsMenu()
+    {
+        Debug.Log("Settings doesnt work yet!");
     }
 }

@@ -60,7 +60,7 @@ public class AirBoss : Enemy
     public Transform bottomTargetToUse;
 
 
-    public enum BossState { Shooting, TripleShooting}
+    public enum BossState { StageOne, StageTwo, StageThree}
     private BossState currentBossState;
     public bool facingUp = true;
 
@@ -77,7 +77,7 @@ public class AirBoss : Enemy
     void OnEnable()
     {
         CreateMiniMePool(aMiniMe);
-        currentBossState = BossState.Shooting;
+        currentBossState = BossState.StageOne;
     }
 
     // Update is called once per frame
@@ -145,10 +145,10 @@ public class AirBoss : Enemy
 
         if(timeBtwAttack <= 0)
         {
-            if(currentBossState == BossState.TripleShooting)
+            if(currentBossState == BossState.StageTwo)
             {
                 ShootTriple();
-            }else if(currentBossState == BossState.Shooting)
+            }else if(currentBossState == BossState.StageOne)
             {
                 Shoot();
             }
@@ -253,7 +253,7 @@ public class AirBoss : Enemy
         base.TakeDamage(damage);
         if(hp <= maxHp * 0.66f)
         {
-            currentBossState = BossState.TripleShooting;
+            currentBossState = BossState.StageTwo;
         }
     }
 
