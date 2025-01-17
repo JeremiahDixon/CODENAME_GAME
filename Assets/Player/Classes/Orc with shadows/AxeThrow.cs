@@ -71,6 +71,9 @@ public class AxeThrow : MonoBehaviour
         if(scene.name == "VS"){
             ClearTheQueue();
             CreateObjectPool();
+        }else if(scene.name == "VS 2"){
+            ClearTheQueue();
+            CreateObjectPool();
         }
     }
 

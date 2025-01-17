@@ -95,7 +95,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 491491893
-  m_SortingLayer: 1
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: f633c27c122797143bf4782f5c45d885, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -221,7 +221,9 @@ MonoBehaviour:
     m_Bits: 64
   timeBtwAttack: 0
   startTimeBtwAttack: 0.5
+  startTimeBtwAttackTriple: 0.75
   launchForce: 10
+  launchForceTriple: 8
   aMiniMe: {fileID: 4760765393936386056, guid: 4938f02d169596e4a8f81df1a23badf8, type: 3}
   shotPoint: {fileID: 5665952611042816320}
   shotPointTop: {fileID: 3769608216515726815}

@@ -43,6 +43,8 @@ public class SoundManager : MonoBehaviour
     {
         if(scene.name == "VS"){
             GetComponent<AudioSource>().enabled = false;
+        }else if(scene.name == "VS 2"){
+            GetComponent<AudioSource>().enabled = false;
         }
     }
 }

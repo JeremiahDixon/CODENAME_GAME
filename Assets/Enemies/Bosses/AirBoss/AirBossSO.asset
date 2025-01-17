@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Air Boss
   enemyLevel: 3
-  maxHp: 3000
+  maxHp: 4000
   strength: 15
   scoreValue: 500
   isFreezable: 0

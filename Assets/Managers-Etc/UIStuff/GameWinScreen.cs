@@ -1,16 +1,28 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
+
 
 public class GameWinScreen : MonoBehaviour
 {
+    [SerializeField] GameObject _gameWinMenuFirst;
 
     void Awake(){
+    }
+    void Update()
+    {
+
     }
     public void GameWin()
     {
         GetComponent<Image>().enabled = true;
         foreach (Transform child in transform) {
             child.gameObject.SetActive(true);
+        }
+        if(Gamepad.current != null)
+        {
+            EventSystem.current.SetSelectedGameObject(_gameWinMenuFirst);
         }
     }
 

@@ -3,6 +3,8 @@ using UnityEngine;
 using TMPro;
 using System.Linq;
 using System.Collections.Generic;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
 public class PowerupMenu : MonoBehaviour
 {
@@ -12,6 +14,7 @@ public class PowerupMenu : MonoBehaviour
     GameObject option3;
     public GameObject[] allPowerups;
     public List<GameObject> possiblePowerups;
+    [SerializeField] GameObject _powerupMenuFirst;
     int randomPowerup1;
     int randomPowerup2;
     int randomPowerup3;
@@ -34,11 +37,12 @@ public class PowerupMenu : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public void PowerUp()
     {
+        GameManager.Instance.PoweringUp();
         Time.timeScale = 0;
         Debug.Log("Powerup enabled!");
         healthManager.SetActive(false);
@@ -63,6 +67,10 @@ public class PowerupMenu : MonoBehaviour
         option3.GetComponent<Image>().sprite = possiblePowerups[randomPowerup3].GetComponent<Powerup>().sprite;
         option3.GetComponentInChildren<TextMeshProUGUI>().text = possiblePowerups[randomPowerup3].GetComponent<Powerup>().powerupName + " : " + possiblePowerups[randomPowerup3].GetComponent<Powerup>().description + 
             " : " + possiblePowerups[randomPowerup3].GetComponent<Powerup>().powerupLevel + " out of " + possiblePowerups[randomPowerup3].GetComponent<Powerup>().maxPowerupLevel;
+        if(Gamepad.current != null)
+        {
+            EventSystem.current.SetSelectedGameObject(_powerupMenuFirst);
+        }
     }
 
     public void PowerupSelected(int powerup)
@@ -94,5 +102,7 @@ public class PowerupMenu : MonoBehaviour
         }
         healthManager.SetActive(true);
         Time.timeScale = 1;
+        EventSystem.current.SetSelectedGameObject(null);
+        GameManager.Instance.DonePoweringUp();
     }
 }

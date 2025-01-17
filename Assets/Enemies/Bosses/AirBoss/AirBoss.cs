@@ -8,8 +8,11 @@ public class AirBoss : Enemy
     private float timeBtwAttack;
     [SerializeField]
     float startTimeBtwAttack;
+    [SerializeField]
+    float startTimeBtwAttackTriple;
     private Queue<GameObject> miniMes = new Queue<GameObject>();
     public float launchForce;
+    public float launchForceTriple;
     int miniMeLimit = 50;
     public GameObject aMiniMe;
 
@@ -60,19 +63,9 @@ public class AirBoss : Enemy
     public Transform bottomTargetToUse;
 
 
-    public enum BossState { StageOne, StageTwo, StageThree}
+    public enum BossState { StageOne, StageTwo, StageThree, Transition}
     private BossState currentBossState;
     public bool facingUp = true;
-
-    // private void Awake()
-    // {
-        //thePlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<IPlayer>();
-        // shotPoint = transform.GetChild(0).gameObject.transform;
-        // shotPointTop = transform.GetChild(1).gameObject.transform;
-        // shotPointBottom = transform.GetChild(2).gameObject.transform;
-    //     CreateMiniMePool(aMiniMe);
-    //     currentBossState = BossState.Shooting;
-    // }
 
     void OnEnable()
     {
@@ -121,27 +114,10 @@ public class AirBoss : Enemy
             bottomTargetToUse = leftRightBottomTarget;
         }
 
-        // if(Vector2.Distance(anim.transform.position, playerPos.position) > 8f)
-        // {
-        //     anim.transform.position = Vector2.MoveTowards(anim.transform.position, playerPos.position, currentSpeed * Time.deltaTime);
-        // }
         if(playerPos.position.y - anim.transform.position.y > 0.2f || playerPos.position.y - anim.transform.position.y < -0.2f)
         {
             anim.transform.position = Vector2.MoveTowards(anim.transform.position, new Vector2(Camera.main.ViewportToWorldPoint(new Vector3(0.8f, playerPos.position.y, 0)).x, playerPos.position.y), currentSpeed * Time.deltaTime);
         }
-
-        //Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(1.1f, 1.4f), 0));
-        // if(Vector2.Distance(transform.position, playerPos.position) <= 2.5f)
-        // {
-        //     if(timeBtwAttack <= 0)
-        //     {
-        //         timeBtwAttack = 3f;
-        //     }
-        // }
-        // if(timeBtwAttack >= 0)
-        // {
-        //     timeBtwAttack -= Time.deltaTime;
-        // }
 
         if(timeBtwAttack <= 0)
         {
@@ -173,8 +149,8 @@ public class AirBoss : Enemy
             newMiniMe.transform.position = middleAttackPosToUse.position;
             newMiniMe.transform.rotation = middleAttackPosToUse.rotation;
             Vector3 direction = (middleTargetToUse.position - middleAttackPosToUse.position).normalized; 
-            newMiniMe.GetComponent<Rigidbody2D>().linearVelocity = direction * launchForce;
-            StartCoroutine(RequeueAfterDelay(3, newMiniMe));
+            newMiniMe.GetComponent<Rigidbody2D>().linearVelocity = direction * launchForceTriple;
+            StartCoroutine(RequeueAfterDelay(4, newMiniMe));
         }
 
         if(miniMes.Count > 0){
@@ -188,8 +164,8 @@ public class AirBoss : Enemy
             newMiniMe.transform.position = topAttackPosToUse.position;
             newMiniMe.transform.rotation = topAttackPosToUse.rotation;
             Vector3 direction = (topTargetToUse.position - topAttackPosToUse.position).normalized; 
-            newMiniMe.GetComponent<Rigidbody2D>().linearVelocity = direction * launchForce;
-            StartCoroutine(RequeueAfterDelay(3, newMiniMe));
+            newMiniMe.GetComponent<Rigidbody2D>().linearVelocity = direction * launchForceTriple;
+            StartCoroutine(RequeueAfterDelay(4, newMiniMe));
         }
 
         if(miniMes.Count > 0){
@@ -203,8 +179,8 @@ public class AirBoss : Enemy
             newMiniMe.transform.position = bottomAttackPosToUse.position;
             newMiniMe.transform.rotation = bottomAttackPosToUse.rotation;
             Vector3 direction = (bottomTargetToUse.position - bottomAttackPosToUse.position).normalized; 
-            newMiniMe.GetComponent<Rigidbody2D>().linearVelocity = direction * launchForce;
-            StartCoroutine(RequeueAfterDelay(3, newMiniMe));
+            newMiniMe.GetComponent<Rigidbody2D>().linearVelocity = direction * launchForceTriple;
+            StartCoroutine(RequeueAfterDelay(4, newMiniMe));
         }
 
     }
@@ -223,7 +199,7 @@ public class AirBoss : Enemy
             newMiniMe.transform.rotation = middleAttackPosToUse.rotation;
             Vector3 direction = (middleTargetToUse.position - middleAttackPosToUse.position).normalized; 
             newMiniMe.GetComponent<Rigidbody2D>().linearVelocity = direction * launchForce;
-            StartCoroutine(RequeueAfterDelay(3, newMiniMe));
+            StartCoroutine(RequeueAfterDelay(4, newMiniMe));
         }
     }
 
@@ -254,6 +230,7 @@ public class AirBoss : Enemy
         if(hp <= maxHp * 0.66f)
         {
             currentBossState = BossState.StageTwo;
+            startTimeBtwAttack = startTimeBtwAttackTriple;
         }
     }
 

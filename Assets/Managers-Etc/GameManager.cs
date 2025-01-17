@@ -7,7 +7,7 @@ using TMPro;
 public class GameManager: MonoBehaviour
 {
     public static GameManager Instance;
-    public enum GameState { MainMenu, Playing, Paused, Storage, GameOver }
+    public enum GameState { MainMenu, Playing, Paused, GameWin, GameOver, PoweringUp }
     public GameState currentState{get; private set;}
     public int playerHealth{get; set;}
     public int maxPlayerHealth{get; set;}
@@ -54,6 +54,10 @@ public class GameManager: MonoBehaviour
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         if(scene.name == "VS"){
+            LoadPlayScreen();
+            resetPlayer();
+            currentState = GameState.Playing;
+        }else if(scene.name == "VS 2"){
             LoadPlayScreen();
             resetPlayer();
             currentState = GameState.Playing;
@@ -112,6 +116,7 @@ public class GameManager: MonoBehaviour
 
     public void GameWin()
     {
+        currentState = GameState.GameWin;
         gameWinScreen.GameWin();
         Time.timeScale = 0;
     }
@@ -146,6 +151,16 @@ public class GameManager: MonoBehaviour
             default:
                 break;
         }
+    }
+
+    public void PoweringUp()
+    {
+        currentState = GameState.PoweringUp;
+    }
+
+    public void DonePoweringUp()
+    {
+        currentState = GameState.Playing;
     }
 
 }
