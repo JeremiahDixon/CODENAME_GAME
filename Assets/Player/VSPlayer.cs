@@ -164,20 +164,21 @@ public class VSPlayer : MonoBehaviour, IPlayer
                 if(swordAttack.WasPressedThisFrame())
                 {
                     combo++;
-                }
-                if(swordAttack.WasPressedThisFrame() && combo == 1)
-                {
-                    anim.SetTrigger(SWORD_TRIGGER);
-                }
-                else if(swordAttack.WasPressedThisFrame() && combo == 2)
-                {
-                    anim.SetTrigger(SWORD_TWO_TRIGGER);
-                    
-                }else if(swordAttack.WasPressedThisFrame() && combo == 3)
-                {
-                    anim.SetTrigger(SWORD_TRIGGER);
-                    timeBtwAttack = 1f;
-                    combo = 0;
+                    if(combo == 1)
+                    {
+                        anim.SetTrigger(SWORD_TRIGGER);
+                    }
+                    else if(combo == 2)
+                    {
+                        anim.SetTrigger(SWORD_TWO_TRIGGER);
+                        
+                    }else if(combo == 3)
+                    {
+                        Debug.Log("Third Attack Triggering");
+                        anim.SetTrigger(SWORD_TRIGGER);
+                        timeBtwAttack = 1f;
+                        combo = 0;
+                    }
                 }
             }else
             {
@@ -290,7 +291,6 @@ public class VSPlayer : MonoBehaviour, IPlayer
             }
             yield return null;
         }
-        Debug.Log("Attack!");
         ReturnDamagedEnemiesHittable();
     }
 
@@ -329,7 +329,6 @@ public class VSPlayer : MonoBehaviour, IPlayer
 
     public void TakeDamage(int amount)
     {
-        Debug.Log("Player Damaged!");
         GameManager.Instance.TakeDamage(amount);
     }
 
