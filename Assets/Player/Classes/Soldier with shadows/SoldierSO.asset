@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: {x: 2, y: 2}
   className: Soldier
-  startTimeBtwAttack: 0.5
+  startTimeBtwAttack: 0.2
   baseAttackStrength: 50
   dashSpeed: {x: 2, y: 2}
   dashLength: 0.5

@@ -8,7 +8,10 @@ public class VSPlayer : MonoBehaviour, IPlayer
     [SerializeField]
     Vector2 movementSpeed = new Vector2(0.0f, 0.0f); // 2D Movement speed to have independant axis speed
     Vector2 inputVector = new Vector2(0.0f, 0.0f);
+    public float knockbackForce = 5f;
+    public float knockbackDuration = 0.2f;
     const string SWORD_TRIGGER = "isAttackingTrigger";
+    const string SWORD_TWO_TRIGGER = "isSecondAttacking";
     const string WALKING = "isWalking";
     const string IDLE = "isIdle";
     const string DEAD = "isDead";
@@ -76,6 +79,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
     float stepLength;
     [SerializeField]
     float stepTimer;
+    private int combo = 0;
     public bool isDoubleProjectile { get; set;} = false;
     private void Awake()
     {
@@ -159,8 +163,21 @@ public class VSPlayer : MonoBehaviour, IPlayer
             {
                 if(swordAttack.WasPressedThisFrame())
                 {
-                    timeBtwAttack = startTimeBtwAttack;
+                    combo++;
+                }
+                if(swordAttack.WasPressedThisFrame() && combo == 1)
+                {
                     anim.SetTrigger(SWORD_TRIGGER);
+                }
+                else if(swordAttack.WasPressedThisFrame() && combo == 2)
+                {
+                    anim.SetTrigger(SWORD_TWO_TRIGGER);
+                    
+                }else if(swordAttack.WasPressedThisFrame() && combo == 3)
+                {
+                    anim.SetTrigger(SWORD_TRIGGER);
+                    timeBtwAttack = 1f;
+                    combo = 0;
                 }
             }else
             {
@@ -264,6 +281,9 @@ public class VSPlayer : MonoBehaviour, IPlayer
                         impulseSource.GenerateImpulse(new Vector3(0, -0.1f, 0));
                         shook = true;
                     }
+                    // Calculate knockback direction
+                    Vector2 knockbackDirection = enemiesToDamage[i].transform.position - transform.position;
+                    enemy.ApplyKnockback(knockbackDirection, knockbackForce, knockbackDuration);
                     enemy.TakeDamage(currentAttackStrength + Mathf.RoundToInt(currentAttackStrength * damageModifier));
                     damagedEnemies.Add(enemy);
                 }

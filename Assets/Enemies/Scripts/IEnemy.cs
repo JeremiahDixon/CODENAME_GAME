@@ -8,6 +8,7 @@ public interface IEnemy
     // void setHp(int hp);
     void TakeDamage (int damage);
     void Freeze(float time);
+    public void ApplyKnockback(Vector2 direction, float speed, float duration);
     // int getStrength();
     // void setStrength(int strength);
     // float getSpeed();

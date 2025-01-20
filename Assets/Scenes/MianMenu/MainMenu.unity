@@ -2347,6 +2347,9 @@ MonoBehaviour:
   _mainMenuFirst: {fileID: 1234736219}
   _classMenuFirst: {fileID: 1221462666}
   _settingsMenuFirst: {fileID: 0}
+  isMain: 0
+  isClassSelect: 0
+  isSettings: 0
 --- !u!1 &2021587811
 GameObject:
   m_ObjectHideFlags: 0

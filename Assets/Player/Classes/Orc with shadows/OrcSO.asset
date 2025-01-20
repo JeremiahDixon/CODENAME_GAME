@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: {x: 2, y: 2}
   className: Orc
-  startTimeBtwAttack: 3
+  startTimeBtwAttack: 0.65
   baseAttackStrength: 80
   dashSpeed: {x: 2, y: 2}
   dashLength: 0.65

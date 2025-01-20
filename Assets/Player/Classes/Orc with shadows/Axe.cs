@@ -12,6 +12,8 @@ public class Axe : Projectile
     float traveledDistance;
     int roationSpeed = 1080;
     bool firstPass;
+    public float knockbackForce = 2f;
+    public float knockbackDuration = 0.15f;
 
     void OnEnable()
     {
@@ -55,6 +57,8 @@ public class Axe : Projectile
         if(!frozen)
         {
             if(other.gameObject.CompareTag(ENEMY_TAG)){
+                Vector2 knockbackDirection = other.transform.position - transform.position;
+                other.gameObject.GetComponent<IEnemy>().ApplyKnockback(knockbackDirection, knockbackForce, knockbackDuration);
                 other.gameObject.GetComponent<IEnemy>().TakeDamage(damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.damageModifier));
                 Debug.Log("Dealing x damage: " + (damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.damageModifier)));
             }

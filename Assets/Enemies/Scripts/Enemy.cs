@@ -35,7 +35,12 @@ public class Enemy : MonoBehaviour, IEnemy
         legendary
     };
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private Vector2 knockbackDirection;
+    private float knockbackDuration;
+    private float knockbackSpeed;
+
+    private bool isKnockedBack;
+
     void Awake()
     {
         ms = GameObject.Find("Spawner").GetComponent<MobSpawner>();
@@ -56,6 +61,20 @@ public class Enemy : MonoBehaviour, IEnemy
     void FixedUpdate()
     {
         PreventOverlap();
+        if (isKnockedBack)
+        {
+            // Move the enemy in the knockback direction
+            transform.position += (Vector3)(knockbackDirection * knockbackSpeed * Time.deltaTime);
+
+            // Decrease the knockback duration
+            knockbackDuration -= Time.deltaTime;
+
+            // Stop knockback when the duration is over
+            if (knockbackDuration <= 0)
+            {
+                isKnockedBack = false;
+            }
+        }
     }
 
     public void PreventOverlap()
@@ -139,5 +158,13 @@ public class Enemy : MonoBehaviour, IEnemy
         Vector3 Scaler = transform.localScale;
         Scaler.x *= -1;
         transform.localScale = Scaler;
+    }
+
+    public void ApplyKnockback(Vector2 direction, float speed, float duration)
+    {
+        knockbackDirection = direction.normalized;
+        knockbackSpeed = speed;
+        knockbackDuration = duration;
+        isKnockedBack = true;
     }
 }
