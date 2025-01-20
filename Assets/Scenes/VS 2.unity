@@ -630,7 +630,7 @@ Transform:
   m_GameObject: {fileID: 120457320}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.23, y: -1.25, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2268,7 +2268,7 @@ Transform:
   m_GameObject: {fileID: 255891811}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 960, y: 540, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2549,7 +2549,7 @@ Transform:
   m_GameObject: {fileID: 324996520}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.23, y: -1.25, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3947,7 +3947,7 @@ Transform:
   m_GameObject: {fileID: 872564489}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5080706, y: -2.5173879, z: -0.050107025}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4012,7 +4012,7 @@ Transform:
   m_GameObject: {fileID: 875662351}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.192818, y: -1.4060354, z: 10.949519}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4072,6 +4072,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 096989a42298cb849a4148a86b27a297, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameWinMenuFirst: {fileID: 0}
 --- !u!114 &979349968
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62249,6 +62250,7 @@ MonoBehaviour:
   - {fileID: 315499973876021060, guid: f46904ca573d44743b4190c690f4943c, type: 3}
   - {fileID: 8467820494014265372, guid: c306adada0391418a80cd6997c03ac89, type: 3}
   possiblePowerups: []
+  _powerupMenuFirst: {fileID: 0}
 --- !u!1 &1113147524
 GameObject:
   m_ObjectHideFlags: 0
@@ -62274,7 +62276,7 @@ Transform:
   m_GameObject: {fileID: 1113147524}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.84, y: -0.64, z: -0.029610526}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -62878,7 +62880,7 @@ Transform:
   m_GameObject: {fileID: 1389994520}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.8147993, y: -3.7150764, z: -0.056020014}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -63341,7 +63343,7 @@ Transform:
   m_GameObject: {fileID: 1652837719}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.02085, y: 0.5871464, z: -0.057666045}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -64965,6 +64967,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f598f4739bff74afa997d2de57806c61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _gameOverMenuFirst: {fileID: 0}
 --- !u!114 &1808639281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65104,7 +65107,7 @@ Transform:
   m_GameObject: {fileID: 1856849340}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1073.6841, y: 608.1988, z: 6.9434214}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -65534,7 +65537,7 @@ Transform:
   m_GameObject: {fileID: 2011170297}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.6320904, y: 0.21753938, z: -0.110572346}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
