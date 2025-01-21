@@ -80896,6 +80896,7 @@ MonoBehaviour:
   - {fileID: 4791925070798943499, guid: e6da73876ece00a4a9ee035b727da966, type: 3}
   - {fileID: 315499973876021060, guid: f46904ca573d44743b4190c690f4943c, type: 3}
   - {fileID: 8467820494014265372, guid: c306adada0391418a80cd6997c03ac89, type: 3}
+  - {fileID: 2741234081315411931, guid: dae58e7bab08943b3b1d77d8b63c3d37, type: 3}
   possiblePowerups: []
   _powerupMenuFirst: {fileID: 1069049527}
 --- !u!1 &1113147524
