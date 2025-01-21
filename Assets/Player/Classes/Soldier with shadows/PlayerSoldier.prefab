@@ -198,7 +198,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 834131347
-  m_SortingLayer: 2
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: -7978735674136817684, guid: ef761efe4771643568cf0cb7fda59aba, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -372,15 +372,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: {x: 0, y: 0}
+  knockbackForce: 5
+  knockbackDuration: 0.2
   timeBtwAttack: 0
-  startTimeBtwAttack: 0.5
+  startTimeBtwAttack: 0
   attackPos: {fileID: 8548521028279300952}
   attackPosLeft: {fileID: 7895013169810573308}
   whatIsEnemies:
     serializedVersion: 2
     m_Bits: 64
   attackRange: 0.6
-  baseAttackStrength: 5
+  baseAttackStrength: 0
   baseHp: 0
   activeMovementSpeed: {x: 0, y: 0}
   dashSpeed: {x: 6, y: 6}
@@ -547,7 +549,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 834131347
-  m_SortingLayer: 2
+  m_SortingLayer: 5
   m_SortingOrder: 5
   m_Sprite: {fileID: 21301652, guid: 4e799e9a72d583c4ebba9f2e35c2a5f4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

@@ -10,8 +10,16 @@ public class VSPlayer : MonoBehaviour, IPlayer
     Vector2 inputVector = new Vector2(0.0f, 0.0f);
     public float knockbackForce = 5f;
     public float knockbackDuration = 0.2f;
+    private int comboStep = 0;
+    private float comboTimer;
+    private float maxComboDelay = 0.8f; // Time allowed to chain combos
+    private bool isAttacking = false;
+    private bool bufferedInput = false;
+    private float animationProgress = 0f; // Track current animation progress
     const string SWORD_TRIGGER = "isAttackingTrigger";
-    const string SWORD_TWO_TRIGGER = "isSecondAttacking";
+    const string IS_ATTACKING = "isAttacking";
+    const string COMBO_STEP = "comboStep";
+    // const string SWORD_TWO_TRIGGER = "isSecondAttacking";
     const string WALKING = "isWalking";
     const string IDLE = "isIdle";
     const string DEAD = "isDead";
@@ -79,7 +87,6 @@ public class VSPlayer : MonoBehaviour, IPlayer
     float stepLength;
     [SerializeField]
     float stepTimer;
-    private int combo = 0;
     public bool isDoubleProjectile { get; set;} = false;
     private void Awake()
     {
@@ -159,31 +166,40 @@ public class VSPlayer : MonoBehaviour, IPlayer
             {
                 dashCoolCounter -= Time.deltaTime;
             }
-            if(timeBtwAttack <= 0)
-            {
-                if(swordAttack.WasPressedThisFrame())
-                {
-                    combo++;
-                    if(combo == 1)
-                    {
-                        anim.SetTrigger(SWORD_TRIGGER);
-                    }
-                    else if(combo == 2)
-                    {
-                        anim.SetTrigger(SWORD_TWO_TRIGGER);
-                        
-                    }else if(combo == 3)
-                    {
-                        Debug.Log("Third Attack Triggering");
-                        anim.SetTrigger(SWORD_TRIGGER);
-                        timeBtwAttack = 1f;
-                        combo = 0;
-                    }
-                }
+
+            if(timeBtwAttack <= 0){
+                HandleCombatInput();
+                ResetComboTimer();
             }else
             {
                 timeBtwAttack -= Time.deltaTime;
             }
+
+        //     if(timeBtwAttack <= 0)
+        //     {
+        //         if(swordAttack.WasPressedThisFrame())
+        //         {
+        //             combo++;
+        //             if(combo == 1)
+        //             {
+        //                 anim.SetTrigger(SWORD_TRIGGER);
+        //             }
+        //             else if(combo == 2)
+        //             {
+        //                 anim.SetTrigger(SWORD_TRIGGER);
+                        
+        //             }else if(combo == 3)
+        //             {
+        //                 Debug.Log("Third Attack Triggering");
+        //                 anim.SetTrigger(SWORD_TRIGGER);
+        //                 timeBtwAttack = 1f;
+        //                 combo = 0;
+        //             }
+        //         }
+        //     }else
+        //     {
+        //         timeBtwAttack -= Time.deltaTime;
+        //     }
         }
         
     }
@@ -237,6 +253,86 @@ public class VSPlayer : MonoBehaviour, IPlayer
             }
         }
         
+    }
+
+    void HandleCombatInput()
+    {
+        if (swordAttack.WasPressedThisFrame())
+        {
+            if (!isAttacking)
+            {
+                // Start the combo
+                isAttacking = true;
+                comboStep = 1;
+                comboTimer = maxComboDelay;
+                anim.SetInteger(COMBO_STEP, comboStep);
+                anim.SetBool(IS_ATTACKING, true);
+                anim.SetTrigger(SWORD_TRIGGER);
+            }
+            else if (comboStep < 3 && comboTimer > 0)
+            {
+                // Buffer the input if current animation is not ready to chain
+                if (animationProgress < 0.7f) // Allow buffering during the first 70% of the animation
+                {
+                    bufferedInput = true;
+                }
+                else
+                {
+                    // Chain the next attack immediately if animation is ready
+                    TriggerNextAttack();
+                }
+            }
+        }
+    }
+
+    void TriggerNextAttack()
+    {
+        comboStep++;
+        comboTimer = maxComboDelay; // Reset combo timer
+        anim.SetInteger(COMBO_STEP, comboStep);
+        anim.SetTrigger(SWORD_TRIGGER);
+        bufferedInput = false; // Clear buffered input after triggering the next attack
+    }
+
+    void ResetComboTimer()
+    {
+        if (isAttacking)
+        {
+            comboTimer -= Time.deltaTime;
+
+            if (comboTimer <= 0)
+            {
+                // End the combo if time runs out
+                isAttacking = false;
+                comboStep = 0;
+                anim.SetBool(IS_ATTACKING, false);
+                bufferedInput = false; // Clear any buffered input
+                timeBtwAttack = startTimeBtwAttack;
+            }
+        }
+    }
+
+    public void OnAttackAnimationEnd()
+    {
+        if (comboStep >= 3 || comboTimer <= 0)
+        {
+            isAttacking = false;
+            comboStep = 0;
+            anim.SetBool(IS_ATTACKING, false);
+            timeBtwAttack = startTimeBtwAttack;
+        }
+        else if (bufferedInput)
+        {
+            // Trigger the next attack if there was buffered input
+            TriggerNextAttack();
+        }else{
+            timeBtwAttack = startTimeBtwAttack;
+        }
+    }
+
+    public void UpdateAnimationProgress(float progress)
+    {
+        animationProgress = progress; // This value should range from 0.0 to 1.0
     }
 
     void Freeze()
