@@ -188,7 +188,8 @@ MonoBehaviour:
   currentSpeed: 0
   scoreValue: 0
   isFreezable: 0
-  damagedClips: []
+  damagedClips:
+  - {fileID: 8300000, guid: 5533246ab38d16e43b618dfe471d3a1f, type: 3}
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 8
@@ -203,6 +204,7 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+  canBeKnockedBack: 0
   timeBtwAttack: 0
   attackPos: {fileID: 8575935487428392944}
   attackRange: 1.53

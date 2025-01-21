@@ -78,7 +78,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 491491893
-  m_SortingLayer: 1
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 596f20bad5aa4644db446480a1583ece, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -132,8 +132,10 @@ MonoBehaviour:
   speed: 0
   currentSpeed: 0
   scoreValue: 0
+  isFreezable: 0
   damagedClips:
-  - {fileID: 8300000, guid: 02a55b19bf252446493f86cfd48f3ca6, type: 3}
+  - {fileID: 8300000, guid: 4052d073e0465ff4ab261803e486fb22, type: 3}
+  - {fileID: 8300000, guid: a9251a67137733c4487d77e7c334dcc8, type: 3}
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 8
@@ -143,6 +145,8 @@ MonoBehaviour:
   enemyLevel: 0
   detectionRadius: 0.2
   separationStrength: 1
+  anim: {fileID: 0}
+  facingRight: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64

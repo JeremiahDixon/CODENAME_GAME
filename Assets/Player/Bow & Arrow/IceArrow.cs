@@ -11,8 +11,11 @@ public class IceArrow : Arrow
             rb.linearVelocity = Vector2.zero;
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
             transform.parent = other.transform;
-            Vector2 knockbackDirection = other.transform.position - transform.position;
-            other.gameObject.GetComponent<IEnemy>().ApplyKnockback(knockbackDirection, knockbackForce, knockbackDuration);
+            if (other.gameObject.GetComponent<Enemy>().canBeKnockedBack)
+            {
+                Vector2 knockbackDirection = other.transform.position - GameManager.Instance.thePlayer.transform.position;
+                other.gameObject.GetComponent<IEnemy>().ApplyKnockback(knockbackDirection, knockbackForce, knockbackDuration);
+            }
             other.gameObject.GetComponent<IEnemy>().TakeDamage(damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.damageModifier));
             Debug.Log("Dealing x damage: " + (damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.damageModifier)));
             if(other.gameObject.activeInHierarchy){

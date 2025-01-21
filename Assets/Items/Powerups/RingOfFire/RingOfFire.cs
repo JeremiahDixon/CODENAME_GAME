@@ -31,22 +31,22 @@ public class RingOfFire : Powerup
             ringOfFire = Instantiate(hammerSpinPrefab, this.transform.position, Quaternion.identity);
         }else if(powerupLevel == 2)
         {
-            ringOfFire.GetComponent<HammerSpin>().LevelUpAbility(2);
+            ringOfFire.GetComponent<HammerSpin>().LevelUpAbility(2, 30);
         }else if(powerupLevel == 3)
         {
-            ringOfFire.GetComponent<HammerSpin>().LevelUpAbility(3);
+            ringOfFire.GetComponent<HammerSpin>().LevelUpAbility(3, 30);
         }else if(powerupLevel == 4)
         {
-            ringOfFire.GetComponent<HammerSpin>().LevelUpAbility(4);
+            ringOfFire.GetComponent<HammerSpin>().LevelUpAbility(4, 40);
         }else if(powerupLevel == 5)
         {
-
+            ringOfFire.GetComponent<HammerSpin>().LevelUpAbility(4, 50);
         }else if(powerupLevel == 6)
         {
-
+            ringOfFire.GetComponent<HammerSpin>().LevelUpAbility(5, 60);
         }else if(powerupLevel == 7)
         {
-
+            ringOfFire.GetComponent<HammerSpin>().LevelUpAbility(6, 70);
         }
     }
 }

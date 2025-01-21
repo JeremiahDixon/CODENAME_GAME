@@ -52,7 +52,7 @@ public class PlaySystemManager : MonoBehaviour
             ms.startAdvancedTimeBtwSpawn = 0.75f;
             ms.startLegendaryTimeBtwSpawn = 1;
         }else if(timePlayed >= playedThreeMin){
-            ms.startBasicTimeBtwSpawn = 1;
+            ms.startBasicTimeBtwSpawn = 0.2f;
             ms.startIntermediateTimeBtwSpawn = 0.5f;
             ms.startAdvancedTimeBtwSpawn = 1;
             ms.startLegendaryTimeBtwSpawn = 5;
@@ -119,6 +119,21 @@ public class PlaySystemManager : MonoBehaviour
             pum.PowerUp();
         }
         else if(score >= 1750 && powerupCount == 9)
+        {
+            powerupCount ++;
+            pum.PowerUp();
+        }
+        else if(score >= 2000 && powerupCount == 10)
+        {
+            powerupCount ++;
+            pum.PowerUp();
+        }
+        else if(score >= 2250 && powerupCount == 11)
+        {
+            powerupCount ++;
+            pum.PowerUp();
+        }
+        else if(score >= 2500 && powerupCount == 12)
         {
             powerupCount ++;
             pum.PowerUp();

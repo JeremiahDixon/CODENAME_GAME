@@ -28,6 +28,7 @@ public class Enemy : MonoBehaviour, IEnemy
     const string RUNNING = "isRunning";
     public bool facingRight = false;
     public LayerMask enemyLayer; // Layer to detect other enemies
+    public bool canBeKnockedBack = true;
     public enum EnemyLevel{
         basic,
         intermediate,

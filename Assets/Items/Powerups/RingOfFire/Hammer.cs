@@ -19,12 +19,18 @@ public class Hammer : MonoBehaviour
         // Check if the object hit is an enemy
         if (collision.CompareTag("Enemy"))
         {
-            Vector2 knockbackDirection = collision.transform.position - GameManager.Instance.thePlayer.transform.position;
-            collision.gameObject.GetComponent<IEnemy>().ApplyKnockback(knockbackDirection, knockbackForce, knockbackDuration);
-            Debug.Log("Hammer Dealing Damage to enemy.");
-            // Example: Apply damage to the enemy (assuming the enemy has a Health script)
+            if (collision.gameObject.GetComponent<Enemy>().canBeKnockedBack)
+            {
+                Vector2 knockbackDirection = collision.transform.position - GameManager.Instance.thePlayer.transform.position;
+                collision.gameObject.GetComponent<IEnemy>().ApplyKnockback(knockbackDirection, knockbackForce, knockbackDuration);
+            }
             collision.GetComponent<IEnemy>().TakeDamage(damage);
         }
+    }
+
+    public void IncreaseDamage(int damage)
+    {
+        this.damage = damage;
     }
 
 }

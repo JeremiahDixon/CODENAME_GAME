@@ -4,9 +4,8 @@ public class HammerSpin : MonoBehaviour
 {
     public GameObject hammerPrefab; // Reference to the hammer prefab
     public int numberOfHammers = 1; // Number of hammers (scales with level)
-    public float spinSpeed = 150f; // Speed of the spin
-    public float radius = 0.05f; // Distance of the hammers from the player
-
+    public float spinSpeed = 180f; // Speed of the spin
+    public float radius = 1.25f; // Distance of the hammers from the player
     private GameObject[] hammers; // Array to store active hammers
     IPlayer player;
 
@@ -15,7 +14,7 @@ public class HammerSpin : MonoBehaviour
         player = GameManager.Instance.thePlayer;
         this.gameObject.transform.parent = player.transform;
         this.gameObject.transform.position = player.transform.position;
-        SpawnHammers(); // Initial hammer spawn
+        SpawnHammers(20); // Initial hammer spawn
     }
 
     void Update()
@@ -23,7 +22,7 @@ public class HammerSpin : MonoBehaviour
         RotateHammers(); // Rotate the hammers around the player
     }
 
-    void SpawnHammers()
+    void SpawnHammers(int damage)
     {
         // Destroy existing hammers if any
         if (hammers != null)
@@ -44,6 +43,7 @@ public class HammerSpin : MonoBehaviour
 
             GameObject hammer = Instantiate(hammerPrefab, position, Quaternion.identity);
             hammer.transform.parent = this.transform;
+            hammer.GetComponent<Hammer>().IncreaseDamage(damage);
             hammers[i] = hammer;
         }
     }
@@ -64,10 +64,10 @@ public class HammerSpin : MonoBehaviour
     }
 
     // Call this to update the number of hammers (e.g., when the ability levels up)
-    public void LevelUpAbility(int newHammerCount)
+    public void LevelUpAbility(int newHammerCount, int damage )
     {
         numberOfHammers = newHammerCount;
-        SpawnHammers();
+        SpawnHammers(damage);
     }
     
 }

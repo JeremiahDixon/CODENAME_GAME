@@ -46,5 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hammerPrefab: {fileID: 2172604270187590481, guid: 8d8be3796b21b43f8acb512fefdf956c, type: 3}
   numberOfHammers: 1
-  spinSpeed: 50
-  radius: 2
+  spinSpeed: 180
+  radius: 1.25

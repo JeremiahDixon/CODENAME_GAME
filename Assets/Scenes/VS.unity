@@ -16974,7 +16974,7 @@ MonoBehaviour:
   advancedMobs:
   - {fileID: 558362672080133649, guid: f96a6db94d086504dbce38f74bdce4d9, type: 3}
   legendaryMobs:
-  - {fileID: 1682183932814266441, guid: b7197c9b1295ff643bea1baa2a82dbbc, type: 3}
+  - {fileID: 74967740486132380, guid: 8ea82414331a0ed4986c91fa127848bd, type: 3}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -80892,6 +80892,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   allPowerups:
   - {fileID: 2741234081315411931, guid: dae58e7bab08943b3b1d77d8b63c3d37, type: 3}
+  - {fileID: 4379922112471556457, guid: aefc3ea6bef9fcb40a1c0a339b1a2de3, type: 3}
+  - {fileID: 8467820494014265372, guid: c306adada0391418a80cd6997c03ac89, type: 3}
+  - {fileID: 8374271587910678415, guid: ab44a0f18b777224c81a939a239fad5e, type: 3}
+  - {fileID: 4791925070798943499, guid: e6da73876ece00a4a9ee035b727da966, type: 3}
+  - {fileID: 315499973876021060, guid: f46904ca573d44743b4190c690f4943c, type: 3}
   possiblePowerups: []
   _powerupMenuFirst: {fileID: 1069049527}
 --- !u!1 &1113147524
