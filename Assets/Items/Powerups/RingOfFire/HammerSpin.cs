@@ -4,8 +4,8 @@ public class HammerSpin : MonoBehaviour
 {
     public GameObject hammerPrefab; // Reference to the hammer prefab
     public int numberOfHammers = 1; // Number of hammers (scales with level)
-    public float spinSpeed = 50f; // Speed of the spin
-    public float radius = 2f; // Distance of the hammers from the player
+    public float spinSpeed = 150f; // Speed of the spin
+    public float radius = 0.05f; // Distance of the hammers from the player
 
     private GameObject[] hammers; // Array to store active hammers
     IPlayer player;
@@ -56,6 +56,9 @@ public class HammerSpin : MonoBehaviour
             if (hammers[i] != null)
             {
                 hammers[i].transform.RotateAround(transform.position, Vector3.forward, spinSpeed * Time.deltaTime);
+                //hammers[i].transform.Rotate(Vector3.forward * spinSpeed * Time.deltaTime);
+                // Vector3 direction = hammers[i].transform.position - transform.position;
+                // hammers[i].transform.right = direction;
             }
         }
     }

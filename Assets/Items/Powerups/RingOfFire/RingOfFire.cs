@@ -4,6 +4,7 @@ public class RingOfFire : Powerup
 {
     IPlayer player;
     [SerializeField] GameObject hammerSpinPrefab;
+    GameObject ringOfFire;
     void Awake()
     {
         powerupSO.CreateInfo(this.gameObject);
@@ -27,16 +28,16 @@ public class RingOfFire : Powerup
         IncreaseLevel();
         if(powerupLevel == 1)
         {
-            Instantiate(hammerSpinPrefab, this.transform.position, Quaternion.identity);
+            ringOfFire = Instantiate(hammerSpinPrefab, this.transform.position, Quaternion.identity);
         }else if(powerupLevel == 2)
         {
-
+            ringOfFire.GetComponent<HammerSpin>().LevelUpAbility(2);
         }else if(powerupLevel == 3)
         {
-
+            ringOfFire.GetComponent<HammerSpin>().LevelUpAbility(3);
         }else if(powerupLevel == 4)
         {
-
+            ringOfFire.GetComponent<HammerSpin>().LevelUpAbility(4);
         }else if(powerupLevel == 5)
         {
 
