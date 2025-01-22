@@ -76,6 +76,7 @@ public class Enemy : MonoBehaviour, IEnemy
                 isKnockedBack = false;
             }
         }
+        CheckBounds();
     }
 
     public void PreventOverlap()
@@ -140,16 +141,18 @@ public class Enemy : MonoBehaviour, IEnemy
 
     //this works if i decide to despawn the mob after leaves camera bounds
     public void CheckBounds(){
-        if(transform.position.x < Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).x
-        || transform.position.x > Camera.main.ViewportToWorldPoint(new Vector3(1, 0, 0)).x)
+        if(transform.position.x < Camera.main.ViewportToWorldPoint(new Vector3(-0.1f, 0, 0)).x
+        || transform.position.x > Camera.main.ViewportToWorldPoint(new Vector3(1.1f, 0, 0)).x)
         {
-            ms.RequeueMob(this.gameObject);
+            ms.RespawnMob(this.gameObject);
+            Debug.Log("Respawning Mob");
         }
 
-        if(transform.position.y < Camera.main.ViewportToWorldPoint(new Vector3(0, 0, 0)).y
-        || transform.position.y > Camera.main.ViewportToWorldPoint(new Vector3(0, 1, 0)).y)
+        if(transform.position.y < Camera.main.ViewportToWorldPoint(new Vector3(0, -0.1f, 0)).y
+        || transform.position.y > Camera.main.ViewportToWorldPoint(new Vector3(0, 1.1f, 0)).y)
         {
-            ms.RequeueMob(this.gameObject);
+            ms.RespawnMob(this.gameObject);
+            Debug.Log("Respawning Mob");
         }
     }
 

@@ -1,3 +1,4 @@
+
 using System.Collections;
 using UnityEngine;
 
@@ -41,19 +42,19 @@ public class MobSpawner : MonoBehaviour
     {
         if(GameManager.Instance.currentState == GameManager.GameState.Playing && currentState == PlayState.MobWaves){
             if(basicTimeBtwSpawn <= 0){
-                Spawn(basicMobsList);
+                Spawn(GetRandomMob(basicMobsList), GetRandomScreenside());
                 basicTimeBtwSpawn = startBasicTimeBtwSpawn;
             }else{
                 basicTimeBtwSpawn -= Time.deltaTime;
             }
             if(intermediateTimeBtwSpawn <= 0){
-                Spawn(intermediateMobsList);
+                Spawn(GetRandomMob(intermediateMobsList), GetRandomScreenside());
                 intermediateTimeBtwSpawn = startIntermediateTimeBtwSpawn;
             }else{
                 intermediateTimeBtwSpawn -= Time.deltaTime;
             }
             if(advancedTimeBtwSpawn <= 0){
-                Spawn(advancedMobsList);
+                Spawn(GetRandomMob(advancedMobsList), GetRandomScreenside());
                 advancedTimeBtwSpawn = startAdvancedTimeBtwSpawn;
             }else{
                 advancedTimeBtwSpawn -= Time.deltaTime;
@@ -62,44 +63,81 @@ public class MobSpawner : MonoBehaviour
         }
     }
 
-    void Spawn(ArrayList mobList){
+    GameObject GetRandomMob(ArrayList mobList){
+        if(mobList.Count > 0)
+        {
+            int randomMob = Random.Range(0, mobList.Count);
+            GameObject mob = (GameObject)mobList[randomMob];
+            mobList.RemoveAt(randomMob);
+            spawnedMobs.Add(mob);
+            return mob;
+        }
+        return null;
+    }
+
+    int GetRandomScreenside(){
         int screenSide = Random.Range(1, 5);
-        int randomMob = Random.Range(0, mobList.Count);
+        return screenSide;
+    }
+
+    ArrayList GetMobList(Enemy.EnemyLevel enemyLevel)
+    {
+        switch (enemyLevel)
+        {
+            case Enemy.EnemyLevel.basic:
+                return basicMobsList;
+            case Enemy.EnemyLevel.intermediate:
+                return intermediateMobsList;
+            case Enemy.EnemyLevel.advanced:
+                return advancedMobsList;
+            case Enemy.EnemyLevel.legendary:
+                return legendaryMobsList;
+            default:
+                return basicMobsList;
+        }
+    }
+
+    void Spawn(GameObject mob, int screenSide){
+        ArrayList mobList = GetMobList(mob.GetComponent<Enemy>().enemyLevel);
         if(screenSide == 1){
-            Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(1.1f, 1.4f), 0));
-             if(mobList.Count > 0 && CanSpawn(v3Pos, 1.0f)){
-                GameObject mob = (GameObject)mobList[randomMob];
-                mobList.RemoveAt(randomMob);
-                spawnedMobs.Add(mob);
+            Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(1.01f, 1.05f), 0));
+            if(CanSpawn(v3Pos, 0.2f)){
                 mob.transform.position = v3Pos;
                 mob.SetActive(true);
+            }else
+            {
+                mobList.Add(mob);
+                spawnedMobs.Remove(mob);
             }
         }else if(screenSide == 2){
-            Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(1.1f, 1.4f), Random.Range(0.0f, 1.0f), 0));
-            if(mobList.Count > 0 && CanSpawn(v3Pos, 1.0f)){
-                GameObject mob = (GameObject)mobList[randomMob];
-                mobList.RemoveAt(randomMob);
-                spawnedMobs.Add(mob);
+            Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(1.01f, 1.05f), Random.Range(0.0f, 1.0f), 0));
+            if(CanSpawn(v3Pos, 0.2f)){
                 mob.transform.position = v3Pos;
                 mob.SetActive(true);
+            }else
+            {
+                mobList.Add(mob);
+                spawnedMobs.Remove(mob);
             }
         }else if(screenSide == 3){
-            Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(0.0f, -0.4f), 0));
-            if(mobList.Count > 0 && CanSpawn(v3Pos, 1.0f)){
-                GameObject mob = (GameObject)mobList[randomMob];
-                mobList.RemoveAt(randomMob);
-                spawnedMobs.Add(mob);
+            Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(0.0f, -0.05f), 0));
+            if(CanSpawn(v3Pos, 0.2f)){
                 mob.transform.position = v3Pos;
                 mob.SetActive(true);
+            }else
+            {
+                mobList.Add(mob);
+                spawnedMobs.Remove(mob);
             }
         }else if(screenSide == 4){
-            Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, -0.4f), Random.Range(0.0f, 1f), 0));
-            if(mobList.Count > 0 && CanSpawn(v3Pos, 1.0f)){
-                GameObject mob = (GameObject)mobList[randomMob];
-                mobList.RemoveAt(randomMob);
-                spawnedMobs.Add(mob);
+            Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, -0.05f), Random.Range(0f, 1f), 0));
+            if(CanSpawn(v3Pos, 0.2f)){
                 mob.transform.position = v3Pos;
                 mob.SetActive(true);
+            }else
+            {
+                mobList.Add(mob);
+                spawnedMobs.Remove(mob);
             }
         }
     }
@@ -176,11 +214,17 @@ public class MobSpawner : MonoBehaviour
         
     }
 
+    public void RespawnMob(GameObject mob)
+    {
+        // mob.SetActive(false);
+        Spawn(mob, GetRandomScreenside());
+    }
+
     public void SpawnBoss()
     {
         currentState = PlayState.Bossfight;
         DespawnAll();
-        Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(1.1f, 1.4f), 0));
+        Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(1.01f, 1.05f), 0));
         if(legendaryMobsList.Count > 0){
             GameObject mob = (GameObject)legendaryMobsList[0];
             legendaryMobsList.RemoveAt(0);
