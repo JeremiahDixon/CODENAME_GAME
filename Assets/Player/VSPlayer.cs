@@ -5,8 +5,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class VSPlayer : MonoBehaviour, IPlayer
 {
-    [SerializeField]
-    Vector2 movementSpeed = new Vector2(0.0f, 0.0f); // 2D Movement speed to have independant axis speed
+    [SerializeField] Vector2 movementSpeed = new Vector2(0.0f, 0.0f); // 2D Movement speed to have independant axis speed
     Vector2 inputVector = new Vector2(0.0f, 0.0f);
     public float knockbackForce = 5f;
     public float knockbackDuration = 0.2f;
@@ -35,38 +34,26 @@ public class VSPlayer : MonoBehaviour, IPlayer
     private Rigidbody2D myRigid;
     private bool facingRight = true;
     private Animator anim;
-    [SerializeField]
-    float timeBtwAttack;
-    [SerializeField]
-    float startTimeBtwAttack;
-    [SerializeField]
-    Transform attackPos;
-    [SerializeField]
-    Transform attackPosLeft;
+    [SerializeField] float timeBtwAttack;
+    [SerializeField] float startTimeBtwAttack;
+    [SerializeField] Transform attackPos;
+    [SerializeField] Transform attackPosLeft;
 
-    [SerializeField]
-    LayerMask whatIsEnemies;
-    [SerializeField]
-    float attackRange;
-    [SerializeField]
-    private int baseAttackStrength;
+    [SerializeField] LayerMask whatIsEnemies;
+    [SerializeField] float attackRange;
+    [SerializeField] private int baseAttackStrength;
     public int currentAttackStrength{get; set;}
     public float damageModifier { get; set;} = 0;
-    [SerializeField]
-    private int baseHp;
+    [SerializeField] private int baseHp;
     public bool shouldBeDamaging {get; private set;} = false;
     private List<IEnemy> damagedEnemies = new List<IEnemy>();
     public static VSPlayer Instance;
-    [SerializeField]
-    Vector2 activeMovementSpeed;
-    [SerializeField]
-    Vector2 dashSpeed;
-    [SerializeField]
-    float dashLength, dashCooldown;
+    [SerializeField] Vector2 activeMovementSpeed;
+    [SerializeField] Vector2 dashSpeed;
+    [SerializeField] float dashLength, dashCooldown;
     private float dashCounter;
     private float dashCoolCounter;
-    [SerializeField]
-    string className;
+    [SerializeField] string className;
     private CinemachineCamera playerCamera;
     private CinemachineImpulseSource impulseSource;
     public InputActionAsset playerControls;
@@ -442,6 +429,21 @@ public class VSPlayer : MonoBehaviour, IPlayer
         {
             anim.SetBool(IDLE, true);
         }
+    }
+
+    public void UpgradeDashSpeed(float percent)
+    {
+        dashSpeed = new Vector2(dashSpeed.x + dashSpeed.x * percent, dashSpeed.y + dashSpeed.y * percent);
+    }
+
+    public void UpgradeDashLength(float percent)
+    {
+        dashLength += dashLength * percent;
+    }
+
+    public void UpgradeDashCooldown(float percent)
+    {
+        dashCooldown -= dashCooldown * percent;
     }
 
     public void SetMovementSpeed(Vector2 movementSpeed)

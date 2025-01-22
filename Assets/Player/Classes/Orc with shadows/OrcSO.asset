@@ -18,6 +18,6 @@ MonoBehaviour:
   baseAttackStrength: 80
   dashSpeed: {x: 2, y: 2}
   dashLength: 0.65
-  dashCooldown: 2
+  dashCooldown: 3
   baseHp: 140
   sprite: {fileID: 5120410236738981136, guid: 68fc90e4ed1b44150a0134bd68a6173e, type: 3}

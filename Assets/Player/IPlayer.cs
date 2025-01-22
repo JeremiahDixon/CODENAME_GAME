@@ -21,4 +21,8 @@ public interface IPlayer
     public void SetMovementSpeed(Vector2 movementSpeed);
     public Vector2 GetActiveMovementSpeed();
     public void SetActiveMovementSpeed(Vector2 movementSpeed);
+    public void UpgradeDashSpeed(float percent);
+    public void UpgradeDashLength(float percent);
+    public void UpgradeDashCooldown(float percent);
+    
 }
