@@ -4,28 +4,30 @@ using UnityEngine;
 
 public class MobSpawner : MonoBehaviour
 {
-    public float basicTimeBtwSpawn;
-    public float startBasicTimeBtwSpawn;
-    public float intermediateTimeBtwSpawn;
-    public float startIntermediateTimeBtwSpawn;
-    public float advancedTimeBtwSpawn;
-    public float startAdvancedTimeBtwSpawn;
-    public float legendaryTimeBtwSpawn;
-    public float startLegendaryTimeBtwSpawn;
-    private int basicLimit = 30;
-    private int legendaryLimit = 1;
-    public GameObject[] basicMobs;
-    public GameObject[] intermediateMobs;
-    public GameObject[] advancedMobs;
-    public GameObject[] legendaryMobs;
-    public ArrayList basicMobsList = new ArrayList();
-    public ArrayList intermediateMobsList = new ArrayList();
-    public ArrayList advancedMobsList = new ArrayList();
-    public ArrayList legendaryMobsList = new ArrayList();
-    public ArrayList spawnedMobs = new ArrayList();
-    public LayerMask enemyLayer; // Layer to detect other enemies
+    [SerializeField] float basicTimeBtwSpawn; public float BasicTimeBtwSpawn{get => basicTimeBtwSpawn; set => basicTimeBtwSpawn = value;}
+    [SerializeField] float startBasicTimeBtwSpawn; public float StartBasicTimeBtwSpawn{get => startBasicTimeBtwSpawn; set => startBasicTimeBtwSpawn = value;}
+    [SerializeField] float intermediateTimeBtwSpawn; public float IntermediateTimeBtwSpawn{get => intermediateTimeBtwSpawn; set => intermediateTimeBtwSpawn = value;}
+    [SerializeField] float startIntermediateTimeBtwSpawn; public float StartIntermediateTimeBtwSpawn{get => startIntermediateTimeBtwSpawn; set => startIntermediateTimeBtwSpawn = value;}
+    [SerializeField] float advancedTimeBtwSpawn; public float AdvancedTimeBtwSpawn{get => advancedTimeBtwSpawn; set => advancedTimeBtwSpawn = value;}
+    [SerializeField] float startAdvancedTimeBtwSpawn; public float StartAdvancedTimeBtwSpawn{get => startAdvancedTimeBtwSpawn; set => startAdvancedTimeBtwSpawn = value;}
+    [SerializeField] float legendaryTimeBtwSpawn; public float LegendaryTimeBtwSpawn{get => legendaryTimeBtwSpawn; set => legendaryTimeBtwSpawn = value;}
+    [SerializeField] float startLegendaryTimeBtwSpawn; public float StartLegendaryTimeBtwSpawn{get => startLegendaryTimeBtwSpawn; set => startLegendaryTimeBtwSpawn = value;}
+    int basicLimit = 30;
+    int legendaryLimit = 1;
+    [SerializeField] GameObject[] basicMobs; public GameObject[] BasicMobs{get => basicMobs; set => basicMobs = value;}
+    [SerializeField] GameObject[] intermediateMobs; public GameObject[] IntermediateMobs{get => intermediateMobs; set => intermediateMobs = value;}
+    [SerializeField] GameObject[] advancedMobs; public GameObject[] AdvancedMobs{get => advancedMobs; set => advancedMobs = value;}
+    [SerializeField] GameObject[] legendaryMobs; public GameObject[] LegendaryMobs{get => legendaryMobs; set => legendaryMobs = value;}
+    [SerializeField] ArrayList basicMobsList = new ArrayList();
+    [SerializeField] ArrayList intermediateMobsList = new ArrayList();
+    [SerializeField] ArrayList advancedMobsList = new ArrayList();
+    [SerializeField] ArrayList legendaryMobsList = new ArrayList();
+    [SerializeField] ArrayList spawnedMobs = new ArrayList();
+    [SerializeField] LayerMask enemyLayer;
     public enum PlayState { Bossfight, MobWaves }
-    public PlayState currentState;
+    [SerializeField] PlayState currentState;
+    [SerializeField] MobSpawnerSO spawnerSo;
+    [SerializeField] float canSpawnRadius;
 
     private void Awake()
     {
@@ -33,6 +35,7 @@ public class MobSpawner : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        spawnerSo.CreateInfo(this.gameObject);
         currentState = PlayState.MobWaves;
         CreateObjectPools();
     }
@@ -113,7 +116,7 @@ public class MobSpawner : MonoBehaviour
         ArrayList mobList = GetMobList(mob.GetComponent<Enemy>().enemyLevel);
         if(screenSide == 1){
             Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(1.01f, 1.05f), 0));
-            if(CanSpawn(v3Pos, 0.2f)){
+            if(CanSpawn(v3Pos, canSpawnRadius)){
                 mob.transform.position = v3Pos;
                 mob.SetActive(true);
             }else
@@ -122,7 +125,7 @@ public class MobSpawner : MonoBehaviour
             }
         }else if(screenSide == 2){
             Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(1.01f, 1.05f), Random.Range(0.0f, 1.0f), 0));
-            if(CanSpawn(v3Pos, 0.2f)){
+            if(CanSpawn(v3Pos, canSpawnRadius)){
                 mob.transform.position = v3Pos;
                 mob.SetActive(true);
             }else
@@ -131,7 +134,7 @@ public class MobSpawner : MonoBehaviour
             }
         }else if(screenSide == 3){
             Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(0.0f, -0.05f), 0));
-            if(CanSpawn(v3Pos, 0.2f)){
+            if(CanSpawn(v3Pos, canSpawnRadius)){
                 mob.transform.position = v3Pos;
                 mob.SetActive(true);
             }else
@@ -140,7 +143,7 @@ public class MobSpawner : MonoBehaviour
             }
         }else if(screenSide == 4){
             Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, -0.05f), Random.Range(0f, 1f), 0));
-            if(CanSpawn(v3Pos, 0.2f)){
+            if(CanSpawn(v3Pos, canSpawnRadius)){
                 mob.transform.position = v3Pos;
                 mob.SetActive(true);
             }else

@@ -15,8 +15,8 @@ public class HealthManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        maxHealth = GameManager.Instance.maxPlayerHealth;
-        healthAmount = GameManager.Instance.playerHealth;
+        maxHealth = GameManager.Instance.MaxPlayerHealth;
+        healthAmount = GameManager.Instance.PlayerHealth;
         healthBar = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<Image>();
     }
 
@@ -27,15 +27,15 @@ public class HealthManager : MonoBehaviour
     }
 
     public void TakeDamage(float damage){
-        maxHealth = GameManager.Instance.maxPlayerHealth;
-        healthAmount = GameManager.Instance.playerHealth;
+        maxHealth = GameManager.Instance.MaxPlayerHealth;
+        healthAmount = GameManager.Instance.PlayerHealth;
         healthAmount -= damage;
         healthBar.fillAmount = healthAmount / maxHealth;
     }
 
     public void Heal(int amount){
-        maxHealth = GameManager.Instance.maxPlayerHealth;
-        healthAmount = GameManager.Instance.playerHealth;
+        maxHealth = GameManager.Instance.MaxPlayerHealth;
+        healthAmount = GameManager.Instance.PlayerHealth;
         healthAmount += amount;
         healthAmount = Mathf.Clamp(healthAmount, 0, maxHealth);
 

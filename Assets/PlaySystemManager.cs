@@ -47,30 +47,30 @@ public class PlaySystemManager : MonoBehaviour
     {
         timePlayed += Time.deltaTime;
         if(timePlayed >= playedFiveMin){
-            ms.startBasicTimeBtwSpawn = 1;
-            ms.startIntermediateTimeBtwSpawn = 0.3f;
-            ms.startAdvancedTimeBtwSpawn = 0.75f;
-            ms.startLegendaryTimeBtwSpawn = 1;
+            ms.StartBasicTimeBtwSpawn = 1;
+            ms.StartIntermediateTimeBtwSpawn = 0.3f;
+            ms.StartAdvancedTimeBtwSpawn = 0.75f;
+            ms.StartLegendaryTimeBtwSpawn = 1;
         }else if(timePlayed >= playedThreeMin){
-            ms.startBasicTimeBtwSpawn = 0.2f;
-            ms.startIntermediateTimeBtwSpawn = 0.5f;
-            ms.startAdvancedTimeBtwSpawn = 1;
-            ms.startLegendaryTimeBtwSpawn = 5;
+            ms.StartBasicTimeBtwSpawn = 0.2f;
+            ms.StartIntermediateTimeBtwSpawn = 0.5f;
+            ms.StartAdvancedTimeBtwSpawn = 1;
+            ms.StartLegendaryTimeBtwSpawn = 5;
         }else if(timePlayed >= playedTwoMin){
-            ms.startBasicTimeBtwSpawn = 0.3f;
-            ms.startIntermediateTimeBtwSpawn = 2;
-            ms.startAdvancedTimeBtwSpawn = 5;
-            ms.startLegendaryTimeBtwSpawn = 10;
+            ms.StartBasicTimeBtwSpawn = 0.3f;
+            ms.StartIntermediateTimeBtwSpawn = 2;
+            ms.StartAdvancedTimeBtwSpawn = 5;
+            ms.StartLegendaryTimeBtwSpawn = 10;
         }else if(timePlayed >= playedOneMin){
-            ms.startBasicTimeBtwSpawn = 0.4f;
-            ms.startIntermediateTimeBtwSpawn = 6;
-            ms.startAdvancedTimeBtwSpawn = 12;
-            ms.startLegendaryTimeBtwSpawn = 20;
+            ms.StartBasicTimeBtwSpawn = 0.4f;
+            ms.StartIntermediateTimeBtwSpawn = 6;
+            ms.StartAdvancedTimeBtwSpawn = 12;
+            ms.StartLegendaryTimeBtwSpawn = 20;
         }else if(timePlayed >= playedThirtySeconds){
-            ms.startBasicTimeBtwSpawn = 0.5f;
-            ms.startIntermediateTimeBtwSpawn = 7;
-            ms.startAdvancedTimeBtwSpawn = 15;
-            ms.startLegendaryTimeBtwSpawn = 25;
+            ms.StartBasicTimeBtwSpawn = 0.5f;
+            ms.StartIntermediateTimeBtwSpawn = 7;
+            ms.StartAdvancedTimeBtwSpawn = 15;
+            ms.StartLegendaryTimeBtwSpawn = 25;
         }
     }
 

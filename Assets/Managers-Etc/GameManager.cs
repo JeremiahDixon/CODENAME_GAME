@@ -9,25 +9,28 @@ public class GameManager: MonoBehaviour
     public static GameManager Instance;
     public enum GameState { MainMenu, Playing, Paused, GameWin, GameOver, PoweringUp }
     public GameState currentState{get; private set;}
-    public int playerHealth{get; set;}
-    public int maxPlayerHealth{get; set;}
+    int playerHealth; public int PlayerHealth{get => playerHealth; private set => playerHealth = value;}
+    int maxPlayerHealth; public int MaxPlayerHealth{get => maxPlayerHealth; private set => maxPlayerHealth = value;}
+    bool dead = false; public bool Dead{get => dead; private set => dead = value;}
     public IPlayer thePlayer;
-    private HealthManager healthManager;
-    [SerializeField]
-    private GameOverScreen gameOverScreen;
-    [SerializeField]
-    private GameWinScreen gameWinScreen;
-    public bool dead{get; private set;} = false;
+    HealthManager healthManager;
     private SceneLoader sceneLoader;
-    [SerializeField]
-    private Transform startPos;
-    [SerializeField]
-    GameObject[] playerClasses;
-    [SerializeField]
-    GameObject currentClass;
-    [SerializeField]
-    ClassSO[] classSos;
+    [SerializeField] GameOverScreen gameOverScreen;
+    [SerializeField] GameWinScreen gameWinScreen;
+    [SerializeField] Transform startPos;
+    [SerializeField] GameObject[] playerClasses;
+    [SerializeField] GameObject currentClass;
+    [SerializeField] ClassSO[] classSos;
     public ClassSO currentClassSo;
+    const string GAMEPLAY_SCENE_DARKFOREST = "VS";
+    const string GAMEPLAY_SCENE_HEAT = "VS 2";
+    const string SCENE_LOADER_NAME = "SceneLoader";
+    const string GAMEOVER_SCREEN_NAME = "GameOverScreen";
+    const string GAMEWIN_SCREEN_NAME = "GameWinScreen";
+    const string START_POSITION_NAME = "StartPosition";
+    const string HEALTH_MANAGER_NAME = "HealthManager";
+    const string ARCHER_CLASS_NAME = "Soldier";
+    const string ORC_CLASS_NAME = "Orc";
 
     private void Awake()
     {
@@ -47,17 +50,17 @@ public class GameManager: MonoBehaviour
     void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
-        sceneLoader = GameObject.Find("SceneLoader").GetComponent<SceneLoader>();
+        sceneLoader = GameObject.Find(SCENE_LOADER_NAME).GetComponent<SceneLoader>();
     }
 
     // called third
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if(scene.name == "VS"){
+        if(scene.name == GAMEPLAY_SCENE_DARKFOREST){
             LoadPlayScreen();
             resetPlayer();
             currentState = GameState.Playing;
-        }else if(scene.name == "VS 2"){
+        }else if(scene.name == GAMEPLAY_SCENE_HEAT){
             LoadPlayScreen();
             resetPlayer();
             currentState = GameState.Playing;
@@ -75,10 +78,10 @@ public class GameManager: MonoBehaviour
     }
 
     void LoadPlayScreen(){
-        healthManager = GameObject.Find("HealthManager").GetComponent<HealthManager>();
-        gameOverScreen = GameObject.FindGameObjectWithTag("GameOverScreen").GetComponent<GameOverScreen>();
-        gameWinScreen = GameObject.FindGameObjectWithTag("GameWinScreen").GetComponent<GameWinScreen>();
-        startPos = GameObject.Find("StartPosition").transform;
+        healthManager = GameObject.Find(HEALTH_MANAGER_NAME).GetComponent<HealthManager>();
+        gameOverScreen = GameObject.FindGameObjectWithTag(GAMEOVER_SCREEN_NAME).GetComponent<GameOverScreen>();
+        gameWinScreen = GameObject.FindGameObjectWithTag(GAMEWIN_SCREEN_NAME).GetComponent<GameWinScreen>();
+        startPos = GameObject.Find(START_POSITION_NAME).transform;
     }
 
     public void Heal(int amount){
@@ -140,11 +143,11 @@ public class GameManager: MonoBehaviour
 
     public void setPlayerClassSo(string className){
         switch(className){
-            case "Soldier":
+            case ARCHER_CLASS_NAME:
                 currentClass = playerClasses[0];
                 currentClassSo = classSos [0];
                 break;
-            case "Orc":
+            case ORC_CLASS_NAME:
                 currentClass = playerClasses[1];
                 currentClassSo = classSos [1];
                 break;
@@ -161,6 +164,11 @@ public class GameManager: MonoBehaviour
     public void DonePoweringUp()
     {
         currentState = GameState.Playing;
+    }
+
+    public void IncreaseMaxHealth(int increaseAmount)
+    {
+        maxPlayerHealth += increaseAmount;
     }
 
 }
