@@ -11,26 +11,27 @@ public class AxeThrow : MonoBehaviour
     private Transform axePos;
     public GameObject axe;
     public float launchForce;
-    private InputAction throwAxe;
-    private InputAction look;
-    private InputAction joysticklook;
+    InputAction throwAxe;
+    InputAction look;
+    InputAction joysticklook;
     public InputActionAsset playerControls;
-    private PlayerInput playerInput;
+    PlayerInput playerInput;
     const string ACTION_MAP = "Player";
     const string LOOK_ACTION = "Look";
     const string THROW_ACTION = "Attack";
     const string JOYSTICK_LOOK_ACTION = "JoystickLook";
     const string GAMEPAD_SCHEME = "Gamepad";
     const string KM_SCHEME = "Keyboard&Mouse";
-    private IPlayer thePlayer;
-    private int axeLimit = 30;
-    private Queue<GameObject> axes = new Queue<GameObject>();
-    [SerializeField]
-    float timeBtwAttack;
+    const string GAMEPLAY_SCENE_DARKFOREST = "VS";
+    const string GAMEPLAY_SCENE_HEAT = "VS 2";
+    IPlayer thePlayer;
+    int axeLimit = 30;
+    Queue<GameObject> axes = new Queue<GameObject>();
+    [SerializeField] float timeBtwAttack;
     [SerializeField] float startTimeBtwAttack;
     float delayLength = 5;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    private void Awake()
+
+    void Awake()
     {
         thePlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<IPlayer>();
         transform.parent = thePlayer.transform;
@@ -39,7 +40,8 @@ public class AxeThrow : MonoBehaviour
         axePos = transform.GetChild(0).gameObject.transform;
     }
 
-    private void OnEnable(){
+    void OnEnable()
+    {
         SceneManager.sceneLoaded += OnSceneLoaded;
         playerControls.Enable();
         look = playerControls.FindActionMap(ACTION_MAP).FindAction(LOOK_ACTION);
@@ -55,7 +57,8 @@ public class AxeThrow : MonoBehaviour
         CreateObjectPool();
     }
 
-    private void OnDisable(){
+    void OnDisable()
+    {
         if(playerControls != null){
             playerControls.Disable();
             throwAxe.Disable();
@@ -68,10 +71,10 @@ public class AxeThrow : MonoBehaviour
 
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if(scene.name == "VS"){
+        if(scene.name == GAMEPLAY_SCENE_DARKFOREST){
             ClearTheQueue();
             CreateObjectPool();
-        }else if(scene.name == "VS 2"){
+        }else if(scene.name == GAMEPLAY_SCENE_HEAT){
             ClearTheQueue();
             CreateObjectPool();
         }
@@ -98,7 +101,7 @@ public class AxeThrow : MonoBehaviour
             {
                 timeBtwAttack = startTimeBtwAttack;
                 ThrowAxe();
-                if(GameManager.Instance.thePlayer.isDoubleProjectile)
+                if(GameManager.Instance.thePlayer.IsDoubleProjectile)
                 {
                     StartCoroutine(ThrowAgain(startTimeBtwAttack * 0.25f));
                 }
@@ -133,7 +136,8 @@ public class AxeThrow : MonoBehaviour
         axes.Clear();
     }
 
-    void ThrowAxe(){
+    void ThrowAxe()
+    {
         if(axes.Count > 0){
             GameObject newAxe = axes.Dequeue();
             newAxe.SetActive(true);
@@ -152,7 +156,7 @@ public class AxeThrow : MonoBehaviour
         }
     }
 
-    private IEnumerator RequeueAfterDelay(float seconds, GameObject axe)
+    IEnumerator RequeueAfterDelay(float seconds, GameObject axe)
     {
         yield return new WaitForSeconds(seconds);
         RequeueAxe(axe);

@@ -1,27 +1,15 @@
 using System.Collections;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class TheCamera : MonoBehaviour
 {
     public static TheCamera Instance;
-
-    private void Awake()
-    {
-
-    }
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    public float xLowEndRange = -1f;
+    public float xHighEndRange = 1f;
+    public float yLowEndRange = -1f;
+    public float yHighEndRange = 1f;
 
     public IEnumerator Shake(float duration, float magnitude)
     {
@@ -30,8 +18,8 @@ public class TheCamera : MonoBehaviour
 
         while (elapsed < duration)
         {
-            float x = Random.Range(-1f, 1f) * magnitude;
-            float y = Random.Range(-1f, 1f) * magnitude;
+            float x = Random.Range(xLowEndRange, xHighEndRange) * magnitude;
+            float y = Random.Range(yLowEndRange, yHighEndRange) * magnitude;
 
             transform.localPosition = new Vector3(originalPosition.x + x, originalPosition.y + y, originalPosition.z);
             elapsed += Time.deltaTime;

@@ -28,7 +28,7 @@ public class IceBow : Powerup
         }else
         {
             //this needs to change to increase arrow damage not all base damage
-            GameManager.Instance.thePlayer.damageModifier += 0.1f;
+            GameManager.Instance.thePlayer.DamageModifier += 0.1f;
             bow.IcreaseArrowStat("Freeze Time", 0.5f);
         }
     }

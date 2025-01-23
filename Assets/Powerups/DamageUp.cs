@@ -16,8 +16,8 @@ public class DamageUp : Powerup
     public override void PowerupSelected()
     {
         IncreaseLevel();
-        player.damageModifier += 0.15f;
-        Debug.Log("Damage modifier increased by 15 percent. " + player.damageModifier);
+        player.DamageModifier += 0.15f;
+        Debug.Log("Damage modifier increased by 15 percent. " + player.DamageModifier);
     }
 
 }

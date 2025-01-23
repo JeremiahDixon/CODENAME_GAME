@@ -5,11 +5,10 @@ public class Axe : Projectile
 {
     Rigidbody2D rb;
     const string ENEMY_TAG = "Enemy";
-    private bool frozen = false;
-    [SerializeField]
-    Vector3 thrownTransform;
-    [SerializeField]
-    float traveledDistance;
+    const string PLAYER_TAG = "Player";
+    bool frozen = false;
+    [SerializeField] Vector3 thrownTransform;
+    [SerializeField] float traveledDistance;
     int roationSpeed = 1080;
     bool firstPass;
     [SerializeField] float knockbackForce = 2f;
@@ -19,10 +18,6 @@ public class Axe : Projectile
     void OnEnable()
     {
         rb = GetComponent<Rigidbody2D>();
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
     }
     
     void OnDisable()
@@ -36,11 +31,10 @@ public class Axe : Projectile
         firstPass = true;
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(firstPass){
-            thrownTransform = GameObject.FindGameObjectWithTag("Player").transform.position;
+            thrownTransform = GameObject.FindGameObjectWithTag(PLAYER_TAG).transform.position;
             firstPass = false;
         }
         if(!frozen){
@@ -63,8 +57,8 @@ public class Axe : Projectile
                     Vector2 knockbackDirection = other.transform.position - GameManager.Instance.thePlayer.transform.position;
                     other.gameObject.GetComponent<IEnemy>().ApplyKnockback(knockbackDirection, knockbackForce, knockbackDuration);
                 }
-                other.gameObject.GetComponent<IEnemy>().TakeDamage(damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.damageModifier));
-                Debug.Log("Dealing x damage: " + (damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.damageModifier)));
+                other.gameObject.GetComponent<IEnemy>().TakeDamage(damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.DamageModifier));
+                Debug.Log("Dealing x damage: " + (damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.DamageModifier)));
             }
         }
         if(other.gameObject.CompareTag("Terrain")){

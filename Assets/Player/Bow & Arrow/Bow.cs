@@ -5,45 +5,40 @@ using UnityEngine.InputSystem;
 
 public class Bow : MonoBehaviour
 {
-    [SerializeField]
-    private Transform shotPoint;
+    [SerializeField] Transform shotPoint;
     public GameObject arrow;
-    public float launchForce;
-    private InputAction shoot;
-    private InputAction look;
-    private InputAction joysticklook;
-    public InputActionAsset playerControls;
-    private PlayerInput playerInput;
+    [SerializeField] float launchForce;
+    InputAction shoot;
+    InputAction look;
+    InputAction joysticklook;
+    [SerializeField] InputActionAsset playerControls;
+    PlayerInput playerInput;
     const string ACTION_MAP = "Player";
     const string LOOK_ACTION = "Look";
     const string SHOOT_ACTION = "Attack";
     const string JOYSTICK_LOOK_ACTION = "JoystickLook";
     const string GAMEPAD_SCHEME = "Gamepad";
     const string KM_SCHEME = "Keyboard&Mouse";
-    private IPlayer thePlayer;
+    const string PLAYER_TAG = "Player";
+    const string FREEZE_STAT_NAME = "Freeze Time";
+    IPlayer thePlayer;
     int arrowLimit = 40;
-    private Queue<GameObject> arrows = new Queue<GameObject>();
+    Queue<GameObject> arrows = new Queue<GameObject>();
     List<GameObject> dequeuedArrows = new List<GameObject>();
-    [SerializeField]
-    float timeBtwAttack;
-    [SerializeField]
-    float startTimeBtwAttack;
+    [SerializeField] float timeBtwAttack;
+    [SerializeField] float startTimeBtwAttack;
     float delayLength = 5;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
-        thePlayer = GameObject.FindGameObjectWithTag("Player").GetComponent<IPlayer>();
+        thePlayer = GameObject.FindGameObjectWithTag(PLAYER_TAG).GetComponent<IPlayer>();
         playerInput = GetComponentInParent<PlayerInput>();
         playerControls = playerInput.actions;
         shotPoint = transform.GetChild(1).gameObject.transform;
         CreateArrowPool(arrow);
     }
-    void Start()
-    {
-        
-    }
 
-    private void OnEnable(){
+    void OnEnable(){
         playerControls.Enable();
         look = playerControls.FindActionMap(ACTION_MAP).FindAction(LOOK_ACTION);
         shoot = playerControls.FindActionMap(ACTION_MAP).FindAction(SHOOT_ACTION);
@@ -53,7 +48,7 @@ public class Bow : MonoBehaviour
         joysticklook.Enable();
     }
 
-    private void OnDisable(){
+    void OnDisable(){
         if(playerControls != null){
             playerControls.Disable();
             shoot.Disable();
@@ -62,7 +57,6 @@ public class Bow : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(playerInput.currentControlScheme == GAMEPAD_SCHEME){
@@ -83,7 +77,7 @@ public class Bow : MonoBehaviour
             {
                 timeBtwAttack = startTimeBtwAttack;
                 Shoot();
-                if(GameManager.Instance.thePlayer.isDoubleProjectile)
+                if(GameManager.Instance.thePlayer.IsDoubleProjectile)
                 {
                     StartCoroutine(ShootAgain(startTimeBtwAttack * 0.25f));
                 }
@@ -111,7 +105,7 @@ public class Bow : MonoBehaviour
 
     }
 
-    private IEnumerator RequeueAfterDelay(float seconds, GameObject arrow)
+    IEnumerator RequeueAfterDelay(float seconds, GameObject arrow)
     {
         yield return new WaitForSeconds(seconds);
         if(arrow != null)
@@ -123,7 +117,7 @@ public class Bow : MonoBehaviour
         }
     }
 
-    private IEnumerator ShootAgain(float seconds)
+    IEnumerator ShootAgain(float seconds)
     {
         yield return new WaitForSeconds(seconds);
         Shoot();
@@ -158,7 +152,7 @@ public class Bow : MonoBehaviour
     {
         switch(stat)
         {
-            case "Freeze Time":
+            case FREEZE_STAT_NAME:
                 foreach (GameObject arrow in arrows)
                 {
                     arrow.GetComponent<IceArrow>().freezeTime += amount;

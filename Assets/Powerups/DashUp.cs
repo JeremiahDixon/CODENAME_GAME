@@ -7,7 +7,7 @@ public class DashUp : Powerup
     {
         powerupSO.CreateInfo(this.gameObject);
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
     void Start()
     {
         player = GameManager.Instance.thePlayer;
@@ -44,6 +44,5 @@ public class DashUp : Powerup
             player.UpgradeDashLength(0.20f);
             player.UpgradeDashCooldown(0.20f);
         }
-        //Debug.Log("Damage modifier increased by 15 percent. " + player.damageModifier);
     }
 }

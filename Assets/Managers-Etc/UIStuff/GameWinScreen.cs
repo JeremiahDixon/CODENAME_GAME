@@ -7,7 +7,7 @@ using UnityEngine.InputSystem;
 public class GameWinScreen : MonoBehaviour
 {
     [SerializeField] GameObject _gameWinMenuFirst;
-
+    const string MAIN_MENU_SCENE_NAME = "Main Menu";
     void Awake(){
     }
     void Update()
@@ -39,6 +39,6 @@ public class GameWinScreen : MonoBehaviour
     public void MainMenu()
     {
         Time.timeScale = 1;
-        GameManager.Instance.LoadAScene("MainMenu");
+        GameManager.Instance.LoadAScene(MAIN_MENU_SCENE_NAME);
     }
 }

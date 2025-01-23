@@ -56,15 +56,4 @@ public class SceneLoader : MonoBehaviour
         string currentScene = SceneManager.GetActiveScene().name;
         LoadScene(currentScene);
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

@@ -3,10 +3,10 @@ using UnityEngine.UI;
 
 public class HealthManager : MonoBehaviour
 {
-    [SerializeField]
-    private Image healthBar;
-    public float healthAmount;
-    public int maxHealth;
+    [SerializeField] Image healthBar;
+    float healthAmount;
+    int maxHealth;
+    const string HEALTH_BAR_TAG = "HealthBar";
 
     private void Awake()
     {
@@ -17,7 +17,7 @@ public class HealthManager : MonoBehaviour
     {
         maxHealth = GameManager.Instance.MaxPlayerHealth;
         healthAmount = GameManager.Instance.PlayerHealth;
-        healthBar = GameObject.FindGameObjectWithTag("HealthBar").GetComponent<Image>();
+        healthBar = GameObject.FindGameObjectWithTag(HEALTH_BAR_TAG).GetComponent<Image>();
     }
 
     // Update is called once per frame

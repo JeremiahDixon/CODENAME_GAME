@@ -18,7 +18,7 @@ public class DoubleProjectile : Powerup
     public override void PowerupSelected()
     {
         IncreaseLevel();
-        player.isDoubleProjectile = true;
+        player.IsDoubleProjectile = true;
     }
 
 }

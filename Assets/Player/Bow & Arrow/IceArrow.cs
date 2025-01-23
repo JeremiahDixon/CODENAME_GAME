@@ -3,6 +3,7 @@ using UnityEngine;
 public class IceArrow : Arrow
 {
     const string ENEMY_TAG = "Enemy";
+    const string TERRAIN_TAG = "Terrain";
     public float freezeTime;
 
     void OnCollisionEnter2D(Collision2D other)
@@ -16,8 +17,8 @@ public class IceArrow : Arrow
                 Vector2 knockbackDirection = other.transform.position - GameManager.Instance.thePlayer.transform.position;
                 other.gameObject.GetComponent<IEnemy>().ApplyKnockback(knockbackDirection, knockbackForce, knockbackDuration);
             }
-            other.gameObject.GetComponent<IEnemy>().TakeDamage(damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.damageModifier));
-            Debug.Log("Dealing x damage: " + (damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.damageModifier)));
+            other.gameObject.GetComponent<IEnemy>().TakeDamage(damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.DamageModifier));
+            Debug.Log("Dealing x damage: " + (damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.DamageModifier)));
             if(other.gameObject.activeInHierarchy){
                 if(other.gameObject.GetComponent<Enemy>().IsFreezable)
                 {
@@ -26,7 +27,7 @@ public class IceArrow : Arrow
                     }
                 }
             }
-        }else if(other.gameObject.CompareTag("Terrain")){
+        }else if(other.gameObject.CompareTag(TERRAIN_TAG)){
             rb.linearVelocity = Vector2.zero;
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
             transform.parent = other.transform;

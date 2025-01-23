@@ -5,20 +5,9 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class VSPlayer : MonoBehaviour, IPlayer
 {
-    [SerializeField] Vector2 movementSpeed = new Vector2(0.0f, 0.0f); // 2D Movement speed to have independant axis speed
-    Vector2 inputVector = new Vector2(0.0f, 0.0f);
-    public float knockbackForce = 5f;
-    public float knockbackDuration = 0.2f;
-    private int comboStep = 0;
-    private float comboTimer;
-    private float maxComboDelay = 0.8f; // Time allowed to chain combos
-    private bool isAttacking = false;
-    private bool bufferedInput = false;
-    private float animationProgress = 0f; // Track current animation progress
     const string SWORD_TRIGGER = "isAttackingTrigger";
     const string IS_ATTACKING = "isAttacking";
     const string COMBO_STEP = "comboStep";
-    // const string SWORD_TWO_TRIGGER = "isSecondAttacking";
     const string WALKING = "isWalking";
     const string IDLE = "isIdle";
     const string DEAD = "isDead";
@@ -31,9 +20,19 @@ public class VSPlayer : MonoBehaviour, IPlayer
     const string DASH_ACTION = "DASH";
     const string GAMEPAD_SCHEME = "Gamepad";
     const string KM_SCHEME = "Keyboard&Mouse";
-    private Rigidbody2D myRigid;
-    private bool facingRight = true;
-    private Animator anim;
+    [SerializeField] Vector2 movementSpeed = new Vector2(0.0f, 0.0f); // 2D Movement speed to have independant axis speed
+    Vector2 inputVector = new Vector2(0.0f, 0.0f);
+    int comboStep = 0;
+    float comboTimer;
+    bool isAttacking = false;
+    bool bufferedInput = false;
+    float animationProgress = 0f;
+    bool facingRight = true;
+    Rigidbody2D myRigid;
+    Animator anim;
+    [SerializeField] float knockbackForce = 5f;
+    [SerializeField] float knockbackDuration = 0.2f;
+    [SerializeField] float maxComboDelay = 0.8f;
     [SerializeField] float timeBtwAttack;
     [SerializeField] float startTimeBtwAttack;
     [SerializeField] Transform attackPos;
@@ -41,40 +40,35 @@ public class VSPlayer : MonoBehaviour, IPlayer
 
     [SerializeField] LayerMask whatIsEnemies;
     [SerializeField] float attackRange;
-    [SerializeField] private int baseAttackStrength;
-    public int currentAttackStrength{get; set;}
-    public float damageModifier { get; set;} = 0;
-    [SerializeField] private int baseHp;
+    [SerializeField] int baseAttackStrength;
+    int currentAttackStrength; public int CurrentAttackStrength{get => currentAttackStrength; set => currentAttackStrength = value;}
+    float damageModifier = 0; public float DamageModifier{get => damageModifier; set => damageModifier = value;}
+    [SerializeField]int baseHp;
     public bool shouldBeDamaging {get; private set;} = false;
-    private List<IEnemy> damagedEnemies = new List<IEnemy>();
+    List<IEnemy> damagedEnemies = new List<IEnemy>();
     public static VSPlayer Instance;
     [SerializeField] Vector2 activeMovementSpeed;
     [SerializeField] Vector2 dashSpeed;
     [SerializeField] float dashLength, dashCooldown;
-    private float dashCounter;
-    private float dashCoolCounter;
+    float dashCounter;
+    float dashCoolCounter;
     [SerializeField] string className;
-    private CinemachineCamera playerCamera;
-    private CinemachineImpulseSource impulseSource;
-    public InputActionAsset playerControls;
-    private InputAction move;
-    private InputAction look;
-    private InputAction dash;
-    private InputAction swordAttack;
-    private InputAction joysticklook;
-    private PlayerInput playerInput;
+    CinemachineCamera playerCamera;
+    CinemachineImpulseSource impulseSource;
+    [SerializeField] InputActionAsset playerControls;
+    InputAction move;
+    InputAction look;
+    InputAction dash;
+    InputAction swordAttack;
+    InputAction joysticklook;
+    PlayerInput playerInput;
     SpriteRenderer spriteRenderer;
-    [SerializeField]
-    Sprite sprite;
-    [SerializeField]
-    ClassSO classSo;
-    [SerializeField]
-    AudioClip[] steppingClips;
-    [SerializeField]
-    float stepLength;
-    [SerializeField]
-    float stepTimer;
-    public bool isDoubleProjectile { get; set;} = false;
+    [SerializeField] Sprite sprite;
+    [SerializeField] ClassSO classSo;
+    [SerializeField] AudioClip[] steppingClips;
+    [SerializeField] float stepLength;
+    [SerializeField] float stepTimer;
+    public bool isDoubleProjectile = false; public bool IsDoubleProjectile{get => isDoubleProjectile; set => isDoubleProjectile = value;}
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
@@ -96,7 +90,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
         impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
-    private void OnEnable()
+    void OnEnable()
     {
         playerControls.Enable();
         move = playerControls.FindActionMap(ACTION_MAP).FindAction(MOVE_ACTION);
@@ -111,7 +105,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
         swordAttack.Enable();
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
         if(playerControls != null){
             playerControls.Disable();
@@ -124,13 +118,11 @@ public class VSPlayer : MonoBehaviour, IPlayer
     }
 
 
-    // Update is called once per frame
     void Update()
     {
         if(GameManager.Instance.currentState == GameManager.GameState.Playing)
         {
-            inputVector = move.ReadValue<Vector2>(); //new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
-            if(dash.WasPressedThisFrame())
+            inputVector = move.ReadValue<Vector2>();
             {
                 if(dashCoolCounter <=0 && dashCounter <= 0)
                 {
@@ -310,12 +302,11 @@ public class VSPlayer : MonoBehaviour, IPlayer
         {
             spriteRenderer.flipX = true;
         }
-        //flip the sword attack pos
     }
 
     public IEnumerator DamageWhileAttackingIsActive()
     {
-        //myRigid.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY;
+        //Freeze();
         shouldBeDamaging = true;
         bool shook = false;
 

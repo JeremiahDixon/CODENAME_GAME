@@ -7,6 +7,7 @@ public class GameOverScreen : MonoBehaviour
 {
 
     [SerializeField] GameObject _gameOverMenuFirst;
+    const string MAIN_MENU_SCENE_NAME = "Main Menu";
     void Awake(){
     }
 
@@ -39,6 +40,6 @@ public class GameOverScreen : MonoBehaviour
     public void MainMenu()
     {
         Time.timeScale = 1;
-        GameManager.Instance.LoadAScene("MainMenu");
+        GameManager.Instance.LoadAScene(MAIN_MENU_SCENE_NAME);
     }
 }

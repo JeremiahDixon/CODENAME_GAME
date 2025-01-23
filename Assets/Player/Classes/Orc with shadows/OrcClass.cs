@@ -4,8 +4,10 @@ using UnityEngine;
 public class OrcClass : MonoBehaviour
 {
     bool boosted = false;
-    private void OnCollisionEnter2D(Collision2D other){
-        if(other.gameObject.CompareTag("Axe")){
+    const string AXE_TAG = "Axe";
+    Vector2 boostSpeed = new Vector2(2.0f, 2.0f);
+    void OnCollisionEnter2D(Collision2D other){
+        if(other.gameObject.CompareTag(AXE_TAG)){
             GetComponentInChildren<AxeThrow>().RequeueAxe(other.gameObject);
             AxePickupBoost();
         }
@@ -15,15 +17,15 @@ public class OrcClass : MonoBehaviour
     {
         if(!boosted){
             boosted = true;
-            GetComponent<IPlayer>().SetActiveMovementSpeed(GetComponent<IPlayer>().GetActiveMovementSpeed() + new Vector2(2.0f, 2.0f));
-            StartCoroutine(BoostFinished(2));
+            GetComponent<IPlayer>().SetActiveMovementSpeed(GetComponent<IPlayer>().GetActiveMovementSpeed() + boostSpeed);
+            StartCoroutine(BoostFinished(2, boostSpeed));
         }
     }
 
-    private IEnumerator BoostFinished(int seconds)
+    IEnumerator BoostFinished(int seconds, Vector2 boost)
     {
         yield return new WaitForSeconds(seconds);
         boosted = false;
-        GetComponent<IPlayer>().SetActiveMovementSpeed(GetComponent<IPlayer>().GetActiveMovementSpeed() - new Vector2(2.0f, 2.0f));
+        GetComponent<IPlayer>().SetActiveMovementSpeed(GetComponent<IPlayer>().GetActiveMovementSpeed() - boost);
     }
 }
