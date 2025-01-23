@@ -366,6 +366,11 @@ public class VSPlayer : MonoBehaviour, IPlayer
         GameManager.Instance.Heal(amount);
     }
 
+    public void GainGold(int amount)
+    {
+        GameManager.Instance.GainGold(amount);
+    }
+
     public void BoostStrength(int amount)
     {
         currentAttackStrength += amount;

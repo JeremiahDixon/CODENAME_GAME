@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class HammerSpin : MonoBehaviour
 {
-    public GameObject hammerPrefab; // Reference to the hammer prefab
-    public int numberOfHammers = 1; // Number of hammers (scales with level)
-    public float spinSpeed = 180f; // Speed of the spin
-    public float radius = 1.25f; // Distance of the hammers from the player
-    private GameObject[] hammers; // Array to store active hammers
+    [SerializeField] GameObject hammerPrefab; // Reference to the hammer prefab
+    int numberOfHammers = 1; // Number of hammers (scales with level)
+    float spinSpeed = 180f; // Speed of the spin
+    float radius = 1.25f; // Distance of the hammers from the player
+    GameObject[] hammers; // Array to store active hammers
     IPlayer player;
 
     void Start()
@@ -56,17 +56,15 @@ public class HammerSpin : MonoBehaviour
             if (hammers[i] != null)
             {
                 hammers[i].transform.RotateAround(transform.position, Vector3.forward, spinSpeed * Time.deltaTime);
-                //hammers[i].transform.Rotate(Vector3.forward * spinSpeed * Time.deltaTime);
-                // Vector3 direction = hammers[i].transform.position - transform.position;
-                // hammers[i].transform.right = direction;
             }
         }
     }
 
     // Call this to update the number of hammers (e.g., when the ability levels up)
-    public void LevelUpAbility(int newHammerCount, int damage )
+    public void LevelUpAbility(int newHammerCount, int damage, float radius )
     {
         numberOfHammers = newHammerCount;
+        this.radius = radius;
         SpawnHammers(damage);
     }
     

@@ -9,6 +9,7 @@ public interface IPlayer
     public void Die();
     public void TakeDamage(int amount);
     public void Heal(int amount);
+    public void GainGold(int amount);
     public void ResetPlayer();
     public void SetDashSpeed(Vector2 dashSpeed);
     public void SetClassName(string className);

@@ -10,6 +10,7 @@ public class GameManager: MonoBehaviour
     public enum GameState { MainMenu, Playing, Paused, GameWin, GameOver, PoweringUp }
     public GameState currentState{get; private set;}
     int playerHealth; public int PlayerHealth{get => playerHealth; private set => playerHealth = value;}
+    int playerGold; public int PlayerGold{get => playerGold; private set => playerGold = value;}
     int maxPlayerHealth; public int MaxPlayerHealth{get => maxPlayerHealth; private set => maxPlayerHealth = value;}
     bool dead = false; public bool Dead{get => dead; private set => dead = value;}
     public IPlayer thePlayer;
@@ -51,6 +52,7 @@ public class GameManager: MonoBehaviour
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
         sceneLoader = GameObject.Find(SCENE_LOADER_NAME).GetComponent<SceneLoader>();
+        playerGold = 0;
     }
 
     // called third
@@ -92,6 +94,10 @@ public class GameManager: MonoBehaviour
         }else{
             playerHealth = newHealthValue;
         }
+    }
+
+    public void GainGold(int amount){
+
     }
 
     public void TakeDamage(int amount){
