@@ -19,7 +19,7 @@ public class Hammer : MonoBehaviour
         // Check if the object hit is an enemy
         if (collision.CompareTag("Enemy"))
         {
-            if (collision.gameObject.GetComponent<Enemy>().canBeKnockedBack)
+            if (collision.gameObject.GetComponent<Enemy>().CanBeKnockedBack)
             {
                 Vector2 knockbackDirection = collision.transform.position - GameManager.Instance.thePlayer.transform.position;
                 collision.gameObject.GetComponent<IEnemy>().ApplyKnockback(knockbackDirection, knockbackForce, knockbackDuration);

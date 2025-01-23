@@ -4,31 +4,34 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour, IEnemy
 {
-    public int hp;
-    public int maxHp;
-    public int strength;
-    public string enemyName;
-    public float speed;
-    public float currentSpeed;
-    public int scoreValue;
-    public bool isFreezable;
-    public AudioClip[] damagedClips;
-    public LayerMask whatIsPlayer;
-    public const string PLAYER_TAG = "Player";
-    public GameObject[] loot;
-    public EnemySO enemySo;
-    public Transform playerPos;
-    public IPlayer player;
+    protected int hp; public int Hp{get => hp; set => hp = value;}
+    protected int maxHp; public int MaxHp{ get => maxHp; set => maxHp = value;}
+    protected int strength; public int Strength{ get => strength; set => strength = value;}
+    protected string enemyName; public string EnemyName{ get => enemyName; set => enemyName = value;}
+    protected float speed; public float Speed{ get => speed; set => speed = value;}
+    protected float currentSpeed; public float CurrentSpeed{ get => currentSpeed; set => currentSpeed = value;}
+    protected int scoreValue; public int ScoreValue{ get => scoreValue; set => scoreValue = value;}
+    protected bool isFreezable; public bool IsFreezable{ get => isFreezable; set => isFreezable = value;}
+    [SerializeField] protected AudioClip[] damagedClips;
+    [SerializeField] protected LayerMask whatIsPlayer;
+    protected const string PLAYER_TAG = "Player";
+    const string SPAWNER_NAME = "Spawner";
+    const string PLAYSYSTEM_MANAGER_NAME = "PlaySystemManager";
+    float _soundFxVolume = 1.0f;
+    [SerializeField] protected GameObject[] loot; public GameObject[] Loot{ get => loot; set => loot = value;}
+    [SerializeField] protected EnemySO enemySo;
+    protected Transform playerPos;
+    protected IPlayer player;
     MobSpawner ms;
     public EnemyLevel enemyLevel = new EnemyLevel();
     PlaySystemManager playManager;
-    public float detectionRadius; // Radius for overlap detection
-    public float separationStrength; // Force to push enemies apart
-    public Animator anim;
-    const string RUNNING = "isRunning";
-    public bool facingRight = false;
-    public LayerMask enemyLayer; // Layer to detect other enemies
-    public bool canBeKnockedBack = true;
+    [SerializeField] protected float detectionRadius; // Radius for overlap detection
+    [SerializeField] protected float separationStrength; // Force to push enemies apart
+    protected Animator anim;
+    protected const string RUNNING = "isRunning";
+    protected bool facingRight = false;
+    [SerializeField] protected LayerMask enemyLayer; // Layer to detect other enemies
+    [SerializeField] protected bool canBeKnockedBack = true; public bool CanBeKnockedBack{ get => canBeKnockedBack; set => canBeKnockedBack = value;}
     public enum EnemyLevel{
         basic,
         intermediate,
@@ -36,20 +39,16 @@ public class Enemy : MonoBehaviour, IEnemy
         legendary
     };
 
-    private Vector2 knockbackDirection;
-    private float knockbackDuration;
-    private float knockbackSpeed;
-
-    private bool isKnockedBack;
+    Vector2 knockbackDirection;
+    float knockbackDuration;
+    float knockbackSpeed;
+    bool isKnockedBack;
 
     void Awake()
     {
-        ms = GameObject.Find("Spawner").GetComponent<MobSpawner>();
-        playManager = GameObject.Find("PlaySystemManager").GetComponent<PlaySystemManager>();
     }
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void OnEnable()
     {
         enemySo.CreateStats(gameObject);
         hp = maxHp;
@@ -57,6 +56,8 @@ public class Enemy : MonoBehaviour, IEnemy
         anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag(PLAYER_TAG).GetComponent<IPlayer>();
         playerPos = player.transform;
+        ms = GameObject.Find(SPAWNER_NAME).GetComponent<MobSpawner>();
+        playManager = GameObject.Find(PLAYSYSTEM_MANAGER_NAME).GetComponent<PlaySystemManager>();
     }
 
     void FixedUpdate()
@@ -79,7 +80,7 @@ public class Enemy : MonoBehaviour, IEnemy
         CheckBounds();
     }
 
-    public void PreventOverlap()
+    void PreventOverlap()
     {
         // Detect nearby colliders within the detection radius
         Collider2D[] nearbyEnemies = Physics2D.OverlapCircleAll(transform.position, detectionRadius, enemyLayer);
@@ -103,7 +104,7 @@ public class Enemy : MonoBehaviour, IEnemy
         if(damagedClips.Length > 0)
         {
             int randInt = Random.Range(0, damagedClips.Length);
-            SoundManager.Instance.PlaySoundEffect(damagedClips[randInt], transform, 1.0f);
+            SoundManager.Instance.PlaySoundEffect(damagedClips[randInt], transform, _soundFxVolume);
         }
         if (hp <= 0)
         {
@@ -122,7 +123,7 @@ public class Enemy : MonoBehaviour, IEnemy
         }
     }
 
-    public virtual void dropLoot(float randomInt)
+    protected virtual void dropLoot(float randomInt)
     {
     }
 
@@ -140,23 +141,21 @@ public class Enemy : MonoBehaviour, IEnemy
     }
 
     //this works if i decide to despawn the mob after leaves camera bounds
-    public void CheckBounds(){
+    void CheckBounds(){
         if(transform.position.x < Camera.main.ViewportToWorldPoint(new Vector3(-0.1f, 0, 0)).x
         || transform.position.x > Camera.main.ViewportToWorldPoint(new Vector3(1.1f, 0, 0)).x)
         {
             ms.RespawnMob(this.gameObject);
-            Debug.Log("Respawning Mob");
         }
 
         if(transform.position.y < Camera.main.ViewportToWorldPoint(new Vector3(0, -0.1f, 0)).y
         || transform.position.y > Camera.main.ViewportToWorldPoint(new Vector3(0, 1.1f, 0)).y)
         {
             ms.RespawnMob(this.gameObject);
-            Debug.Log("Respawning Mob");
         }
     }
 
-    public void Flip()
+    protected void Flip()
     {
         facingRight = !facingRight;
         Vector3 Scaler = transform.localScale;

@@ -3,16 +3,16 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "EnemySO", menuName = "Scriptable Objects/EnemySO")]
 public class EnemySO : ScriptableObject
 {
-    public string enemyName;
-    public EnemyLevel enemyLevel;
-    public int maxHp;
-    public int strength;
-    public int scoreValue;
+    [SerializeField] string enemyName;
+    [SerializeField] EnemyLevel enemyLevel;
+    [SerializeField] int maxHp;
+    [SerializeField] int strength;
+    [SerializeField] int scoreValue;
     float speed;
-    public bool isFreezable;
-    public float minSpeed;
-    public float maxSpeed;
-    public GameObject[] loot;
+    [SerializeField] bool isFreezable;
+    [SerializeField] float minSpeed;
+    [SerializeField] float maxSpeed;
+    [SerializeField] GameObject[] loot;
 
     public enum EnemyLevel{
         basic,
@@ -24,13 +24,13 @@ public class EnemySO : ScriptableObject
     public void CreateStats(GameObject gameObject){
         Enemy enemy = gameObject.GetComponent<Enemy>();
         speed = Random.Range(minSpeed, maxSpeed);
-        enemy.maxHp = maxHp;
-        enemy.strength = strength;
-        enemy.scoreValue = scoreValue;
-        enemy.enemyName = enemyName;
-        enemy.speed = speed;
-        enemy.loot = loot;
-        enemy.isFreezable = isFreezable;
+        enemy.MaxHp = maxHp;
+        enemy.Strength = strength;
+        enemy.ScoreValue = scoreValue;
+        enemy.EnemyName = enemyName;
+        enemy.Speed = speed;
+        enemy.Loot = loot;
+        enemy.IsFreezable = isFreezable;
         enemy.enemyLevel = GetEnemyLevel(enemyLevel);
     }
 

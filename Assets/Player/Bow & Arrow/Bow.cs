@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,6 +28,7 @@ public class Bow : MonoBehaviour
     float timeBtwAttack;
     [SerializeField]
     float startTimeBtwAttack;
+    float delayLength = 5;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -86,7 +85,7 @@ public class Bow : MonoBehaviour
                 Shoot();
                 if(GameManager.Instance.thePlayer.isDoubleProjectile)
                 {
-                    StartCoroutine(ShootAgain(0.25f));
+                    StartCoroutine(ShootAgain(startTimeBtwAttack * 0.25f));
                 }
             }
 
@@ -107,12 +106,12 @@ public class Bow : MonoBehaviour
             newArrow.transform.position = shotPoint.position;
             newArrow.transform.rotation = shotPoint.rotation;
             newArrow.GetComponent<Rigidbody2D>().linearVelocity = transform.right * launchForce;
-            StartCoroutine(RequeueAfterDelay(5, newArrow));
+            StartCoroutine(RequeueAfterDelay(delayLength, newArrow));
         }
 
     }
 
-    private IEnumerator RequeueAfterDelay(int seconds, GameObject arrow)
+    private IEnumerator RequeueAfterDelay(float seconds, GameObject arrow)
     {
         yield return new WaitForSeconds(seconds);
         if(arrow != null)

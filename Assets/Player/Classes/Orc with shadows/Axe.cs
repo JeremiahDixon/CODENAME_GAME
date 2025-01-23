@@ -12,8 +12,9 @@ public class Axe : Projectile
     float traveledDistance;
     int roationSpeed = 1080;
     bool firstPass;
-    public float knockbackForce = 2f;
-    public float knockbackDuration = 0.15f;
+    [SerializeField] float knockbackForce = 2f;
+    [SerializeField] float knockbackDuration = 0.15f;
+    float maxDistance = 3.5f;
 
     void OnEnable()
     {
@@ -46,7 +47,7 @@ public class Axe : Projectile
             transform.Rotate( Vector3.back.normalized * roationSpeed * Time.deltaTime );
         }
         traveledDistance = Vector3.Distance(thrownTransform, transform.position);
-        if(traveledDistance >= 4.0f)
+        if(traveledDistance >= maxDistance)
         {
             Freeze();
         }
@@ -57,7 +58,7 @@ public class Axe : Projectile
         if(!frozen)
         {
             if(other.gameObject.CompareTag(ENEMY_TAG)){
-                if (other.gameObject.GetComponent<Enemy>().canBeKnockedBack)
+                if (other.gameObject.GetComponent<Enemy>().CanBeKnockedBack)
                 {
                     Vector2 knockbackDirection = other.transform.position - GameManager.Instance.thePlayer.transform.position;
                     other.gameObject.GetComponent<IEnemy>().ApplyKnockback(knockbackDirection, knockbackForce, knockbackDuration);
@@ -78,5 +79,10 @@ public class Axe : Projectile
         rb.bodyType = RigidbodyType2D.Kinematic;
         rb.constraints = RigidbodyConstraints2D.FreezePositionX | RigidbodyConstraints2D.FreezePositionY | RigidbodyConstraints2D.FreezeRotation;
         GetComponent<PolygonCollider2D>().enabled = true;
+    }
+
+    public void IncreaseMaxDistance(float percentage)
+    {
+        maxDistance += maxDistance * percentage;
     }
 }

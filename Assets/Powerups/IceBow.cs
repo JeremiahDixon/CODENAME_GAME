@@ -21,14 +21,13 @@ public class IceBow : Powerup
         IncreaseLevel();
         if(powerupLevel == 1)
         {
-            Debug.Log("IceBow selected for first time");
             description = "Increase the chance to freeze and damage dealt.";
             setLWeaponBowGFX.sprite = this.sprite;
             bow.arrow = this.arrow;
             bow.ClearAndRepopulateArrowQueue(arrow);
         }else
         {
-            Debug.Log("IceBow selected for subsequent time");
+            //this needs to change to increase arrow damage not all base damage
             GameManager.Instance.thePlayer.damageModifier += 0.1f;
             bow.IcreaseArrowStat("Freeze Time", 0.5f);
         }

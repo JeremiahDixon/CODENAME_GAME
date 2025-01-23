@@ -2,14 +2,10 @@ using UnityEngine;
 
 public class Dwarf : Enemy
 {
-    [SerializeField]
-    private float timeBtwAttack;
+    [SerializeField] private float timeBtwAttack;
     const string ATTACKING_TRIGGER = "isAttackingTrigger";
-    const string RUNNING = "isRunning";
-    [SerializeField]
-    Transform attackPos;
-    [SerializeField]
-    float attackRange;
+    [SerializeField] Transform attackPos;
+    [SerializeField] float attackRange;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
     void Update()

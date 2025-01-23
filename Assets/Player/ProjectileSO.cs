@@ -8,7 +8,7 @@ public class ProjectileSO : ScriptableObject
 
      public void CreateInfo(GameObject gameObject)
     {
-        gameObject.GetComponent<Projectile>().projectileName = projectileName;
-        gameObject.GetComponent<Projectile>().damage = damage;
+        gameObject.GetComponent<Projectile>().ProjectileName = projectileName;
+        gameObject.GetComponent<Projectile>().Damage = damage;
     }
 }

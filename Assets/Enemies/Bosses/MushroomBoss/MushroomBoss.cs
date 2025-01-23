@@ -4,13 +4,9 @@ using UnityEngine;
 
 public class MushroomBoss : Enemy
 {
-    [SerializeField]
-    private float timeBtwAttack;
-    const string RUNNING = "isRunning";
-    [SerializeField]
-    Transform attackPos;
-    [SerializeField]
-    float attackRange;
+    [SerializeField] private float timeBtwAttack;
+    [SerializeField] Transform attackPos;
+    [SerializeField] float attackRange;
 
     void Update()
     {

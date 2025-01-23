@@ -2,13 +2,9 @@ using UnityEngine;
 
 public class Skull : Enemy
 {
-    [SerializeField]
-    private float timeBtwAttack;
-    const string RUNNING = "isRunning";
-    [SerializeField]
-    Transform attackPos;
-    [SerializeField]
-    float attackRange;
+    [SerializeField] float timeBtwAttack;
+    [SerializeField] Transform attackPos;
+    [SerializeField] float attackRange;
 
     void Update()
     {

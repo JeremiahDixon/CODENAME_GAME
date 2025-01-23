@@ -1,73 +1,53 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AirBoss : Enemy
 {
-    [SerializeField]
-    private float timeBtwAttack;
-    [SerializeField]
-    float startTimeBtwAttack;
-    [SerializeField]
-    float startTimeBtwAttackTriple;
-    private Queue<GameObject> miniMes = new Queue<GameObject>();
-    public float launchForce;
-    public float launchForceTriple;
+    [SerializeField] float timeBtwAttack;
+    [SerializeField] float startTimeBtwAttack;
+    [SerializeField] float startTimeBtwAttackTriple;
+    Queue<GameObject> miniMes = new Queue<GameObject>();
+    [SerializeField] float launchForce;
+    [SerializeField] float launchForceTriple;
     int miniMeLimit = 50;
-    public GameObject aMiniMe;
+    [SerializeField] GameObject aMiniMe;
 
-    [SerializeField]
-    private Transform shotPoint;
-    [SerializeField]
-    private Transform shotPointTop;
-    [SerializeField]
-    private Transform shotPointBottom;
-    [SerializeField]
-    private Transform leftRightMiddleTarget;
-    [SerializeField]
-    private Transform leftRightTopTarget;
-    [SerializeField]
-    private Transform leftRightBottomTarget;
+    //transforms for shooting projectiles
+    [SerializeField] Transform shotPoint;
+    [SerializeField] Transform shotPointTop;
+    [SerializeField] Transform shotPointBottom;
+    [SerializeField] Transform leftRightMiddleTarget;
+    [SerializeField] Transform leftRightTopTarget;
+    [SerializeField] Transform leftRightBottomTarget;
 
-    [SerializeField]
-    private Transform upMiddleShotPoint;
-    [SerializeField]
-    private Transform upTopShotPoint;
-    [SerializeField]
-    private Transform upBottomShotPoint;
-    [SerializeField]
-    private Transform upTopTarget;
-    [SerializeField]
-    private Transform UpMiddleTarget;
-    [SerializeField]
-    private Transform upBottomTarget;
+    [SerializeField] Transform upMiddleShotPoint;
+    [SerializeField] Transform upTopShotPoint;
+    [SerializeField] Transform upBottomShotPoint;
+    [SerializeField] Transform upTopTarget;
+    [SerializeField] Transform UpMiddleTarget;
+    [SerializeField] Transform upBottomTarget;
 
-    [SerializeField]
-    private Transform downMiddleShotPoint;
-    [SerializeField]
-    private Transform downTopShotPoint;
-    [SerializeField]
-    private Transform downBottomShotPoint;
-    [SerializeField]
-    private Transform downTopTarget;
-    [SerializeField]
-    private Transform downMiddleTarget;
-    [SerializeField]
-    private Transform downBottomTarget;
+    [SerializeField] Transform downMiddleShotPoint;
+    [SerializeField] Transform downTopShotPoint;
+    [SerializeField] Transform downBottomShotPoint;
+    [SerializeField] Transform downTopTarget;
+    [SerializeField] Transform downMiddleTarget;
+    [SerializeField] Transform downBottomTarget;
 
-    public Transform topAttackPosToUse;
-    public Transform middleAttackPosToUse;
-    public Transform bottomAttackPosToUse;
-    public Transform topTargetToUse;
-    public Transform middleTargetToUse;
-    public Transform bottomTargetToUse;
-
+    //references that change on the direction to shoot based on where player is
+    [SerializeField] Transform topAttackPosToUse;
+    [SerializeField] Transform middleAttackPosToUse;
+    [SerializeField] Transform bottomAttackPosToUse;
+    [SerializeField] Transform topTargetToUse;
+    [SerializeField] Transform middleTargetToUse;
+    [SerializeField] Transform bottomTargetToUse;
 
     public enum BossState { StageOne, StageTwo, StageThree, Transition}
-    private BossState currentBossState;
-    public bool facingUp = true;
+    public BossState currentBossState {get; private set;}
 
-    void OnEnable()
+    void Start()
     {
         CreateMiniMePool(aMiniMe);
         currentBossState = BossState.StageOne;
@@ -203,7 +183,7 @@ public class AirBoss : Enemy
         }
     }
 
-    private IEnumerator RequeueAfterDelay(int seconds, GameObject newMiniMe)
+    IEnumerator RequeueAfterDelay(int seconds, GameObject newMiniMe)
     {
         yield return new WaitForSeconds(seconds);
         if(newMiniMe != null)

@@ -23,12 +23,12 @@ public class AxeThrow : MonoBehaviour
     const string GAMEPAD_SCHEME = "Gamepad";
     const string KM_SCHEME = "Keyboard&Mouse";
     private IPlayer thePlayer;
-    private int axeLimit = 20;
+    private int axeLimit = 30;
     private Queue<GameObject> axes = new Queue<GameObject>();
     [SerializeField]
     float timeBtwAttack;
-    [SerializeField]
-    float startTimeBtwAttack;
+    [SerializeField] float startTimeBtwAttack;
+    float delayLength = 5;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Awake()
     {
@@ -100,7 +100,7 @@ public class AxeThrow : MonoBehaviour
                 ThrowAxe();
                 if(GameManager.Instance.thePlayer.isDoubleProjectile)
                 {
-                    StartCoroutine(ThrowAgain(0.3f));
+                    StartCoroutine(ThrowAgain(startTimeBtwAttack * 0.25f));
                 }
             }
 
@@ -140,7 +140,7 @@ public class AxeThrow : MonoBehaviour
             newAxe.transform.position = axePos.position;
             newAxe.transform.rotation = axePos.rotation;
             newAxe.GetComponent<Rigidbody2D>().linearVelocity = transform.right * launchForce;
-            StartCoroutine(RequeueAfterDelay(5, newAxe));
+            StartCoroutine(RequeueAfterDelay(delayLength, newAxe));
         }
     }
 
@@ -152,7 +152,7 @@ public class AxeThrow : MonoBehaviour
         }
     }
 
-    private IEnumerator RequeueAfterDelay(int seconds, GameObject axe)
+    private IEnumerator RequeueAfterDelay(float seconds, GameObject axe)
     {
         yield return new WaitForSeconds(seconds);
         RequeueAxe(axe);

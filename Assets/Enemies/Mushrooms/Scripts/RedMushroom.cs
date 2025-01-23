@@ -5,11 +5,8 @@ public class RedMushroom : Enemy
 [SerializeField]
     private float timeBtwAttack;
     const string ATTACKING_TRIGGER = "isAttackingTrigger";
-    const string RUNNING = "isRunning";
-    [SerializeField]
-    Transform attackPos;
-    [SerializeField]
-    float attackRange;
+    [SerializeField] Transform attackPos;
+    [SerializeField] float attackRange;
     void Update()
     {
         if(Vector2.Distance(anim.transform.position, playerPos.position) > 0.75f)
@@ -41,7 +38,7 @@ public class RedMushroom : Enemy
         }
     }
 
-    public override void dropLoot(float randomFloat)
+    protected override void dropLoot(float randomFloat)
     {
         Vector3 objectPosition = transform.position;
         Vector3 randPoint = new Vector3(objectPosition.x + Random.Range(-1.0f, 1.0f), objectPosition.y + Random.Range(-1.0f, 1.0f));

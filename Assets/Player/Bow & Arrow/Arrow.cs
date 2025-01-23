@@ -26,7 +26,7 @@ public class Arrow : Projectile
             rb.linearVelocity = Vector2.zero;
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
             transform.parent = other.transform;
-            if (other.gameObject.GetComponent<Enemy>().canBeKnockedBack)
+            if (other.gameObject.GetComponent<Enemy>().CanBeKnockedBack)
             {
                 Vector2 knockbackDirection = other.transform.position - GameManager.Instance.thePlayer.transform.position;
                 other.gameObject.GetComponent<IEnemy>().ApplyKnockback(knockbackDirection, knockbackForce, knockbackDuration);

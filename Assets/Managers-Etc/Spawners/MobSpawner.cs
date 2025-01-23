@@ -42,19 +42,31 @@ public class MobSpawner : MonoBehaviour
     {
         if(GameManager.Instance.currentState == GameManager.GameState.Playing && currentState == PlayState.MobWaves){
             if(basicTimeBtwSpawn <= 0){
-                Spawn(GetRandomMob(basicMobsList), GetRandomScreenside());
+                GameObject bmob = GetRandomMob(basicMobsList);
+                if( bmob != null )
+                {
+                    Spawn(bmob, GetRandomScreenside());
+                }
                 basicTimeBtwSpawn = startBasicTimeBtwSpawn;
             }else{
                 basicTimeBtwSpawn -= Time.deltaTime;
             }
             if(intermediateTimeBtwSpawn <= 0){
-                Spawn(GetRandomMob(intermediateMobsList), GetRandomScreenside());
+                GameObject imob = GetRandomMob(intermediateMobsList);
+                if( imob != null )
+                {
+                    Spawn(imob, GetRandomScreenside());
+                }
                 intermediateTimeBtwSpawn = startIntermediateTimeBtwSpawn;
             }else{
                 intermediateTimeBtwSpawn -= Time.deltaTime;
             }
             if(advancedTimeBtwSpawn <= 0){
-                Spawn(GetRandomMob(advancedMobsList), GetRandomScreenside());
+                GameObject amob = GetRandomMob(advancedMobsList);
+                if( amob != null )
+                {
+                    Spawn(amob, GetRandomScreenside());
+                }
                 advancedTimeBtwSpawn = startAdvancedTimeBtwSpawn;
             }else{
                 advancedTimeBtwSpawn -= Time.deltaTime;
@@ -106,8 +118,7 @@ public class MobSpawner : MonoBehaviour
                 mob.SetActive(true);
             }else
             {
-                mobList.Add(mob);
-                spawnedMobs.Remove(mob);
+                RequeueMob(mob);
             }
         }else if(screenSide == 2){
             Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(1.01f, 1.05f), Random.Range(0.0f, 1.0f), 0));
@@ -116,8 +127,7 @@ public class MobSpawner : MonoBehaviour
                 mob.SetActive(true);
             }else
             {
-                mobList.Add(mob);
-                spawnedMobs.Remove(mob);
+                RequeueMob(mob);
             }
         }else if(screenSide == 3){
             Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(0.0f, -0.05f), 0));
@@ -126,8 +136,7 @@ public class MobSpawner : MonoBehaviour
                 mob.SetActive(true);
             }else
             {
-                mobList.Add(mob);
-                spawnedMobs.Remove(mob);
+                RequeueMob(mob);
             }
         }else if(screenSide == 4){
             Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, -0.05f), Random.Range(0f, 1f), 0));
@@ -136,8 +145,7 @@ public class MobSpawner : MonoBehaviour
                 mob.SetActive(true);
             }else
             {
-                mobList.Add(mob);
-                spawnedMobs.Remove(mob);
+                RequeueMob(mob);
             }
         }
     }
@@ -216,7 +224,6 @@ public class MobSpawner : MonoBehaviour
 
     public void RespawnMob(GameObject mob)
     {
-        // mob.SetActive(false);
         Spawn(mob, GetRandomScreenside());
     }
 

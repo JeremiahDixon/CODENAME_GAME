@@ -161,32 +161,6 @@ public class VSPlayer : MonoBehaviour, IPlayer
             {
                 timeBtwAttack -= Time.deltaTime;
             }
-
-        //     if(timeBtwAttack <= 0)
-        //     {
-        //         if(swordAttack.WasPressedThisFrame())
-        //         {
-        //             combo++;
-        //             if(combo == 1)
-        //             {
-        //                 anim.SetTrigger(SWORD_TRIGGER);
-        //             }
-        //             else if(combo == 2)
-        //             {
-        //                 anim.SetTrigger(SWORD_TRIGGER);
-                        
-        //             }else if(combo == 3)
-        //             {
-        //                 Debug.Log("Third Attack Triggering");
-        //                 anim.SetTrigger(SWORD_TRIGGER);
-        //                 timeBtwAttack = 1f;
-        //                 combo = 0;
-        //             }
-        //         }
-        //     }else
-        //     {
-        //         timeBtwAttack -= Time.deltaTime;
-        //     }
         }
         
     }
