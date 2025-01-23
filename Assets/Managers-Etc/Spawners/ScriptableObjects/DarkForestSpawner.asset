@@ -12,15 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a706f334841967742987a5340ced715c, type: 3}
   m_Name: DarkForestSpawner
   m_EditorClassIdentifier: 
-  basicMobs: []
-  intermediateMobs: []
-  advancedMobs: []
-  legendaryMobs: []
+  basicMobs:
+  - {fileID: 8112522797563040343, guid: c3024387eba541940a4bf566e1c0b4dc, type: 3}
+  - {fileID: 5732870863236921878, guid: 4464b21607ef2c8418e666c037873e60, type: 3}
+  - {fileID: 926504124914932186, guid: 19b7261d52b81144bb0d515d5b96bcb4, type: 3}
+  intermediateMobs:
+  - {fileID: 7747513118935039834, guid: 025ca58ee57b0224daa0a8d7e7aa401c, type: 3}
+  advancedMobs:
+  - {fileID: 558362672080133649, guid: f96a6db94d086504dbce38f74bdce4d9, type: 3}
+  legendaryMobs:
+  - {fileID: 74967740486132380, guid: 8ea82414331a0ed4986c91fa127848bd, type: 3}
   basicTimeBtwSpawn: 0
-  startBasicTimeBtwSpawn: 0
-  intermediateTimeBtwSpawn: 0
-  startIntermediateTimeBtwSpawn: 0
-  advancedTimeBtwSpawn: 0
-  startAdvancedTimeBtwSpawn: 0
-  legendaryTimeBtwSpawn: 0
-  startLegendaryTimeBtwSpawn: 0
+  startBasicTimeBtwSpawn: 0.75
+  intermediateTimeBtwSpawn: 10
+  startIntermediateTimeBtwSpawn: 10
+  advancedTimeBtwSpawn: 20
+  startAdvancedTimeBtwSpawn: 20
+  legendaryTimeBtwSpawn: 29
+  startLegendaryTimeBtwSpawn: 29

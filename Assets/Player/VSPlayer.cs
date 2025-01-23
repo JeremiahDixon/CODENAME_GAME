@@ -20,7 +20,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
     const string DASH_ACTION = "DASH";
     const string GAMEPAD_SCHEME = "Gamepad";
     const string KM_SCHEME = "Keyboard&Mouse";
-    [SerializeField] Vector2 movementSpeed = new Vector2(0.0f, 0.0f); // 2D Movement speed to have independant axis speed
+    [SerializeField] Vector2 movementSpeed = new Vector2(0.0f, 0.0f);
     Vector2 inputVector = new Vector2(0.0f, 0.0f);
     int comboStep = 0;
     float comboTimer;
@@ -123,8 +123,10 @@ public class VSPlayer : MonoBehaviour, IPlayer
         if(GameManager.Instance.currentState == GameManager.GameState.Playing)
         {
             inputVector = move.ReadValue<Vector2>();
+            if(dash.WasPressedThisFrame())
+            inputVector = move.ReadValue<Vector2>();
             {
-                if(dashCoolCounter <=0 && dashCounter <= 0)
+                if(dashCoolCounter <= 0 && dashCounter <= 0)
                 {
                     activeMovementSpeed += dashSpeed;
                     dashCounter = dashLength;

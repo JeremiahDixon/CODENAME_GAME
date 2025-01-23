@@ -14782,6 +14782,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3973e2d80336c4073a59ae9bfdacc99d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  xLowEndRange: -1
+  xHighEndRange: 1
+  yLowEndRange: -1
+  yHighEndRange: 1
 --- !u!114 &324996522
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16978,7 +16982,9 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
-  currentState: 0
+  currentState: 1
+  spawnerSo: {fileID: 11400000, guid: 39d279d88e5e7d5458fec241d271385e, type: 2}
+  canSpawnRadius: 0.1
 --- !u!4 &875662353
 Transform:
   m_ObjectHideFlags: 0
@@ -90377,8 +90383,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthBar: {fileID: 0}
-  healthAmount: 0
-  maxHealth: 0
 --- !u!1 &1872787291
 GameObject:
   m_ObjectHideFlags: 0
