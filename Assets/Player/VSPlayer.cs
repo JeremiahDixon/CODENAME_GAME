@@ -124,7 +124,6 @@ public class VSPlayer : MonoBehaviour, IPlayer
         {
             inputVector = move.ReadValue<Vector2>();
             if(dash.WasPressedThisFrame())
-            inputVector = move.ReadValue<Vector2>();
             {
                 if(dashCoolCounter <= 0 && dashCounter <= 0)
                 {
