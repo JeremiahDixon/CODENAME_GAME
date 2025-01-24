@@ -38,19 +38,6 @@ public class RedMushroom : Enemy
         }
     }
 
-    protected override void dropLoot(float randomFloat)
-    {
-        Vector3 objectPosition = transform.position;
-        Vector3 randPoint = new Vector3(objectPosition.x + Random.Range(-1.0f, 1.0f), objectPosition.y + Random.Range(-1.0f, 1.0f));
-        if(randomFloat < 10)
-        {
-            //Instantiate(loot[0], randPoint, Quaternion.identity);
-        }else if(randomFloat >= 10 && randomFloat <= 100)
-        {
-            //Instantiate(loot[1], randPoint, Quaternion.identity);
-        }
-    }
-
     //call this durring animation event to check if hit
     void tryToHitPlayer()
     {

@@ -46,7 +46,6 @@ public class GasCloud : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        Debug.Log("CLOUD COLLISION");
         if(other.gameObject.CompareTag("Player"))
         {
             Debug.Log("PLAYER IN CLOUD");

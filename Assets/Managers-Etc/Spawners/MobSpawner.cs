@@ -234,7 +234,7 @@ public class MobSpawner : MonoBehaviour
     {
         currentState = PlayState.Bossfight;
         DespawnAll();
-        Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(1.01f, 1.05f), 0));
+        Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0.75f, 1f), Random.Range(1.01f, 1.05f), 0));
         if(legendaryMobsList.Count > 0){
             GameObject mob = (GameObject)legendaryMobsList[0];
             legendaryMobsList.RemoveAt(0);

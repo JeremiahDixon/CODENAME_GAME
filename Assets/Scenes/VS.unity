@@ -16978,7 +16978,7 @@ MonoBehaviour:
   advancedMobs:
   - {fileID: 558362672080133649, guid: f96a6db94d086504dbce38f74bdce4d9, type: 3}
   legendaryMobs:
-  - {fileID: 74967740486132380, guid: 8ea82414331a0ed4986c91fa127848bd, type: 3}
+  - {fileID: 1682183932814266441, guid: b7197c9b1295ff643bea1baa2a82dbbc, type: 3}
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
