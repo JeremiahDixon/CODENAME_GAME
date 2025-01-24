@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class GasCloud : MonoBehaviour
@@ -5,6 +6,9 @@ public class GasCloud : MonoBehaviour
     float poisonDOT = 0;
     float poisonDOTStartTime = 2;
     int damage = 5;
+    private float moveSpeed = 1f; // Speed of horizontal movement
+    private float lifetime = 10f; // Lifetime of the gas cloud
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -15,6 +19,29 @@ public class GasCloud : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void Initialize(float duration, float speed)
+    {
+        lifetime = duration;
+        moveSpeed = speed;
+        StartCoroutine(MoveAndDestroy());
+    }
+
+    IEnumerator MoveAndDestroy()
+    {
+        float elapsed = 0f;
+
+        while (elapsed < lifetime)
+        {
+            // Move horizontally over time
+            transform.Translate(-Vector2.right * moveSpeed * Time.deltaTime);
+            elapsed += Time.deltaTime;
+            yield return null;
+        }
+
+        // Destroy the gas cloud after its lifetime
+        Destroy(gameObject);
     }
 
     void OnTriggerStay2D(Collider2D other)

@@ -7,55 +7,56 @@ public class MushroomBoss : Enemy
     [SerializeField] private float timeBtwAttack;
     [SerializeField] Transform attackPos;
     [SerializeField] float attackRange;
+    public enum BossState { StageOne, StageTwo, StageThree, Transition}
+    public BossState currentBossState {get; private set;}
 
-    void Update()
+    [SerializeField] GameObject gasCloudPrefab; // Assign your gas cloud prefab in the Inspector
+    [SerializeField] int numberOfClouds = 5;    // Number of gas clouds to spawn
+
+    private Vector2 screenBoundsMin; // Minimum bounds of the screen in world coordinates
+    private Vector2 screenBoundsMax; // Maximum bounds of the screen in world coordinates
+
+    void Start()
     {
-        if(Vector2.Distance(anim.transform.position, playerPos.position) > 2.0f)
+        CalculateScreenBounds();
+        SpawnGasClouds();
+    }
+
+    void CalculateScreenBounds()
+    {
+        // Get the main camera
+        Camera mainCamera = Camera.main;
+
+        // Bottom-left corner of the screen in world coordinates
+        Vector3 bottomLeft = mainCamera.ViewportToWorldPoint(new Vector3(0, 0, mainCamera.nearClipPlane));
+
+        // Top-right corner of the screen in world coordinates
+        Vector3 topRight = mainCamera.ViewportToWorldPoint(new Vector3(1, 1, mainCamera.nearClipPlane));
+
+        // Set screen bounds
+        screenBoundsMin = new Vector2(bottomLeft.x, bottomLeft.y);
+        screenBoundsMax = new Vector2(topRight.x, topRight.y);
+    }
+
+    void SpawnGasClouds()
+    {
+        for (int i = 0; i < numberOfClouds; i++)
         {
-            anim.transform.position = Vector2.MoveTowards(anim.transform.position, playerPos.position, currentSpeed * Time.deltaTime);
-        }
-        if(Vector2.Distance(transform.position, playerPos.position) <= 2.0f)
-        {
-            anim.SetBool(RUNNING, false);
-            if(timeBtwAttack <= 0)
+            // Randomly choose a position within the screen bounds
+            Vector2 randomPosition = new Vector2(
+                Random.Range(screenBoundsMin.x, screenBoundsMax.x),
+                Random.Range(screenBoundsMin.y, screenBoundsMax.y)
+            );
+
+            // Instantiate the gas cloud at the random position
+            GameObject gasCloud = Instantiate(gasCloudPrefab, randomPosition, Quaternion.identity);
+
+            // Initialize the gas cloud's movement
+            GasCloud gasCloudScript = gasCloud.GetComponent<GasCloud>();
+            if (gasCloudScript != null)
             {
-                timeBtwAttack = 3f;
-                tryToHitPlayer();
-            }
-        }else
-        {
-            anim.SetBool(RUNNING, true);
-        }
-        if(timeBtwAttack >= 0)
-        {
-            timeBtwAttack -= Time.deltaTime;
-        }
-        if(playerPos.position.x > transform.position.x && !facingRight)
-        {
-            Flip();
-        }else if(playerPos.position.x < transform.position.x && facingRight)
-        {
-            Flip();
-        }
-    }
-
-    //call this durring animation event to check if hit
-    void tryToHitPlayer()
-    {
-        //create a attackpos and replace transform
-        RaycastHit2D playerToDamage = Physics2D.CircleCast(attackPos.position, attackRange, transform.right, 0f, whatIsPlayer);
-        if( playerToDamage )
-        {
-            IPlayer thePlayer = playerToDamage.collider.gameObject.GetComponent<IPlayer>();
-            if(thePlayer != null && playerToDamage.collider is BoxCollider2D){
-                thePlayer.TakeDamage(strength);
-                //might need to add a bool playerBeenDamaged
+                gasCloudScript.Initialize(10f, Random.Range(1f, 3f)); // Duration: 10s, speed: random between 1-3
             }
         }
-    }
-    void OnDrawGizmosSelected()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(attackPos.position, attackRange);
     }
 }
