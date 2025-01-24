@@ -201,7 +201,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
                 if (stepTimer > stepLength)
                 {
                     int rand = UnityEngine.Random.Range(0, steppingClips.Length);
-                    SoundManager.Instance.PlaySoundEffect(steppingClips[rand], transform, 0.75f);
+                    SoundManager.Instance.PlaySoundEffect(steppingClips[rand], transform, 0.05f);
                     stepTimer = 0f;
                 }
             }

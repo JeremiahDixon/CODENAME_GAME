@@ -17,7 +17,7 @@ public class Enemy : MonoBehaviour, IEnemy
     protected const string PLAYER_TAG = "Player";
     const string SPAWNER_NAME = "Spawner";
     const string PLAYSYSTEM_MANAGER_NAME = "PlaySystemManager";
-    float _soundFxVolume = 1.0f;
+    float _soundFxVolume = 0.05f;
     [SerializeField] protected GameObject[] loot; public GameObject[] Loot{ get => loot; set => loot = value;}
     [SerializeField] protected EnemySO enemySo;
     protected Transform playerPos;
