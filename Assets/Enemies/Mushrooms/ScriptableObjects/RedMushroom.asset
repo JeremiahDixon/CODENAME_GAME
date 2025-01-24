@@ -20,4 +20,5 @@ MonoBehaviour:
   isFreezable: 1
   minSpeed: 1
   maxSpeed: 2
-  loot: []
+  loot:
+  - {fileID: 6567365439898135125, guid: f441fd99c1e0f3d419bdb4ec45009b90, type: 3}

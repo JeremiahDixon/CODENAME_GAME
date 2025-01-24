@@ -109,8 +109,11 @@ public class Enemy : MonoBehaviour, IEnemy
         if (hp <= 0)
         {
             playManager.IncreaseScore(scoreValue);
-            float randomInt = Random.Range(0f, 100.0f);
-            dropLoot(randomInt);
+            if(loot.Length > 0)
+            {
+                float randomInt = Random.Range(0f, 100.0f);
+                dropLoot(randomInt);
+            }
             GetComponent<SpriteRenderer>().color = Color.white;
             currentSpeed = speed;
             hp = maxHp;
@@ -123,8 +126,17 @@ public class Enemy : MonoBehaviour, IEnemy
         }
     }
 
-    protected virtual void dropLoot(float randomInt)
+    protected virtual void dropLoot(float randomFloat)
     {
+        //Vector3 objectPosition = transform.position;
+        //Vector3 randPoint = new Vector3(objectPosition.x + Random.Range(-1.0f, 1.0f), objectPosition.y + Random.Range(-1.0f, 1.0f));
+        if(randomFloat < 15)
+        {
+            Instantiate(loot[0], transform.position, Quaternion.identity);
+        }else if(randomFloat >= 50 && randomFloat <= 100 && loot.Length > 1)
+        {
+            Instantiate(loot[1], transform.position, Quaternion.identity);
+        }
     }
 
     public void Freeze(float time)

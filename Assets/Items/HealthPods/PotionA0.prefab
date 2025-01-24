@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 6105422095182192571}
   - component: {fileID: 6043467834211632909}
   - component: {fileID: 2137350995166042453}
+  - component: {fileID: -7272311000099085953}
+  - component: {fileID: -1354498437099798786}
   m_Layer: 0
   m_Name: PotionA0
   m_TagString: Untagged
@@ -166,3 +168,35 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &-7272311000099085953
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7819942442154613351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb61722a83bcc9243922b5ba643d7665, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bounceHeight: 0.4
+  bounceDuration: 0.3
+  horizontalSpeed: 1
+  randomDirectionRange: {x: -0.8, y: 0.8}
+  stopThreshold: 0.1
+  deceleration: 1.5
+--- !u!114 &-1354498437099798786
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7819942442154613351}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ce888a919eb34aa44bab5ba0cda11f7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attractionRadius: 1.5
+  attractionSpeed: 5

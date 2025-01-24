@@ -22,3 +22,4 @@ MonoBehaviour:
   maxSpeed: 1.5
   loot:
   - {fileID: 7819942442154613351, guid: d84e0f138a1524ef28ad842bbd41ccd1, type: 3}
+  - {fileID: 6567365439898135125, guid: f441fd99c1e0f3d419bdb4ec45009b90, type: 3}
