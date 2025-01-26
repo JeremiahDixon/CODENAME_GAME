@@ -76,12 +76,12 @@ public class PlaySystemManager : MonoBehaviour
 
     void TrackScore()
     {
-        if(score >= 100 && powerupCount == 0 )
+        if(score >= 25 && powerupCount == 0 )
         {
             powerupCount ++;
             pum.PowerUp();
-            // ms.SpawnBoss();
-            // GameObject.Find("PlayerCamera").GetComponent<TheCamera>().LockCamera();
+            ms.SpawnBoss();
+            GameObject.Find("PlayerCamera").GetComponent<TheCamera>().LockCamera();
         }else if(score >= 200 && powerupCount == 1)
         {
             powerupCount ++;

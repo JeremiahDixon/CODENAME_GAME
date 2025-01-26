@@ -201,11 +201,15 @@ MonoBehaviour:
   gasCloudPrefab: {fileID: 8976496974152768478, guid: b3ed266471b042c499abd262be7d3203, type: 3}
   numberOfClouds: 5
   mushroomPrefab: {fileID: 7972992333229994541, guid: 98bf8caf334c11e4fba9301c69738fe2, type: 3}
-  spawnInterval: 0.1
+  spawnInterval: 0.15
   maxDistance: 20
-  spawnOffset: 1
+  spawnOffset: 0.75
   spawnPoint: {fileID: 8575935487428392944}
   ogSpawnPoint: {fileID: 7249810151025586961}
+  sporeBombPrefab: {fileID: 1545743211241906437, guid: abe308b5fc130554181d0ad487fb9fe9, type: 3}
+  attackDuration: 20
+  bombSpawnInterval: 1
+  spawnRadius: 5
 --- !u!1 &4272360410073164297
 GameObject:
   m_ObjectHideFlags: 0

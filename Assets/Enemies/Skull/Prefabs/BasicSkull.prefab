@@ -30,7 +30,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.59, y: -0.4, z: 0}
-  m_LocalScale: {x: 3.9345, y: 3.9345, z: 3.9345}
+  m_LocalScale: {x: 4, y: 4, z: 4}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 660684566120019478}
@@ -125,14 +125,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb90ebeb9b3753d4da04108621a860d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hp: 0
-  maxHp: 0
-  strength: 0
-  enemyName: 
-  speed: 0
-  currentSpeed: 0
-  scoreValue: 0
-  isFreezable: 0
   damagedClips:
   - {fileID: 8300000, guid: 4052d073e0465ff4ab261803e486fb22, type: 3}
   - {fileID: 8300000, guid: a9251a67137733c4487d77e7c334dcc8, type: 3}
@@ -141,15 +133,13 @@ MonoBehaviour:
     m_Bits: 8
   loot: []
   enemySo: {fileID: 11400000, guid: e1fa7a34e32c97d42a7f7aee1958b7eb, type: 2}
-  playerPos: {fileID: 0}
   enemyLevel: 0
   detectionRadius: 0.2
   separationStrength: 1
-  anim: {fileID: 0}
-  facingRight: 0
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+  canBeKnockedBack: 1
   timeBtwAttack: 0
   attackPos: {fileID: 660684566120019478}
   attackRange: 0.33

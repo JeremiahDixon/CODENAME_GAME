@@ -19,15 +19,21 @@ public class MushroomBoss : Enemy
     float startSpawnGas = 10f;
 
     float spawnMushrooms = 10f;
-    float startSpawnMushrooms = 1f;
+    float startSpawnMushrooms = 3f;
 
     public GameObject mushroomPrefab; // Assign your mushroom prefab in the Inspector
-    public float spawnInterval = 0.1f; // Time between spawning mushrooms
+    public float spawnInterval = 0.5f; // Time between spawning mushrooms
     public float maxDistance = 20f; // Maximum distance for the line
-    public float spawnOffset = 1f; // Distance between each mushroom
+    public float spawnOffset = 0.75f; // Distance between each mushroom
     public Transform spawnPoint; // Position from which mushrooms spawn
     public Transform ogSpawnPoint;
     private float currentDistance = 0f;
+
+
+    public GameObject sporeBombPrefab; // Prefab of the spore bomb
+    public float attackDuration = 20f; // How long the attack lasts
+    public float bombSpawnInterval = 1f; // Time between spore bombs
+    public float spawnRadius = 5f; // Maximum range around the player for targeting
 
 
 
@@ -35,6 +41,7 @@ public class MushroomBoss : Enemy
     {
         currentBossState = BossState.StageOne;
         CalculateScreenBounds();
+        StartCoroutine(SporeBombAttack());
     }
 
     void Update()
@@ -75,7 +82,7 @@ public class MushroomBoss : Enemy
 
         }else if(currentBossState == BossState.StageTwo)
         {
-            //some stage two mechanics
+            StartCoroutine(SporeBombAttack());
         }
     }
     
@@ -136,5 +143,24 @@ public class MushroomBoss : Enemy
         // Reset for the next attack cycle
         currentDistance = 0f;
         spawnPoint.position = ogSpawnPoint.position; // Reset spawn point to boss position
+    }
+
+    private IEnumerator SporeBombAttack()
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < attackDuration)
+        {
+            // Pick a random point near the player
+            Vector2 targetPosition = playerPos.position + (Vector3)Random.insideUnitCircle * spawnRadius;
+
+            // Spawn the spore bomb
+            GameObject sporeBomb = Instantiate(sporeBombPrefab, transform.position, Quaternion.identity);
+            sporeBomb.GetComponent<SporeBomb>().Initialize(targetPosition);
+
+            // Wait for the next spawn
+            elapsedTime += bombSpawnInterval;
+            yield return new WaitForSeconds(bombSpawnInterval);
+        }
     }
 }
