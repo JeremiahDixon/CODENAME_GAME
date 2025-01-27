@@ -36,7 +36,8 @@ public class Enemy : MonoBehaviour, IEnemy
         basic,
         intermediate,
         advanced,
-        legendary
+        legendary,
+        shooter
     };
 
     Vector2 knockbackDirection;

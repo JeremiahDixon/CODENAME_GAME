@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: WitchSO
   m_EditorClassIdentifier: 
   enemyName: Witch
-  enemyLevel: 0
+  enemyLevel: 4
   maxHp: 75
   strength: 5
   scoreValue: 15

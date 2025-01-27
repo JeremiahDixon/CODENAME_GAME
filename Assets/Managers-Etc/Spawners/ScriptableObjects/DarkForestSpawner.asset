@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: DarkForestSpawner
   m_EditorClassIdentifier: 
   basicMobs:
-  - {fileID: 2812393948050050686, guid: 1bcb004ceefbb2c48903af4fdc914c81, type: 3}
   - {fileID: 926504124914932186, guid: 19b7261d52b81144bb0d515d5b96bcb4, type: 3}
   - {fileID: 5732870863236921878, guid: 4464b21607ef2c8418e666c037873e60, type: 3}
   - {fileID: 8112522797563040343, guid: c3024387eba541940a4bf566e1c0b4dc, type: 3}
@@ -23,11 +22,15 @@ MonoBehaviour:
   - {fileID: 558362672080133649, guid: f96a6db94d086504dbce38f74bdce4d9, type: 3}
   legendaryMobs:
   - {fileID: 1682183932814266441, guid: b7197c9b1295ff643bea1baa2a82dbbc, type: 3}
+  shooterMobs:
+  - {fileID: 2812393948050050686, guid: 1bcb004ceefbb2c48903af4fdc914c81, type: 3}
   basicTimeBtwSpawn: 0
-  startBasicTimeBtwSpawn: 0.75
+  startBasicTimeBtwSpawn: 1
   intermediateTimeBtwSpawn: 10
   startIntermediateTimeBtwSpawn: 10
   advancedTimeBtwSpawn: 20
   startAdvancedTimeBtwSpawn: 20
   legendaryTimeBtwSpawn: 29
   startLegendaryTimeBtwSpawn: 29
+  shooterTimeBtwSpawn: 4
+  startShooterTimeBtwSpawn: 4

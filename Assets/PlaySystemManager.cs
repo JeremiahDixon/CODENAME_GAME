@@ -48,29 +48,34 @@ public class PlaySystemManager : MonoBehaviour
         timePlayed += Time.deltaTime;
         if(timePlayed >= playedFiveMin){
             ms.StartBasicTimeBtwSpawn = 1;
-            ms.StartIntermediateTimeBtwSpawn = 0.3f;
-            ms.StartAdvancedTimeBtwSpawn = 0.75f;
+            ms.StartIntermediateTimeBtwSpawn = 0.5f;
+            ms.StartAdvancedTimeBtwSpawn = 1f;
             ms.StartLegendaryTimeBtwSpawn = 1;
+            ms.StartShooterTimeBtwSpawn = 2f;
         }else if(timePlayed >= playedThreeMin){
-            ms.StartBasicTimeBtwSpawn = 0.2f;
+            ms.StartBasicTimeBtwSpawn = 0.4f;
             ms.StartIntermediateTimeBtwSpawn = 0.5f;
             ms.StartAdvancedTimeBtwSpawn = 1;
             ms.StartLegendaryTimeBtwSpawn = 5;
+            ms.StartShooterTimeBtwSpawn = 2.5f;
         }else if(timePlayed >= playedTwoMin){
-            ms.StartBasicTimeBtwSpawn = 0.3f;
+            ms.StartBasicTimeBtwSpawn = 0.5f;
             ms.StartIntermediateTimeBtwSpawn = 2;
             ms.StartAdvancedTimeBtwSpawn = 5;
             ms.StartLegendaryTimeBtwSpawn = 10;
+            ms.StartShooterTimeBtwSpawn = 3;
         }else if(timePlayed >= playedOneMin){
-            ms.StartBasicTimeBtwSpawn = 0.4f;
+            ms.StartBasicTimeBtwSpawn = 0.6f;
             ms.StartIntermediateTimeBtwSpawn = 6;
             ms.StartAdvancedTimeBtwSpawn = 12;
             ms.StartLegendaryTimeBtwSpawn = 20;
+            ms.StartShooterTimeBtwSpawn = 3;
         }else if(timePlayed >= playedThirtySeconds){
-            ms.StartBasicTimeBtwSpawn = 0.5f;
+            ms.StartBasicTimeBtwSpawn = 0.7f;
             ms.StartIntermediateTimeBtwSpawn = 7;
             ms.StartAdvancedTimeBtwSpawn = 15;
             ms.StartLegendaryTimeBtwSpawn = 25;
+            ms.StartShooterTimeBtwSpawn = 3.5f;
         }
     }
 

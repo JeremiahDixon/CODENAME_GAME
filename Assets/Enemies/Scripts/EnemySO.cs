@@ -18,7 +18,8 @@ public class EnemySO : ScriptableObject
         basic,
         intermediate,
         advanced,
-        legendary
+        legendary,
+        shooter
     };
 
     public void CreateStats(GameObject gameObject){

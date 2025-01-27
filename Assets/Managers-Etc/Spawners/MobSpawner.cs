@@ -12,16 +12,21 @@ public class MobSpawner : MonoBehaviour
     [SerializeField] float startAdvancedTimeBtwSpawn; public float StartAdvancedTimeBtwSpawn{get => startAdvancedTimeBtwSpawn; set => startAdvancedTimeBtwSpawn = value;}
     [SerializeField] float legendaryTimeBtwSpawn; public float LegendaryTimeBtwSpawn{get => legendaryTimeBtwSpawn; set => legendaryTimeBtwSpawn = value;}
     [SerializeField] float startLegendaryTimeBtwSpawn; public float StartLegendaryTimeBtwSpawn{get => startLegendaryTimeBtwSpawn; set => startLegendaryTimeBtwSpawn = value;}
+    [SerializeField] float shooterTimeBtwSpawn; public float ShooterTimeBtwSpawn{get => shooterTimeBtwSpawn; set => shooterTimeBtwSpawn = value;}
+    [SerializeField] float startShooterTimeBtwSpawn; public float StartShooterTimeBtwSpawn{get => startShooterTimeBtwSpawn; set => startShooterTimeBtwSpawn = value;}
     int basicLimit = 30;
     int legendaryLimit = 1;
+    int shooterLimit = 20;
     [SerializeField] GameObject[] basicMobs; public GameObject[] BasicMobs{get => basicMobs; set => basicMobs = value;}
     [SerializeField] GameObject[] intermediateMobs; public GameObject[] IntermediateMobs{get => intermediateMobs; set => intermediateMobs = value;}
     [SerializeField] GameObject[] advancedMobs; public GameObject[] AdvancedMobs{get => advancedMobs; set => advancedMobs = value;}
     [SerializeField] GameObject[] legendaryMobs; public GameObject[] LegendaryMobs{get => legendaryMobs; set => legendaryMobs = value;}
+    [SerializeField] GameObject[] shooterMobs; public GameObject[] ShooterMobs{get => shooterMobs; set => shooterMobs = value;}
     [SerializeField] ArrayList basicMobsList = new ArrayList();
     [SerializeField] ArrayList intermediateMobsList = new ArrayList();
     [SerializeField] ArrayList advancedMobsList = new ArrayList();
     [SerializeField] ArrayList legendaryMobsList = new ArrayList();
+    [SerializeField] ArrayList shooterMobsList = new ArrayList();
     [SerializeField] ArrayList spawnedMobs = new ArrayList();
     [SerializeField] LayerMask enemyLayer;
     public enum PlayState { Bossfight, MobWaves }
@@ -74,6 +79,16 @@ public class MobSpawner : MonoBehaviour
             }else{
                 advancedTimeBtwSpawn -= Time.deltaTime;
             }
+            if(shooterTimeBtwSpawn <= 0){
+                GameObject smob = GetRandomMob(shooterMobsList);
+                if( smob != null )
+                {
+                    Spawn(smob, GetRandomScreenside());
+                }
+                shooterTimeBtwSpawn = startShooterTimeBtwSpawn;
+            }else{
+                shooterTimeBtwSpawn -= Time.deltaTime;
+            }
 
         }
     }
@@ -95,25 +110,27 @@ public class MobSpawner : MonoBehaviour
         return screenSide;
     }
 
-    ArrayList GetMobList(Enemy.EnemyLevel enemyLevel)
-    {
-        switch (enemyLevel)
-        {
-            case Enemy.EnemyLevel.basic:
-                return basicMobsList;
-            case Enemy.EnemyLevel.intermediate:
-                return intermediateMobsList;
-            case Enemy.EnemyLevel.advanced:
-                return advancedMobsList;
-            case Enemy.EnemyLevel.legendary:
-                return legendaryMobsList;
-            default:
-                return basicMobsList;
-        }
-    }
+    // ArrayList GetMobList(Enemy.EnemyLevel enemyLevel)
+    // {
+    //     switch (enemyLevel)
+    //     {
+    //         case Enemy.EnemyLevel.basic:
+    //             return basicMobsList;
+    //         case Enemy.EnemyLevel.intermediate:
+    //             return intermediateMobsList;
+    //         case Enemy.EnemyLevel.advanced:
+    //             return advancedMobsList;
+    //         case Enemy.EnemyLevel.legendary:
+    //             return legendaryMobsList;
+    //         case Enemy.EnemyLevel.shooter:
+    //             return shooterMobsList;
+    //         default:
+    //             return basicMobsList;
+    //     }
+    // }
 
     void Spawn(GameObject mob, int screenSide){
-        ArrayList mobList = GetMobList(mob.GetComponent<Enemy>().enemyLevel);
+        //ArrayList mobList = GetMobList(mob.GetComponent<Enemy>().enemyLevel);
         if(screenSide == 1){
             Vector3 v3Pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.Range(0f, 1f), Random.Range(1.01f, 1.05f), 0));
             if(CanSpawn(v3Pos, canSpawnRadius)){
@@ -195,6 +212,15 @@ public class MobSpawner : MonoBehaviour
             }
         }
 
+        for(int x = 0; x < shooterMobs.Length; x++){
+            for (int i = 0; i < shooterLimit; i++)
+            {
+                GameObject newShooterMob = Instantiate(shooterMobs[x], this.transform.position, this.transform.rotation);
+                newShooterMob.SetActive(false);
+                shooterMobsList.Add(newShooterMob);
+            }
+        }
+
     }
 
     public void RequeueMob(GameObject mob)
@@ -219,6 +245,11 @@ public class MobSpawner : MonoBehaviour
             case Enemy.EnemyLevel.legendary:
                 mob.SetActive(false);
                 legendaryMobsList.Add(mob);
+                spawnedMobs.Remove(mob);
+                break;
+            case Enemy.EnemyLevel.shooter:
+                mob.SetActive(false);
+                shooterMobsList.Add(mob);
                 spawnedMobs.Remove(mob);
                 break;
         }

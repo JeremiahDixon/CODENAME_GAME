@@ -8,10 +8,15 @@ public class Witch : Enemy
     public float fireRate; // Time between shots
     public float edgePadding; // Margin from the screen edges
     public float idleDuration = 2f; // Time spent idling
-    private float idleTimer = 0f; // Timer for idling
-    private float fireCountdown; // Countdown for the next shot
+    public float spawnRadius = 5f; // Radius for random movement from spawn point
+    public float minPlayerDistance = 2f; // Minimum distance from the player
+    public float avoidDistance = 1.5f; // Distance to move away from the player
     public float laserSpeed = 10f; // Speed of the laser projectile
 
+    private float idleTimer = 0f; // Timer for idling
+    private float fireCountdown; // Countdown for the next shot
+    private Vector2 spawnPosition; // The initial spawn position
+    private Vector2 targetPosition; // Current target position
     private GameObject laserInstance; // The single laser object
     private Laser laserScript; // Reference to the laser script
     private bool laserActive = false; // Whether the laser is active
@@ -19,15 +24,13 @@ public class Witch : Enemy
     private enum State { MovingToPosition, Idle, AvoidingPlayer }
     private State currentState = State.MovingToPosition;
 
-    public float minPlayerDistance = 2f; // Minimum distance from the player
-    public float avoidDistance = 1.5f; // Distance to move away from the player
-
     void Start()
     {
         currentState = State.MovingToPosition;
         fireCountdown = fireRate;
 
-        // Instantiate the laser once and keep it disabled
+        spawnPosition = transform.position;
+
         if (laserPrefab != null)
         {
             laserInstance = Instantiate(laserPrefab, firePoint.position, Quaternion.identity);
@@ -54,7 +57,7 @@ public class Witch : Enemy
         // Ensure the witch's Z position stays locked
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
-        // Update the laser position if it is active
+        // Update laser state
         if (!laserInstance.activeInHierarchy && laserInstance != null)
         {
             laserActive = false;
@@ -66,7 +69,13 @@ public class Witch : Enemy
         anim.SetBool("isWalking", true);
         anim.SetBool("isIdle", false);
 
-        Vector2 targetPosition = GetRandomValidPosition();
+        // If no target position or target reached, pick a new one
+        if (targetPosition == Vector2.zero || Vector2.Distance(transform.position, targetPosition) < 0.1f)
+        {
+            targetPosition = GetRandomValidPosition();
+        }
+
+        // Move towards the target position
         transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
 
         // Lock Z-axis
@@ -104,20 +113,18 @@ public class Witch : Enemy
         anim.SetBool("isWalking", true);
         anim.SetBool("isIdle", false);
 
-        // Calculate direction directly away from the player
         Vector2 directionAway = (transform.position - player.transform.position).normalized;
-        Vector2 targetPosition = (Vector2)transform.position + directionAway * avoidDistance;
+        Vector2 avoidTarget = (Vector2)transform.position + directionAway * avoidDistance;
 
-        // Clamp the target position to stay within the camera bounds
-        targetPosition = ClampToCameraBounds(targetPosition);
+        // Clamp avoid target within bounds and spawn radius
+        avoidTarget = ClampToCameraBounds(ClampToSpawnRadius(avoidTarget));
 
-        // Move towards the clamped target position
-        transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed * Time.deltaTime);
+        transform.position = Vector2.MoveTowards(transform.position, avoidTarget, speed * Time.deltaTime);
 
         // Lock Z-axis
         transform.position = new Vector3(transform.position.x, transform.position.y, 0);
 
-        // Return to Idle if sufficiently far from the player
+        // Return to Idle when sufficiently far from the player
         if (Vector2.Distance(transform.position, player.transform.position) > minPlayerDistance)
         {
             currentState = State.Idle;
@@ -128,15 +135,26 @@ public class Witch : Enemy
     Vector2 GetRandomValidPosition()
     {
         Vector2 randomPosition;
+        spawnPosition = transform.position;
+
         do
         {
-            float x = Random.Range(0f + edgePadding, 1f - edgePadding);
-            float y = Random.Range(0f + edgePadding, 1f - edgePadding);
-            randomPosition = Camera.main.ViewportToWorldPoint(new Vector2(x, y));
+            Vector2 offset = Random.insideUnitCircle * spawnRadius;
+            randomPosition = spawnPosition + offset;
+            randomPosition = ClampToCameraBounds(randomPosition);
         } while (Vector2.Distance(randomPosition, player.transform.position) < minPlayerDistance);
 
-        // Lock Z-axis
-        return new Vector3(randomPosition.x, randomPosition.y, 0);
+        return randomPosition;
+    }
+
+    Vector2 ClampToSpawnRadius(Vector2 position)
+    {
+        Vector2 direction = position - spawnPosition;
+        if (direction.magnitude > spawnRadius)
+        {
+            position = spawnPosition + direction.normalized * spawnRadius;
+        }
+        return position;
     }
 
     Vector2 ClampToCameraBounds(Vector2 position)
@@ -145,10 +163,7 @@ public class Witch : Enemy
         viewportPosition.x = Mathf.Clamp(viewportPosition.x, 0f + edgePadding, 1f - edgePadding);
         viewportPosition.y = Mathf.Clamp(viewportPosition.y, 0f + edgePadding, 1f - edgePadding);
 
-        Vector3 clampedPosition = Camera.main.ViewportToWorldPoint(viewportPosition);
-
-        // Lock Z-axis
-        return new Vector3(clampedPosition.x, clampedPosition.y, 0);
+        return Camera.main.ViewportToWorldPoint(viewportPosition);
     }
 
     void HandleShooting()
@@ -169,10 +184,8 @@ public class Witch : Enemy
             laserInstance.SetActive(true);
             laserInstance.transform.position = firePoint.position;
 
-            // Calculate direction to the player
             Vector2 direction = (player.transform.position - laserInstance.transform.position).normalized;
 
-            // Set direction and speed using a custom laser script
             if (laserScript != null)
             {
                 laserScript.SetDirection(direction, laserSpeed);
@@ -184,30 +197,18 @@ public class Witch : Enemy
 
     override public void TakeDamage(int damage)
     {
-        hp -= damage;
-        if (damagedClips.Length > 0)
-        {
-            int randInt = Random.Range(0, damagedClips.Length);
-            SoundManager.Instance.PlaySoundEffect(damagedClips[randInt], transform, _soundFxVolume);
-        }
+        base.TakeDamage(damage);
         if (hp <= 0)
         {
-            playManager.IncreaseScore(scoreValue);
-            if (loot.Length > 0)
-            {
-                float randomInt = Random.Range(0f, 100.0f);
-                dropLoot(randomInt);
-            }
-            GetComponent<SpriteRenderer>().color = Color.white;
-            currentSpeed = speed;
-            hp = maxHp;
-            foreach (Projectile projectile in GetComponentsInChildren<Projectile>().ToList())
-            {
-                projectile.gameObject.transform.parent = null;
-                projectile.gameObject.SetActive(false);
-            }
-            laserInstance.SetActive(false);
-            ms.RequeueMob(this.gameObject);
+            ResetStateOnDeath();
         }
+    }
+
+    void ResetStateOnDeath()
+    {
+        hp = maxHp;
+        transform.position = spawnPosition;
+        currentState = State.MovingToPosition;
+        laserInstance.SetActive(false);
     }
 }

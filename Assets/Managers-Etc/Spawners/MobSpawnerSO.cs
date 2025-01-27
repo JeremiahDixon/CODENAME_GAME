@@ -7,6 +7,7 @@ public class MobSpawnerSO : ScriptableObject
     [SerializeField] GameObject[] intermediateMobs;
     [SerializeField] GameObject[] advancedMobs;
     [SerializeField] GameObject[] legendaryMobs;
+    [SerializeField] GameObject[] shooterMobs;
     [SerializeField] float basicTimeBtwSpawn;
     [SerializeField] float startBasicTimeBtwSpawn;
     [SerializeField] float intermediateTimeBtwSpawn;
@@ -15,6 +16,8 @@ public class MobSpawnerSO : ScriptableObject
     [SerializeField] float startAdvancedTimeBtwSpawn;
     [SerializeField] float legendaryTimeBtwSpawn;
     [SerializeField] float startLegendaryTimeBtwSpawn;
+    [SerializeField] float shooterTimeBtwSpawn;
+    [SerializeField] float startShooterTimeBtwSpawn;
 
     public void CreateInfo(GameObject gameObject){
         MobSpawner spawner = gameObject.GetComponent<MobSpawner>();
@@ -22,6 +25,7 @@ public class MobSpawnerSO : ScriptableObject
         spawner.IntermediateMobs = intermediateMobs;
         spawner.AdvancedMobs = advancedMobs;
         spawner.LegendaryMobs = legendaryMobs;
+        spawner.ShooterMobs = shooterMobs;
 
         spawner.BasicTimeBtwSpawn = basicTimeBtwSpawn;
         spawner.StartBasicTimeBtwSpawn = startBasicTimeBtwSpawn;
@@ -31,5 +35,7 @@ public class MobSpawnerSO : ScriptableObject
         spawner.StartAdvancedTimeBtwSpawn = startAdvancedTimeBtwSpawn;
         spawner.LegendaryTimeBtwSpawn = legendaryTimeBtwSpawn;
         spawner.StartLegendaryTimeBtwSpawn = startLegendaryTimeBtwSpawn;
+        spawner.ShooterTimeBtwSpawn = shooterTimeBtwSpawn;
+        spawner.StartShooterTimeBtwSpawn = startShooterTimeBtwSpawn;
     }
 }
