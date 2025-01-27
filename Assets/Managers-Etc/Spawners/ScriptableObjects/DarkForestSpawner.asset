@@ -32,5 +32,5 @@ MonoBehaviour:
   startAdvancedTimeBtwSpawn: 20
   legendaryTimeBtwSpawn: 29
   startLegendaryTimeBtwSpawn: 29
-  shooterTimeBtwSpawn: 4
-  startShooterTimeBtwSpawn: 4
+  shooterTimeBtwSpawn: 5
+  startShooterTimeBtwSpawn: 5

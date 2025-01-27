@@ -63,19 +63,19 @@ public class PlaySystemManager : MonoBehaviour
             ms.StartIntermediateTimeBtwSpawn = 2;
             ms.StartAdvancedTimeBtwSpawn = 5;
             ms.StartLegendaryTimeBtwSpawn = 10;
-            ms.StartShooterTimeBtwSpawn = 3;
+            ms.StartShooterTimeBtwSpawn = 3.5f;
         }else if(timePlayed >= playedOneMin){
             ms.StartBasicTimeBtwSpawn = 0.6f;
             ms.StartIntermediateTimeBtwSpawn = 6;
             ms.StartAdvancedTimeBtwSpawn = 12;
             ms.StartLegendaryTimeBtwSpawn = 20;
-            ms.StartShooterTimeBtwSpawn = 3;
+            ms.StartShooterTimeBtwSpawn = 4;
         }else if(timePlayed >= playedThirtySeconds){
             ms.StartBasicTimeBtwSpawn = 0.7f;
             ms.StartIntermediateTimeBtwSpawn = 7;
             ms.StartAdvancedTimeBtwSpawn = 15;
             ms.StartLegendaryTimeBtwSpawn = 25;
-            ms.StartShooterTimeBtwSpawn = 3.5f;
+            ms.StartShooterTimeBtwSpawn = 4.5f;
         }
     }
 
