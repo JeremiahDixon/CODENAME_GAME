@@ -17,14 +17,14 @@ public class Enemy : MonoBehaviour, IEnemy
     protected const string PLAYER_TAG = "Player";
     const string SPAWNER_NAME = "Spawner";
     const string PLAYSYSTEM_MANAGER_NAME = "PlaySystemManager";
-    float _soundFxVolume = 0.05f;
+    protected float _soundFxVolume = 0.05f;
     [SerializeField] protected GameObject[] loot; public GameObject[] Loot{ get => loot; set => loot = value;}
     [SerializeField] protected EnemySO enemySo;
     protected Transform playerPos;
     protected IPlayer player;
     MobSpawner ms;
     public EnemyLevel enemyLevel = new EnemyLevel();
-    PlaySystemManager playManager;
+    protected PlaySystemManager playManager;
     [SerializeField] protected float detectionRadius; // Radius for overlap detection
     [SerializeField] protected float separationStrength; // Force to push enemies apart
     protected Animator anim;
@@ -117,10 +117,10 @@ public class Enemy : MonoBehaviour, IEnemy
             GetComponent<SpriteRenderer>().color = Color.white;
             currentSpeed = speed;
             hp = maxHp;
-            foreach(Projectile arrow in GetComponentsInChildren<Projectile>().ToList())
+            foreach(Projectile projectile in GetComponentsInChildren<Projectile>().ToList())
             {
-                arrow.gameObject.transform.parent = null;
-                arrow.gameObject.SetActive(false);
+                projectile.gameObject.transform.parent = null;
+                projectile.gameObject.SetActive(false);
             }
             ms.RequeueMob(this.gameObject);
         }

@@ -48,7 +48,7 @@ public class GasCloud : MonoBehaviour
     {
         if(other.gameObject.CompareTag("Player"))
         {
-            Debug.Log("PLAYER IN CLOUD");
+            //Debug.Log("PLAYER IN CLOUD");
             if(poisonDOT <= 0)
             {
                 other.gameObject.GetComponent<IPlayer>().TakeDamage(damage);

@@ -8,7 +8,7 @@ public class MushroomAttack : MonoBehaviour
     public int damage = 10; // Damage to the player
 
     private Vector3 initialScale;
-    private bool isGrowing = true;
+    //private bool isGrowing = true;
 
     private void Start()
     {

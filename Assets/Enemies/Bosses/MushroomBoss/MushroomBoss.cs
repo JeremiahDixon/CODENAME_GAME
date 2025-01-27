@@ -1,14 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
 using UnityEngine;
 
 public class MushroomBoss : Enemy
 {
     [SerializeField] private float timeBtwAttack;
     [SerializeField] Transform attackPos;
-    [SerializeField] float attackRange;
-    public enum BossState { StageOne, StageTwo, StageThree, Transition}
+    //[SerializeField] float attackRange;
+    public enum BossState {StageOne, StageTwo, StageThree, Transition}
     public BossState currentBossState {get; private set;}
+
+    public enum StageOneAttack {MushroomAttack, SporeBombs}
+    public StageOneAttack currentStageOneState {get; private set;}
 
     [SerializeField] GameObject gasCloudPrefab; // Assign your gas cloud prefab in the Inspector
     [SerializeField] int numberOfClouds = 5;    // Number of gas clouds to spawn
@@ -19,7 +24,10 @@ public class MushroomBoss : Enemy
     float startSpawnGas = 10f;
 
     float spawnMushrooms = 10f;
-    float startSpawnMushrooms = 3f;
+    float startSpawnMushrooms = 6f;
+
+    float spawnBombs = 0f;
+    float startSpawnBombs = 20f;
 
     public GameObject mushroomPrefab; // Assign your mushroom prefab in the Inspector
     public float spawnInterval = 0.5f; // Time between spawning mushrooms
@@ -31,17 +39,17 @@ public class MushroomBoss : Enemy
 
 
     public GameObject sporeBombPrefab; // Prefab of the spore bomb
-    public float attackDuration = 20f; // How long the attack lasts
-    public float bombSpawnInterval = 1f; // Time between spore bombs
-    public float spawnRadius = 5f; // Maximum range around the player for targeting
+    public float attackDuration;// = 30f; // How long the attack lasts
+    public float bombSpawnInterval;// = 1f; // Time between spore bombs
+    public float spawnRadius;// = 2f; // Maximum range around the player for targeting
 
-
+    int mushroomAttackCount = 0;
 
     void Start()
     {
         currentBossState = BossState.StageOne;
+        currentStageOneState = StageOneAttack.MushroomAttack;
         CalculateScreenBounds();
-        StartCoroutine(SporeBombAttack());
     }
 
     void Update()
@@ -67,22 +75,41 @@ public class MushroomBoss : Enemy
         {
             if(playerPos.position.y - anim.transform.position.y > 0.2f || playerPos.position.y - anim.transform.position.y < -0.2f)
             {
-                anim.transform.position = Vector2.MoveTowards(anim.transform.position, new Vector2(Camera.main.ViewportToWorldPoint(new Vector3(0.8f, playerPos.position.y, 0)).x, playerPos.position.y), currentSpeed * Time.deltaTime);
+                anim.transform.position = Vector2.MoveTowards(anim.transform.position, new Vector2(Camera.main.ViewportToWorldPoint(new Vector3(0.9f, playerPos.position.y, 0)).x, playerPos.position.y), currentSpeed * Time.deltaTime);
             }
 
-            if(spawnMushrooms <= 0)
+            if(currentStageOneState == StageOneAttack.MushroomAttack)
             {
-                StartCoroutine(SpawnMushrooms());
-                spawnMushrooms = startSpawnMushrooms;
+                if(spawnMushrooms <= 0)
+                {
+                    StartCoroutine(SpawnMushrooms());
+                    mushroomAttackCount++;
+                    spawnMushrooms = startSpawnMushrooms;
+                    if(mushroomAttackCount >= 4)
+                    {
+                        currentStageOneState = StageOneAttack.SporeBombs;
+                        mushroomAttackCount = 0;
+                    }
+                }
+                else
+                {
+                    spawnMushrooms -= Time.deltaTime;
+                }
             }
-            else
+            
+            if(currentStageOneState == StageOneAttack.SporeBombs)
             {
-                spawnMushrooms -= Time.deltaTime;
+                if(spawnBombs <= 0)
+                {
+                    StartCoroutine(SporeBombAttack());
+                    spawnBombs = startSpawnBombs;
+                }
+                else
+                {
+                    spawnBombs -= Time.deltaTime;
+                }
             }
 
-        }else if(currentBossState == BossState.StageTwo)
-        {
-            StartCoroutine(SporeBombAttack());
         }
     }
     
@@ -155,12 +182,46 @@ public class MushroomBoss : Enemy
             Vector2 targetPosition = playerPos.position + (Vector3)Random.insideUnitCircle * spawnRadius;
 
             // Spawn the spore bomb
-            GameObject sporeBomb = Instantiate(sporeBombPrefab, transform.position, Quaternion.identity);
+            GameObject sporeBomb = Instantiate(sporeBombPrefab, ogSpawnPoint.position, Quaternion.identity);
             sporeBomb.GetComponent<SporeBomb>().Initialize(targetPosition);
 
             // Wait for the next spawn
             elapsedTime += bombSpawnInterval;
             yield return new WaitForSeconds(bombSpawnInterval);
+        }
+
+        currentStageOneState = StageOneAttack.MushroomAttack;
+    }
+
+    override public void TakeDamage (int damage)
+    {
+        hp -= damage;
+        if(damagedClips.Length > 0)
+        {
+            int randInt = Random.Range(0, damagedClips.Length);
+            SoundManager.Instance.PlaySoundEffect(damagedClips[randInt], transform, _soundFxVolume);
+        }
+        if(hp <= maxHp * 0.65f)
+        {
+            //currentStageOneState = StageOneAttack.SporeBombs;
+            //currentBossState = BossState.StageTwo;
+        }
+        if (hp <= 0)
+        {
+            playManager.IncreaseScore(scoreValue);
+            if(loot.Length > 0)
+            {
+                float randomInt = Random.Range(0f, 100.0f);
+                dropLoot(randomInt);
+            }
+            GetComponent<SpriteRenderer>().color = Color.white;
+            currentSpeed = speed;
+            hp = maxHp;
+            foreach(Projectile projectile in GetComponentsInChildren<Projectile>().ToList())
+            {
+                projectile.gameObject.transform.parent = null;
+                projectile.gameObject.SetActive(false);
+            }
         }
     }
 }
