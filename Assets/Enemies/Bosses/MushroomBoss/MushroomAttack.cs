@@ -4,7 +4,7 @@ public class MushroomAttack : MonoBehaviour
 {
     public float growthDuration = 0.1f; // Time it takes to grow to full size
     public float shrinkDuration = 0.1f; // Time it takes to shrink back
-    public float maxScale = 1.5f; // Maximum scale of the mushroom
+    public float maxScale = 1.25f; // Maximum scale of the mushroom
     public int damage = 10; // Damage to the player
 
     private Vector3 initialScale;
@@ -12,7 +12,7 @@ public class MushroomAttack : MonoBehaviour
 
     private void Start()
     {
-        initialScale = transform.localScale;
+        initialScale = new Vector3(transform.localScale.x * 0.25f, transform.localScale.y * 0.25f, transform.localScale.z * 0.25f);
         StartCoroutine(GrowAndShrink());
     }
 

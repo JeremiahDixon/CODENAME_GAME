@@ -1,12 +1,14 @@
+using System.Linq;
 using UnityEngine;
 
-public class RedMushroom : Enemy
+public class MushroomPatchMushroom : Enemy
 {
     [SerializeField]
     private float timeBtwAttack;
     const string ATTACKING_TRIGGER = "isAttackingTrigger";
     [SerializeField] Transform attackPos;
     [SerializeField] float attackRange;
+    [SerializeField] MushroomGarden mg;
     void Update()
     {
         if(Vector2.Distance(anim.transform.position, playerPos.position) > 0.75f)
@@ -56,5 +58,33 @@ public class RedMushroom : Enemy
     {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(attackPos.position, attackRange);
+    }
+
+    public override void TakeDamage(int damage)
+    {
+        hp -= damage;
+        if(damagedClips.Length > 0)
+        {
+            int randInt = Random.Range(0, damagedClips.Length);
+            SoundManager.Instance.PlaySoundEffect(damagedClips[randInt], transform, _soundFxVolume);
+        }
+        if (hp <= 0)
+        {
+            playManager.IncreaseScore(scoreValue);
+            if(loot.Length > 0)
+            {
+                float randomInt = Random.Range(0f, 100.0f);
+                dropLoot(randomInt);
+            }
+            GetComponent<SpriteRenderer>().color = Color.white;
+            currentSpeed = speed;
+            hp = maxHp;
+            foreach(Projectile projectile in GetComponentsInChildren<Projectile>().ToList())
+            {
+                projectile.gameObject.transform.parent = null;
+                projectile.gameObject.SetActive(false);
+            }
+            mg.ReturnObject(this.gameObject);
+        }
     }
 }

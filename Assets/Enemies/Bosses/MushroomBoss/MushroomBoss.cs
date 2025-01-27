@@ -12,7 +12,7 @@ public class MushroomBoss : Enemy
     public enum BossState {StageOne, StageTwo, StageThree, Transition}
     public BossState currentBossState {get; private set;}
 
-    public enum StageOneAttack {MushroomAttack, SporeBombs}
+    public enum StageOneAttack {MushroomAttack, SporeBombs, MushroomPatches}
     public StageOneAttack currentStageOneState {get; private set;}
 
     [SerializeField] GameObject gasCloudPrefab; // Assign your gas cloud prefab in the Inspector
@@ -24,10 +24,10 @@ public class MushroomBoss : Enemy
     float startSpawnGas = 10f;
 
     float spawnMushrooms = 10f;
-    float startSpawnMushrooms = 6f;
+    float startSpawnMushrooms = 4f;
 
-    float spawnBombs = 0f;
-    float startSpawnBombs = 20f;
+    float spawnBombs = 10f;
+    float startSpawnBombs = 25f;
 
     public GameObject mushroomPrefab; // Assign your mushroom prefab in the Inspector
     public float spawnInterval = 0.5f; // Time between spawning mushrooms
@@ -44,6 +44,12 @@ public class MushroomBoss : Enemy
     public float spawnRadius;// = 2f; // Maximum range around the player for targeting
 
     int mushroomAttackCount = 0;
+
+    public GameObject mushroomPatchPrefab; // Prefab of the spore bomb
+    public int maxPatches = 3;
+    private List<Vector2> spawnedPositions = new List<Vector2>(); // Track positions of spawned patches
+    float spawnPatches = 5f;
+    float startSpawnPatches = 25f;
 
     void Start()
     {
@@ -110,6 +116,19 @@ public class MushroomBoss : Enemy
                 }
             }
 
+            if(currentStageOneState == StageOneAttack.MushroomPatches)
+            {
+                if(spawnPatches <= 0)
+                {
+                    StartCoroutine(SpawnMushroomPatches());
+                    spawnPatches = startSpawnPatches;
+                }
+                else
+                {
+                    spawnPatches -= Time.deltaTime;
+                }
+            }
+
         }
     }
     
@@ -156,7 +175,7 @@ public class MushroomBoss : Enemy
         while (currentDistance < maxDistance)
         {
             // Spawn a mushroom
-            GameObject mushroom = Instantiate(mushroomPrefab, spawnPoint.position, Quaternion.identity);
+            Instantiate(mushroomPrefab, spawnPoint.position, Quaternion.identity);
 
             // Move the spawn point forward by the offset
             spawnPoint.position += -spawnPoint.right * spawnOffset;
@@ -190,7 +209,56 @@ public class MushroomBoss : Enemy
             yield return new WaitForSeconds(bombSpawnInterval);
         }
 
+        currentStageOneState = StageOneAttack.MushroomPatches;
+        spawnBombs = startSpawnBombs;
+    }
+
+    IEnumerator SpawnMushroomPatches()
+    {
+        int patchesSpawned = 0;
+
+        while (patchesSpawned < maxPatches)
+        {
+            Vector2 spawnPosition = GetRandomPositionWithinCamera();
+
+            if (IsPositionValid(spawnPosition))
+            {
+                Instantiate(mushroomPatchPrefab, spawnPosition, Quaternion.identity);
+                spawnedPositions.Add(spawnPosition);
+                patchesSpawned++;
+            }
+
+            yield return null; // Wait for the next frame before attempting another spawn
+        }
         currentStageOneState = StageOneAttack.MushroomAttack;
+        spawnPatches = startSpawnPatches;
+    }
+
+    Vector2 GetRandomPositionWithinCamera()
+    {
+        // Get camera bounds in world space
+        Vector3 bottomLeft = Camera.main.ViewportToWorldPoint(new Vector3(0.15f, 0.15f, 0));
+        Vector3 topRight = Camera.main.ViewportToWorldPoint(new Vector3(0.85f, 0.85f, 0));
+
+        // Generate random position within the camera bounds
+        float x = Random.Range(bottomLeft.x, topRight.x);
+        float y = Random.Range(bottomLeft.y, topRight.y);
+
+        return new Vector2(x, y);
+    }
+
+    bool IsPositionValid(Vector2 position)
+    {
+        // Check if the position is far enough from existing patches
+        foreach (Vector2 existingPosition in spawnedPositions)
+        {
+            if (Vector2.Distance(existingPosition, position) < spawnRadius)
+            {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     override public void TakeDamage (int damage)

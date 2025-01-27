@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour, IEnemy
     [SerializeField] protected EnemySO enemySo;
     protected Transform playerPos;
     protected IPlayer player;
-    MobSpawner ms;
+    protected MobSpawner ms;
     public EnemyLevel enemyLevel = new EnemyLevel();
     protected PlaySystemManager playManager;
     [SerializeField] protected float detectionRadius; // Radius for overlap detection

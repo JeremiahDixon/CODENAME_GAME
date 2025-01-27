@@ -80,8 +80,6 @@ public class PlaySystemManager : MonoBehaviour
         {
             powerupCount ++;
             pum.PowerUp();
-            // ms.SpawnBoss();
-            // GameObject.Find("PlayerCamera").GetComponent<TheCamera>().LockCamera();
         }else if(score >= 200 && powerupCount == 1)
         {
             powerupCount ++;
@@ -142,6 +140,71 @@ public class PlaySystemManager : MonoBehaviour
             ms.SpawnBoss();
             GameObject.Find("PlayerCamera").GetComponent<TheCamera>().LockCamera();
         }
+
+        // if(score >= 5 && powerupCount == 0 )
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }else if(score >= 10 && powerupCount == 1)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }else if(score >= 10 && powerupCount == 2)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }
+        // else if(score >= 10 && powerupCount == 3)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }
+        // else if(score >= 10 && powerupCount == 4)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }
+        // else if(score >= 10 && powerupCount == 5)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }else if(score >= 10 && powerupCount == 6)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }
+        // else if(score >= 10 && powerupCount == 7)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }
+        // else if(score >= 10 && powerupCount == 8)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }
+        // else if(score >= 10 && powerupCount == 9)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }
+        // else if(score >= 10 && powerupCount == 10)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }
+        // else if(score >= 10 && powerupCount == 11)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }
+        // else if(score >= 15 && powerupCount == 12)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        //     ms.SpawnBoss();
+        //     GameObject.Find("PlayerCamera").GetComponent<TheCamera>().LockCamera();
+        // }
     }
 
     public void IncreaseScore(int scoreValue){

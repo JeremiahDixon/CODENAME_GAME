@@ -190,7 +190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67c1d9d875f85554681230915c5c94fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  growthDuration: 1
+  growthDuration: 0.5
   shrinkDuration: 1
   maxScale: 1.5
   damage: 5

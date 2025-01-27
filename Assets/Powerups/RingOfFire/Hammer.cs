@@ -25,6 +25,8 @@ public class Hammer : MonoBehaviour
                 collision.gameObject.GetComponent<IEnemy>().ApplyKnockback(knockbackDirection, knockbackForce, knockbackDuration);
             }
             collision.GetComponent<IEnemy>().TakeDamage(damage);
+        }else if(collision.gameObject.GetComponent<Damagable>() != null){
+            collision.gameObject.GetComponent<Damagable>().TakeDamage(damage);
         }
     }
 

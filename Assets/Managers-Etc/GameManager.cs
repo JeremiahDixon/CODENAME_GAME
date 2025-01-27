@@ -109,16 +109,23 @@ public class GameManager: MonoBehaviour
                 currentState = GameState.GameOver;
                 playerHealth = 0;
                 thePlayer.Die();
-                StartCoroutine(GameOverAfter());
+                GameOverAfter();
+                //StartCoroutine(GameOverAfter());
             }else{
                 playerHealth = newHealthValue;
             }
         }
     }
 
-    private IEnumerator GameOverAfter()
+    // private IEnumerator GameOverAfter()
+    // {
+    //     yield return new WaitForSeconds(1);
+    //     gameOverScreen.GameOver();
+    //     Time.timeScale = 0;
+    // }
+
+    private void GameOverAfter()
     {
-        yield return new WaitForSeconds(1);
         gameOverScreen.GameOver();
         Time.timeScale = 0;
     }

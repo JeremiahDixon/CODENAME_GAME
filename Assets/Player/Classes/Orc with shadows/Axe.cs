@@ -59,10 +59,11 @@ public class Axe : Projectile
                 }
                 other.gameObject.GetComponent<IEnemy>().TakeDamage(damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.DamageModifier));
                 Debug.Log("Dealing x damage: " + (damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.DamageModifier)));
+            }else if(other.gameObject.GetComponent<Damagable>() != null){
+                other.gameObject.GetComponent<Damagable>().TakeDamage(damage);
+            }else if(other.gameObject.CompareTag("Terrain")){
+                Freeze();
             }
-        }
-        if(other.gameObject.CompareTag("Terrain")){
-            Freeze();
         }
     }
 

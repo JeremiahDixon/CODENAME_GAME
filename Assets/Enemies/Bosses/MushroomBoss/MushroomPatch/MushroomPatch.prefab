@@ -11,13 +11,14 @@ GameObject:
   - component: {fileID: 5032624615367754422}
   - component: {fileID: 3305041933845045310}
   - component: {fileID: 4357440551414676563}
+  - component: {fileID: 2886053588693916195}
   m_Layer: 9
   m_Name: MushroomA5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5032624615367754422
 Transform:
   m_ObjectHideFlags: 0
@@ -108,10 +109,10 @@ BoxCollider2D:
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 256
   m_ForceReceiveLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 256
   m_ContactCaptureLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -134,6 +135,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &2886053588693916195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 831492198761984998}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176686fd4337c47e7adbc881ab1eb231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 200
+  shakeDuration: 0.2
+  shakeAmount: 0.1
+  minScale: 0.75
+  maxScale: 1.25
+  growthDuration: 1
+  oscillationDuration: 1
 --- !u!1 &957412244852052023
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,6 +163,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4640890358045184016}
+  - component: {fileID: 7980819478228119695}
   m_Layer: 0
   m_Name: MushroomPatch
   m_TagString: Untagged
@@ -174,6 +195,23 @@ Transform:
   - {fileID: 5032624615367754422}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7980819478228119695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 957412244852052023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3f951eb4e53e424294044085bbb04b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enemyPrefab: {fileID: 8810283773362368579, guid: 84bace2d04bd8c9419134da9d14a407b, type: 3}
+  spawnPoint: {fileID: 4640890358045184016}
+  spawnInterval: 1
+  spawnDurationFactor: 2
+  spawnCycleInterval: 30
 --- !u!1 &4068758650925512735
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,13 +223,14 @@ GameObject:
   - component: {fileID: 4988841606307890289}
   - component: {fileID: 5318455740985937143}
   - component: {fileID: 8165922687702394236}
+  - component: {fileID: 8821278994436758355}
   m_Layer: 9
   m_Name: MushroomD6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4988841606307890289
 Transform:
   m_ObjectHideFlags: 0
@@ -282,10 +321,10 @@ BoxCollider2D:
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 256
   m_ForceReceiveLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 256
   m_ContactCaptureLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -308,6 +347,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &8821278994436758355
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4068758650925512735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176686fd4337c47e7adbc881ab1eb231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 200
+  shakeDuration: 0.2
+  shakeAmount: 0.1
+  minScale: 0.75
+  maxScale: 1.25
+  growthDuration: 1
+  oscillationDuration: 1
 --- !u!1 &5308931856486174205
 GameObject:
   m_ObjectHideFlags: 0
@@ -319,13 +377,14 @@ GameObject:
   - component: {fileID: 3869634392800135772}
   - component: {fileID: 4619555377401555512}
   - component: {fileID: 4775989241923298455}
+  - component: {fileID: 4388480358449673175}
   m_Layer: 9
   m_Name: MushroomD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3869634392800135772
 Transform:
   m_ObjectHideFlags: 0
@@ -416,10 +475,10 @@ BoxCollider2D:
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 256
   m_ForceReceiveLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 256
   m_ContactCaptureLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -442,6 +501,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &4388480358449673175
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5308931856486174205}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176686fd4337c47e7adbc881ab1eb231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 200
+  shakeDuration: 0.2
+  shakeAmount: 0.1
+  minScale: 0.75
+  maxScale: 1.25
+  growthDuration: 1
+  oscillationDuration: 1
 --- !u!1 &6395590463556325550
 GameObject:
   m_ObjectHideFlags: 0
@@ -453,13 +531,14 @@ GameObject:
   - component: {fileID: 5934025857876192147}
   - component: {fileID: 2826214315768610139}
   - component: {fileID: 2589278300710563064}
+  - component: {fileID: 760589644530556145}
   m_Layer: 9
   m_Name: MushroomD5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &5934025857876192147
 Transform:
   m_ObjectHideFlags: 0
@@ -550,10 +629,10 @@ BoxCollider2D:
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 256
   m_ForceReceiveLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 256
   m_ContactCaptureLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -576,6 +655,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &760589644530556145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6395590463556325550}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176686fd4337c47e7adbc881ab1eb231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 200
+  shakeDuration: 0.2
+  shakeAmount: 0.1
+  minScale: 0.75
+  maxScale: 1.25
+  growthDuration: 1
+  oscillationDuration: 1
 --- !u!1 &6460350649273255000
 GameObject:
   m_ObjectHideFlags: 0
@@ -586,13 +684,15 @@ GameObject:
   m_Component:
   - component: {fileID: 1055469074723317029}
   - component: {fileID: 7043077852357658326}
+  - component: {fileID: 6571731774749247160}
+  - component: {fileID: 2396167527743553577}
   m_Layer: 9
   m_Name: MushroomA2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1055469074723317029
 Transform:
   m_ObjectHideFlags: 0
@@ -663,6 +763,71 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &6571731774749247160
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6460350649273255000}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176686fd4337c47e7adbc881ab1eb231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 200
+  shakeDuration: 0.2
+  shakeAmount: 0.1
+  minScale: 0.75
+  maxScale: 1.25
+  growthDuration: 1
+  oscillationDuration: 1
+--- !u!61 &2396167527743553577
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6460350649273255000}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 256
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1, y: 1}
+    newSize: {x: 1, y: 1}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
 --- !u!1 &6659592252788159586
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,13 +839,14 @@ GameObject:
   - component: {fileID: 6569395501327454112}
   - component: {fileID: 9059530118762234837}
   - component: {fileID: 4799955073936399177}
+  - component: {fileID: 3441423992184031995}
   m_Layer: 9
   m_Name: MushroomD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6569395501327454112
 Transform:
   m_ObjectHideFlags: 0
@@ -771,13 +937,13 @@ BoxCollider2D:
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
-    m_Bits: 264
+    m_Bits: 256
   m_ForceReceiveLayers:
     serializedVersion: 2
-    m_Bits: 264
+    m_Bits: 256
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 264
+    m_Bits: 4294967295
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -797,6 +963,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &3441423992184031995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6659592252788159586}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176686fd4337c47e7adbc881ab1eb231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 200
+  shakeDuration: 0.2
+  shakeAmount: 0.1
+  minScale: 0.75
+  maxScale: 1.25
+  growthDuration: 1
+  oscillationDuration: 1
 --- !u!1 &7894307520072833170
 GameObject:
   m_ObjectHideFlags: 0
@@ -808,13 +993,14 @@ GameObject:
   - component: {fileID: 4465283188534706626}
   - component: {fileID: 9117110308730526351}
   - component: {fileID: 8241788782198264868}
+  - component: {fileID: 603756484957739562}
   m_Layer: 9
   m_Name: MushroomD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4465283188534706626
 Transform:
   m_ObjectHideFlags: 0
@@ -905,10 +1091,10 @@ BoxCollider2D:
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 256
   m_ForceReceiveLayers:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 256
   m_ContactCaptureLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -931,6 +1117,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &603756484957739562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7894307520072833170}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176686fd4337c47e7adbc881ab1eb231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 200
+  shakeDuration: 0.2
+  shakeAmount: 0.1
+  minScale: 0.75
+  maxScale: 1.25
+  growthDuration: 1
+  oscillationDuration: 1
 --- !u!1 &8544477303995316123
 GameObject:
   m_ObjectHideFlags: 0
@@ -942,13 +1147,14 @@ GameObject:
   - component: {fileID: 2168233509619654177}
   - component: {fileID: 8367367102570202875}
   - component: {fileID: 840615826646186913}
+  - component: {fileID: 4998135344915121083}
   m_Layer: 9
   m_Name: MushroomD4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2168233509619654177
 Transform:
   m_ObjectHideFlags: 0
@@ -1039,16 +1245,16 @@ BoxCollider2D:
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
-    m_Bits: 264
+    m_Bits: 256
   m_ForceReceiveLayers:
     serializedVersion: 2
-    m_Bits: 264
+    m_Bits: 256
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 264
+    m_Bits: 4294967295
   m_CallbackLayers:
     serializedVersion: 2
-    m_Bits: 264
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
@@ -1065,6 +1271,25 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &4998135344915121083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8544477303995316123}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176686fd4337c47e7adbc881ab1eb231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 200
+  shakeDuration: 0.2
+  shakeAmount: 0.1
+  minScale: 0.75
+  maxScale: 1.25
+  growthDuration: 1
+  oscillationDuration: 1
 --- !u!1 &8767776662272081147
 GameObject:
   m_ObjectHideFlags: 0
@@ -1076,13 +1301,14 @@ GameObject:
   - component: {fileID: 7521172052873486524}
   - component: {fileID: 617560130922573415}
   - component: {fileID: 3136762798084475816}
+  - component: {fileID: 7690366471749287105}
   m_Layer: 9
   m_Name: MushroomD3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7521172052873486524
 Transform:
   m_ObjectHideFlags: 0
@@ -1173,16 +1399,16 @@ BoxCollider2D:
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
-    m_Bits: 264
+    m_Bits: 256
   m_ForceReceiveLayers:
     serializedVersion: 2
-    m_Bits: 264
+    m_Bits: 256
   m_ContactCaptureLayers:
     serializedVersion: 2
-    m_Bits: 264
+    m_Bits: 4294967295
   m_CallbackLayers:
     serializedVersion: 2
-    m_Bits: 264
+    m_Bits: 4294967295
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_CompositeOperation: 0
@@ -1199,3 +1425,22 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &7690366471749287105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8767776662272081147}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 176686fd4337c47e7adbc881ab1eb231, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 200
+  shakeDuration: 0.2
+  shakeAmount: 0.1
+  minScale: 0.75
+  maxScale: 1.25
+  growthDuration: 1
+  oscillationDuration: 1

@@ -10,14 +10,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e6e6797af7db8c4e9b36f601789e3fc, type: 3}
-  m_Name: MushroomBoss
+  m_Name: WitchSO
   m_EditorClassIdentifier: 
-  enemyName: Mushroom Boss
-  enemyLevel: 3
-  maxHp: 12000
-  strength: 50
-  scoreValue: 500
-  isFreezable: 0
-  minSpeed: 2
-  maxSpeed: 2.5
+  enemyName: Witch
+  enemyLevel: 0
+  maxHp: 75
+  strength: 5
+  scoreValue: 15
+  isFreezable: 1
+  minSpeed: 1.5
+  maxSpeed: 2
   loot: []

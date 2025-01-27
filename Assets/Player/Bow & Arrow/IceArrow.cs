@@ -31,6 +31,11 @@ public class IceArrow : Arrow
             rb.linearVelocity = Vector2.zero;
             gameObject.GetComponent<BoxCollider2D>().enabled = false;
             transform.parent = other.transform;
+        }else if(other.gameObject.GetComponent<Damagable>() != null){
+            other.gameObject.GetComponent<Damagable>().TakeDamage(damage);
+            rb.linearVelocity = Vector2.zero;
+            gameObject.GetComponent<BoxCollider2D>().enabled = false;
+            transform.parent = other.transform;
         }
     }
 }
