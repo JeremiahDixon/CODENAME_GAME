@@ -207,6 +207,21 @@ public class VSPlayer : MonoBehaviour, IPlayer
                     stepTimer = 0f;
                 }
             }
+
+            if (isKnockedBack)
+            {
+                // Move the enemy in the knockback direction
+                transform.position += (Vector3)(knockbackDirection * knockbackSpeed * Time.deltaTime);
+
+                // Decrease the knockback duration
+                knockbackDurationForself -= Time.deltaTime;
+
+                // Stop knockback when the duration is over
+                if (knockbackDurationForself <= 0)
+                {
+                    isKnockedBack = false;
+                }
+            }
         }
         
     }
@@ -381,6 +396,18 @@ public class VSPlayer : MonoBehaviour, IPlayer
     {
         shouldBeDamaging = false;
         //myRigid.constraints = RigidbodyConstraints2D.FreezeRotation;
+    }
+
+    Vector2 knockbackDirection;
+    float knockbackDurationForself;
+    float knockbackSpeed;
+    bool isKnockedBack;
+    public void ApplyKnockback(Vector2 direction, float speed, float duration)
+    {
+        knockbackDirection = direction.normalized;
+        knockbackSpeed = speed;
+        knockbackDurationForself = duration;
+        isKnockedBack = true;
     }
 
     void OnDrawGizmosSelected()

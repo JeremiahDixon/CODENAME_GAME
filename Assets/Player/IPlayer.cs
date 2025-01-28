@@ -25,5 +25,6 @@ public interface IPlayer
     public void UpgradeDashSpeed(float percent);
     public void UpgradeDashLength(float percent);
     public void UpgradeDashCooldown(float percent);
+    public void ApplyKnockback(Vector2 direction, float speed, float duration);
     
 }

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Cinemachine;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -66,12 +67,15 @@ public class MushroomBoss : Enemy
     public int numberOfShockwaves; // Number of concentric shockwaves
     public float timeBetweenShockwaves; // Delay between each wave
 
+    CinemachineImpulseSource impulseSource;
+
     void Start()
     {
         currentBossState = BossState.StageOne;
         currentStageOneState = StageOneAttack.MushroomAttack;
         CalculateScreenBounds();
         theShockwave = GetComponent<Shockwave>();
+        impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
     void Update()
@@ -392,7 +396,7 @@ public class MushroomBoss : Enemy
     private void SlamImpact()
     {
         Debug.Log("Boss slammed into the ground!");
-        FindFirstObjectByType<TheCamera>().Shake(0.5f, 0.2f);
+        impulseSource.GenerateImpulse(new Vector3(-0.5f, -0.5f, 0));
         CreateShockwaves();
     }
 

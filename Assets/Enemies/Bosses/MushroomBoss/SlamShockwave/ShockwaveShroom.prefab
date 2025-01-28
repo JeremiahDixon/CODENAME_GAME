@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3788792846640268361}
   - component: {fileID: 6406623493306019251}
   - component: {fileID: 1105147608124191435}
+  - component: {fileID: 6067078205231259970}
   m_Layer: 0
   m_Name: ShockwaveShroom
   m_TagString: Untagged
@@ -132,5 +133,19 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 0.82, y: 0.79}
   m_EdgeRadius: 0
+--- !u!114 &6067078205231259970
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5032571501827077540}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b7a9e8c76eb2bd84fa600e9f07881619, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  knockbackForce: 5
+  knockbackDuration: 0.2
