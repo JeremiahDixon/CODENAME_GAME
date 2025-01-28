@@ -7,7 +7,7 @@ public class GameOverScreen : MonoBehaviour
 {
 
     [SerializeField] GameObject _gameOverMenuFirst;
-    const string MAIN_MENU_SCENE_NAME = "Main Menu";
+    const string MAIN_MENU_SCENE_NAME = "MainMenu";
     void Awake(){
     }
 

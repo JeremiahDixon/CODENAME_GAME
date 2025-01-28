@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -16,11 +15,15 @@ public class MushroomBoss : Enemy
     public enum StageOneAttack {MushroomAttack, SporeBombs, MushroomPatches}
     public StageOneAttack currentStageOneState {get; private set;}
 
+    public enum StageTwoAttack {Slam}
+    public StageTwoAttack currentStageTwoState {get; private set;}
+
     [SerializeField] GameObject gasCloudPrefab; // Assign your gas cloud prefab in the Inspector
     [SerializeField] int numberOfClouds = 5;    // Number of gas clouds to spawn
 
     Vector2 screenBoundsMin; // Minimum bounds of the screen in world coordinates
     Vector2 screenBoundsMax; // Maximum bounds of the screen in world coordinates
+
     float spawnGas = 5f;
     float startSpawnGas = 10f;
 
@@ -30,6 +33,9 @@ public class MushroomBoss : Enemy
     float spawnBombs = 10f;
     float startSpawnBombs = 25f;
 
+    public float slamTime = 10f;
+    public float startSlamTime = 30f;
+
     public GameObject mushroomPrefab; // Assign your mushroom prefab in the Inspector
     public float spawnInterval = 0.5f; // Time between spawning mushrooms
     public float maxDistance = 20f; // Maximum distance for the line
@@ -37,14 +43,12 @@ public class MushroomBoss : Enemy
     public Transform spawnPoint; // Position from which mushrooms spawn
     public Transform ogSpawnPoint;
     private float currentDistance = 0f;
-
+    int mushroomAttackCount = 0;
 
     public GameObject sporeBombPrefab; // Prefab of the spore bomb
     public float attackDuration;// = 30f; // How long the attack lasts
     public float bombSpawnInterval;// = 1f; // Time between spore bombs
     public float spawnRadius;// = 2f; // Maximum range around the player for targeting
-
-    int mushroomAttackCount = 0;
 
     public GameObject mushroomPatchPrefab; // Prefab of the spore bomb
     public int maxPatches = 3;
@@ -53,11 +57,21 @@ public class MushroomBoss : Enemy
     float startSpawnPatches = 25f;
     public Tilemap terrainTilemap;
 
+    public float jumpHeight = 5f; // Height of the jump
+    public float jumpDuration = 1f; // Time it takes to complete the jump
+    public Transform groundPosition; // Reference to the ground position
+    private bool isJumping = false;
+
+    public Shockwave theShockwave;
+    public int numberOfShockwaves; // Number of concentric shockwaves
+    public float timeBetweenShockwaves; // Delay between each wave
+
     void Start()
     {
         currentBossState = BossState.StageOne;
         currentStageOneState = StageOneAttack.MushroomAttack;
         CalculateScreenBounds();
+        theShockwave = GetComponent<Shockwave>();
     }
 
     void Update()
@@ -131,6 +145,22 @@ public class MushroomBoss : Enemy
                 }
             }
 
+        }else if(currentBossState == BossState.StageTwo)
+        {
+            if(Vector2.Distance(transform.position, Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0))) > 0.1f && !isJumping)
+            {
+                transform.position = Vector2.MoveTowards(transform.position, Camera.main.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0)), currentSpeed * Time.deltaTime);
+            }else{
+                if(slamTime <= 0)
+                {
+                    StartCoroutine(JumpAndSlam());
+                    slamTime = startSlamTime;
+                }
+                else
+                {
+                    slamTime -= Time.deltaTime;
+                }
+            }
         }
     }
     
@@ -306,10 +336,10 @@ public class MushroomBoss : Enemy
             int randInt = Random.Range(0, damagedClips.Length);
             SoundManager.Instance.PlaySoundEffect(damagedClips[randInt], transform, _soundFxVolume);
         }
-        if(hp <= maxHp * 0.65f)
+        if(hp <= maxHp * 0.25f)
         {
-            //currentStageOneState = StageOneAttack.SporeBombs;
-            //currentBossState = BossState.StageTwo;
+            currentBossState = BossState.StageTwo;
+            currentStageTwoState = StageTwoAttack.Slam;
         }
         if (hp <= 0)
         {
@@ -329,4 +359,47 @@ public class MushroomBoss : Enemy
             }
         }
     }
+
+    IEnumerator JumpAndSlam()
+    {
+        isJumping = true;
+
+        // Jumping up
+        Vector3 startPosition = transform.position;
+        Vector3 peakPosition = new Vector3(startPosition.x, groundPosition.position.y + jumpHeight, startPosition.z);
+
+        float elapsed = 0f;
+        while (elapsed < jumpDuration / 2)
+        {
+            elapsed += Time.deltaTime;
+            transform.position = Vector3.Lerp(startPosition, peakPosition, elapsed / (jumpDuration / 2));
+            yield return null;
+        }
+
+        // Slamming down
+        elapsed = 0f;
+        while (elapsed < jumpDuration / 2)
+        {
+            elapsed += Time.deltaTime;
+            transform.position = Vector3.Lerp(peakPosition, startPosition, elapsed / (jumpDuration / 2));
+            yield return null;
+        }
+
+        SlamImpact();
+        isJumping = false;
+    }
+
+    private void SlamImpact()
+    {
+        Debug.Log("Boss slammed into the ground!");
+        FindFirstObjectByType<TheCamera>().Shake(0.5f, 0.2f);
+        CreateShockwaves();
+    }
+
+    private void CreateShockwaves()
+    {
+        theShockwave.GetComponent<Shockwave>().TriggerShockwave();
+        Debug.Log("Shockwave triggered!");
+    }
+
 }
