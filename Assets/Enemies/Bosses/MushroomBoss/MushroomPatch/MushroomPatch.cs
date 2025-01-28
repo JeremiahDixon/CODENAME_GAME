@@ -11,12 +11,13 @@ public class MushroomPatch : Damagable
     // This will store the current health
     private float currentHealth;
 
-    public float minScale = 0.5f; // Minimum scale size during bounce
-    public float maxScale = 1.25f; // Maximum scale size
+    public float minScale; // Minimum scale size during bounce
+    public float secMaxScale; // Maximum scale size
+    public float maxScale; // Maximum scale size
     private Vector3 initialScale; // The initial scale of the mushroom
 
-    public float growthDuration = 0.5f; // Time to grow to maxScale
-    public float oscillationDuration = 2f; // Duration of the bouncy oscillation phase before settling
+    public float growthDuration; // Time to grow to maxScale
+    public float oscillationDuration; // Duration of the bouncy oscillation phase before settling
 
     private void Start()
     {
@@ -95,7 +96,7 @@ public class MushroomPatch : Damagable
         {
             // Oscillation effect (smooth bounce)
             float t = Mathf.Sin(elapsedTime * Mathf.PI * 2 / oscillationDuration); // Creates a sine wave
-            float scale = Mathf.Lerp(minScale, maxScale, (t + 1) / 2); // Convert sine wave to scale range
+            float scale = Mathf.Lerp(minScale, secMaxScale, (t + 1) / 2); // Convert sine wave to scale range
             transform.localScale = new Vector3(scale, scale, 1); // Keep Z scale as 1 for 2D
             elapsedTime += Time.deltaTime;
             yield return null;
@@ -104,7 +105,7 @@ public class MushroomPatch : Damagable
         // Phase 3: Smooth transition to scale 1 (final resting size)
         while (transform.localScale.x > 1f)
         {
-            float scale = Mathf.Lerp(transform.localScale.x, 1f, Time.deltaTime * 2); // Smooth transition to 1
+            float scale = Mathf.Lerp(transform.localScale.x, 1f, 2 / oscillationDuration); // Smooth transition to 1
             transform.localScale = new Vector3(scale, scale, 1); // Keep Z scale as 1 for 2D
             yield return null;
         }

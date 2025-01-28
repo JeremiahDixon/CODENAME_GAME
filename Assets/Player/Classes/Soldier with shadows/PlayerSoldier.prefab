@@ -374,6 +374,7 @@ MonoBehaviour:
   movementSpeed: {x: 0, y: 0}
   knockbackForce: 5
   knockbackDuration: 0.2
+  maxComboDelay: 0.8
   timeBtwAttack: 0
   startTimeBtwAttack: 0
   attackPos: {fileID: 8548521028279300952}
@@ -381,6 +382,9 @@ MonoBehaviour:
   whatIsEnemies:
     serializedVersion: 2
     m_Bits: 64
+  whatIsTerrain:
+    serializedVersion: 2
+    m_Bits: 512
   attackRange: 0.6
   baseAttackStrength: 0
   baseHp: 0
@@ -401,6 +405,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9cc5f6900b6d02044ba8cb37ea1ff869, type: 3}
   stepLength: 0.3
   stepTimer: 0
+  isDoubleProjectile: 0
 --- !u!114 &7483288273184238996
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -443,7 +448,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4dcc627c020ae2b4ca1c3e3a5025628f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  iceBow: {fileID: 8374271587910678415, guid: ab44a0f18b777224c81a939a239fad5e, type: 3}
 --- !u!1 &6789598584254104784
 GameObject:
   m_ObjectHideFlags: 0

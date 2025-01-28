@@ -29,7 +29,7 @@ public class MushroomGarden : MonoBehaviour
         foreach (Transform child in transform)
         {
             child.gameObject.SetActive(true);
-            yield return new WaitForSeconds(0.12f); // Wait 0.5 seconds before activating the next one
+            yield return new WaitForSeconds(0.1f); // Wait seconds before activating the next one
         }
 
         // Once all mushrooms are activated, start spawning enemies
@@ -44,7 +44,7 @@ public class MushroomGarden : MonoBehaviour
             // If there are mushrooms left, start spawning
             if (transform.childCount > 0)
             {
-                yield return StartCoroutine(SpawnEnemiesForDuration());
+                yield return StartCoroutine(SpawnEnemiesForDuration(2));
             }
             else
             {
@@ -59,8 +59,15 @@ public class MushroomGarden : MonoBehaviour
         }
     }
 
-    private IEnumerator SpawnEnemiesForDuration()
+    private IEnumerator SpawnEnemiesForDuration(float waitTime)
     {
+        float elapsedTime = 0f;
+        while(elapsedTime < waitTime)
+        {
+            elapsedTime += 0.1f;
+            // Wait for the next spawn interval
+            yield return new WaitForSeconds(0.1f);
+        }
         // Get the number of mushrooms left in the patch (number of child objects)
         int remainingMushrooms = transform.childCount;
 
@@ -68,7 +75,7 @@ public class MushroomGarden : MonoBehaviour
         float spawnDuration = Mathf.Max(remainingMushrooms * spawnDurationFactor, 1f); // Ensure at least 1 second of spawning
 
         // Start spawning enemies for the calculated duration
-        float elapsedTime = 0f;
+        elapsedTime = 0f;
         while (elapsedTime < spawnDuration)
         {
             // Spawn an enemy from the object pool
@@ -142,46 +149,3 @@ public class MushroomGarden : MonoBehaviour
         pool.Enqueue(obj); // Return it to the pool
     }
 }
-
-// public class ObjectPool
-// {
-//     private GameObject prefab;
-//     private Queue<GameObject> pool;
-
-//     public ObjectPool(GameObject prefab, int initialCount)
-//     {
-//         this.prefab = prefab;
-//         pool = new Queue<GameObject>();
-
-//         // Create initial objects and add them to the pool
-//         for (int i = 0; i < initialCount; i++)
-//         {
-//             GameObject obj = Object.Instantiate(prefab);
-//             obj.SetActive(false); // Make sure they are initially inactive
-//             pool.Enqueue(obj);
-//         }
-//     }
-
-//     public GameObject GetObject()
-//     {
-//         // If the pool is empty, create a new object
-//         if (pool.Count == 0)
-//         {
-//             GameObject obj = Object.Instantiate(prefab);
-//             obj.SetActive(false);
-//             return obj;
-//         }
-//         else
-//         {
-//             // Get an object from the pool and activate it
-//             GameObject obj = pool.Dequeue();
-//             return obj;
-//         }
-//     }
-
-//     public void ReturnObject(GameObject obj)
-//     {
-//         obj.SetActive(false); // Deactivate the object
-//         pool.Enqueue(obj); // Return it to the pool
-//     }
-//}

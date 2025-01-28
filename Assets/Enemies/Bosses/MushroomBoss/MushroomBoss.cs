@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class MushroomBoss : Enemy
 {
@@ -50,6 +51,7 @@ public class MushroomBoss : Enemy
     private List<Vector2> spawnedPositions = new List<Vector2>(); // Track positions of spawned patches
     float spawnPatches = 5f;
     float startSpawnPatches = 25f;
+    public Tilemap terrainTilemap;
 
     void Start()
     {
@@ -258,7 +260,42 @@ public class MushroomBoss : Enemy
             }
         }
 
+        // Check if the position is on or near a terrain tile
+        if (IsPositionOnTerrain(position))
+        {
+            return false;
+        }
+
         return true;
+    }
+
+    bool IsPositionOnTerrain(Vector2 position)
+    {
+        // Convert the radius of the object to a range of checks around the position
+        float checkRadius = spawnRadius; // Adjust as needed for your object's actual size
+
+        // Iterate through a series of angles to check points around the position
+        int checkPoints = 12; // Number of points to check (more = finer precision)
+        for (int i = 0; i < checkPoints; i++)
+        {
+            // Calculate the angle for this check point
+            float angle = i * Mathf.PI * 2f / checkPoints;
+
+            // Determine the offset position at this angle and radius
+            Vector2 offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * checkRadius;
+            Vector2 checkPosition = position + offset;
+
+            // Convert the position to a cell position in the tilemap
+            Vector3Int cellPosition = terrainTilemap.WorldToCell(checkPosition);
+
+            // Check if there is a terrain tile at the offset position
+            if (terrainTilemap.HasTile(cellPosition))
+            {
+                return true; // If any point within the radius hits a terrain tile, the position is invalid
+            }
+        }
+
+        return false; // No terrain tiles within the radius
     }
 
     override public void TakeDamage (int damage)

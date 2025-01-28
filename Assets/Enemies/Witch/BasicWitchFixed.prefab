@@ -178,7 +178,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b1dea5df778cd849819b18a5775a246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damagedClips: []
+  damagedClips:
+  - {fileID: 8300000, guid: a9251a67137733c4487d77e7c334dcc8, type: 3}
+  - {fileID: 8300000, guid: 4052d073e0465ff4ab261803e486fb22, type: 3}
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 8

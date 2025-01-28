@@ -39,6 +39,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
     [SerializeField] Transform attackPosLeft;
 
     [SerializeField] LayerMask whatIsEnemies;
+    [SerializeField] LayerMask whatIsTerrain;
     [SerializeField] float attackRange;
     [SerializeField] int baseAttackStrength;
     int currentAttackStrength; public int CurrentAttackStrength{get => currentAttackStrength; set => currentAttackStrength = value;}
@@ -46,6 +47,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
     [SerializeField]int baseHp;
     public bool shouldBeDamaging {get; private set;} = false;
     List<IEnemy> damagedEnemies = new List<IEnemy>();
+    List<Damagable> damagedTerrain = new List<Damagable>();
     public static VSPlayer Instance;
     [SerializeField] Vector2 activeMovementSpeed;
     [SerializeField] Vector2 dashSpeed;
@@ -324,7 +326,7 @@ public class VSPlayer : MonoBehaviour, IPlayer
             for (int i = 0; i < enemiesToDamage.Length; i++)
             {
                 IEnemy enemy = enemiesToDamage[i].collider.gameObject.GetComponent<IEnemy>();
-                if(enemy != null && !damagedEnemies.Contains(enemy) && enemiesToDamage[i].collider is PolygonCollider2D)
+                if(enemy != null && !damagedEnemies.Contains(enemy)/* && enemiesToDamage[i].collider is PolygonCollider2D*/)
                 {
                     if(!shook)
                     {
@@ -332,20 +334,47 @@ public class VSPlayer : MonoBehaviour, IPlayer
                         shook = true;
                     }
                     // Calculate knockback direction
-                    Vector2 knockbackDirection = enemiesToDamage[i].transform.position - transform.position;
-                    enemy.ApplyKnockback(knockbackDirection, knockbackForce, knockbackDuration);
+                    if(enemy.CanBeKnockedBack)
+                    {
+                        Vector2 knockbackDirection = enemiesToDamage[i].transform.position - transform.position;
+                        enemy.ApplyKnockback(knockbackDirection, knockbackForce, knockbackDuration);
+                    }
                     enemy.TakeDamage(currentAttackStrength + Mathf.RoundToInt(currentAttackStrength * damageModifier));
                     damagedEnemies.Add(enemy);
+                }
+            }
+
+            RaycastHit2D[] terrainToDamage;
+            if(facingRight)
+            {
+                terrainToDamage = Physics2D.CircleCastAll(attackPos.position, attackRange, transform.right, 0f, whatIsTerrain);
+            }else
+            {
+                terrainToDamage = Physics2D.CircleCastAll(attackPosLeft.position, attackRange, transform.right, 0f, whatIsTerrain);
+            }
+            for (int i = 0; i < terrainToDamage.Length; i++)
+            {
+                Damagable terrain = terrainToDamage[i].collider.gameObject.GetComponent<Damagable>();
+                if(terrain != null && !damagedTerrain.Contains(terrain)/* && enemiesToDamage[i].collider is PolygonCollider2D*/)
+                {
+                    terrain.TakeDamage(currentAttackStrength + Mathf.RoundToInt(currentAttackStrength * damageModifier));
+                    damagedTerrain.Add(terrain);
                 }
             }
             yield return null;
         }
         ReturnDamagedEnemiesHittable();
+        ReturnDamagedTerrainHittable();
     }
 
     private void ReturnDamagedEnemiesHittable()
     {
         damagedEnemies.Clear();
+    }
+
+    private void ReturnDamagedTerrainHittable()
+    {
+        damagedTerrain.Clear();
     }
 
     public void AttackStop()

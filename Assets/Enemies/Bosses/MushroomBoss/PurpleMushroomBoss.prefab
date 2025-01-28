@@ -211,6 +211,7 @@ MonoBehaviour:
   spawnRadius: 4
   mushroomPatchPrefab: {fileID: 957412244852052023, guid: a7fbcd72e4e9742759e91e940a83fc80, type: 3}
   maxPatches: 3
+  terrainTilemap: {fileID: 6650253063584381363, guid: 1dadd18a60c944a40a2f070785f1f731, type: 3}
 --- !u!1 &4272360410073164297
 GameObject:
   m_ObjectHideFlags: 0

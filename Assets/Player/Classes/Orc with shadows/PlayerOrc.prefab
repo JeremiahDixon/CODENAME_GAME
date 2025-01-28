@@ -115,7 +115,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 834131347
-  m_SortingLayer: 2
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_Sprite: {fileID: 5120410236738981136, guid: 68fc90e4ed1b44150a0134bd68a6173e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -289,6 +289,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: {x: 0, y: 0}
+  knockbackForce: 5
+  knockbackDuration: 0.2
+  maxComboDelay: 0.8
   timeBtwAttack: 0
   startTimeBtwAttack: 0
   attackPos: {fileID: 7595460628529479780}
@@ -296,6 +299,9 @@ MonoBehaviour:
   whatIsEnemies:
     serializedVersion: 2
     m_Bits: 64
+  whatIsTerrain:
+    serializedVersion: 2
+    m_Bits: 512
   attackRange: 0.65
   baseAttackStrength: 0
   baseHp: 0
@@ -316,6 +322,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 9cc5f6900b6d02044ba8cb37ea1ff869, type: 3}
   stepLength: 0.3
   stepTimer: 0
+  isDoubleProjectile: 0
 --- !u!114 &3018504466355347459
 MonoBehaviour:
   m_ObjectHideFlags: 0

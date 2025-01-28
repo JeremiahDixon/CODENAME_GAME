@@ -147,13 +147,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176686fd4337c47e7adbc881ab1eb231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 200
+  health: 100
   shakeDuration: 0.2
   shakeAmount: 0.1
   minScale: 0.75
+  secMaxScale: 1.1
   maxScale: 1.25
-  growthDuration: 1
-  oscillationDuration: 1
+  growthDuration: 0.55
+  oscillationDuration: 0.3
 --- !u!1 &957412244852052023
 GameObject:
   m_ObjectHideFlags: 0
@@ -185,14 +186,14 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2168233509619654177}
-  - {fileID: 7521172052873486524}
-  - {fileID: 6569395501327454112}
-  - {fileID: 4465283188534706626}
   - {fileID: 3869634392800135772}
-  - {fileID: 5934025857876192147}
+  - {fileID: 7521172052873486524}
   - {fileID: 4988841606307890289}
-  - {fileID: 1055469074723317029}
+  - {fileID: 5934025857876192147}
+  - {fileID: 6569395501327454112}
   - {fileID: 5032624615367754422}
+  - {fileID: 1055469074723317029}
+  - {fileID: 4465283188534706626}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7980819478228119695
@@ -359,13 +360,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176686fd4337c47e7adbc881ab1eb231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 200
+  health: 100
   shakeDuration: 0.2
   shakeAmount: 0.1
   minScale: 0.75
+  secMaxScale: 1.1
   maxScale: 1.25
-  growthDuration: 1
-  oscillationDuration: 1
+  growthDuration: 0.55
+  oscillationDuration: 0.3
 --- !u!1 &5308931856486174205
 GameObject:
   m_ObjectHideFlags: 0
@@ -513,13 +515,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176686fd4337c47e7adbc881ab1eb231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 200
+  health: 100
   shakeDuration: 0.2
   shakeAmount: 0.1
   minScale: 0.75
+  secMaxScale: 1.1
   maxScale: 1.25
-  growthDuration: 1
-  oscillationDuration: 1
+  growthDuration: 0.55
+  oscillationDuration: 0.3
 --- !u!1 &6395590463556325550
 GameObject:
   m_ObjectHideFlags: 0
@@ -667,13 +670,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176686fd4337c47e7adbc881ab1eb231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 200
+  health: 100
   shakeDuration: 0.2
   shakeAmount: 0.1
   minScale: 0.75
+  secMaxScale: 1.1
   maxScale: 1.25
-  growthDuration: 1
-  oscillationDuration: 1
+  growthDuration: 0.55
+  oscillationDuration: 0.3
 --- !u!1 &6460350649273255000
 GameObject:
   m_ObjectHideFlags: 0
@@ -775,13 +779,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176686fd4337c47e7adbc881ab1eb231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 200
+  health: 100
   shakeDuration: 0.2
   shakeAmount: 0.1
   minScale: 0.75
+  secMaxScale: 1.1
   maxScale: 1.25
-  growthDuration: 1
-  oscillationDuration: 1
+  growthDuration: 0.55
+  oscillationDuration: 0.3
 --- !u!61 &2396167527743553577
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -975,13 +980,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176686fd4337c47e7adbc881ab1eb231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 200
+  health: 100
   shakeDuration: 0.2
   shakeAmount: 0.1
   minScale: 0.75
+  secMaxScale: 1.1
   maxScale: 1.25
-  growthDuration: 1
-  oscillationDuration: 1
+  growthDuration: 0.55
+  oscillationDuration: 0.3
 --- !u!1 &7894307520072833170
 GameObject:
   m_ObjectHideFlags: 0
@@ -1129,13 +1135,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176686fd4337c47e7adbc881ab1eb231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 200
+  health: 100
   shakeDuration: 0.2
   shakeAmount: 0.1
   minScale: 0.75
+  secMaxScale: 1.1
   maxScale: 1.25
-  growthDuration: 1
-  oscillationDuration: 1
+  growthDuration: 0.55
+  oscillationDuration: 0.3
 --- !u!1 &8544477303995316123
 GameObject:
   m_ObjectHideFlags: 0
@@ -1283,13 +1290,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176686fd4337c47e7adbc881ab1eb231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 200
+  health: 100
   shakeDuration: 0.2
   shakeAmount: 0.1
   minScale: 0.75
+  secMaxScale: 1.1
   maxScale: 1.25
-  growthDuration: 1
-  oscillationDuration: 1
+  growthDuration: 0.55
+  oscillationDuration: 0.3
 --- !u!1 &8767776662272081147
 GameObject:
   m_ObjectHideFlags: 0
@@ -1437,10 +1445,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 176686fd4337c47e7adbc881ab1eb231, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 200
+  health: 100
   shakeDuration: 0.2
   shakeAmount: 0.1
   minScale: 0.75
+  secMaxScale: 1.1
   maxScale: 1.25
-  growthDuration: 1
-  oscillationDuration: 1
+  growthDuration: 0.55
+  oscillationDuration: 0.3
