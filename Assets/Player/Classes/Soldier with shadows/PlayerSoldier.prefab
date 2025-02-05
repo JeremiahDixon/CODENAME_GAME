@@ -389,7 +389,7 @@ MonoBehaviour:
   baseAttackStrength: 0
   baseHp: 0
   activeMovementSpeed: {x: 0, y: 0}
-  dashSpeed: {x: 6, y: 6}
+  dashSpeed: {x: 0, y: 0}
   dashLength: 0.3
   dashCooldown: 1
   className: 

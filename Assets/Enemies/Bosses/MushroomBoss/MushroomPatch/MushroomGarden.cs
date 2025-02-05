@@ -76,7 +76,7 @@ public class MushroomGarden : MonoBehaviour
 
         // Start spawning enemies for the calculated duration
         elapsedTime = 0f;
-        while (elapsedTime < spawnDuration)
+        while (elapsedTime < spawnDuration && transform.childCount > 0)
         {
             // Spawn an enemy from the object pool
             GameObject enemy = GetObject();

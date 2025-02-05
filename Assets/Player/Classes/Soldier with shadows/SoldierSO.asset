@@ -17,7 +17,7 @@ MonoBehaviour:
   startTimeBtwAttack: 1
   baseAttackStrength: 50
   dashSpeed: {x: 3, y: 3}
-  dashLength: 0.33
-  dashCooldown: 3
+  dashLength: 0.5
+  dashCooldown: 2
   baseHp: 100
   sprite: {fileID: -7978735674136817684, guid: ef761efe4771643568cf0cb7fda59aba, type: 3}

@@ -20,7 +20,7 @@ public class MushroomBoss : Enemy
     public StageTwoAttack currentStageTwoState {get; private set;}
 
     [SerializeField] GameObject gasCloudPrefab; // Assign your gas cloud prefab in the Inspector
-    [SerializeField] int numberOfClouds = 5;    // Number of gas clouds to spawn
+    [SerializeField] int numberOfClouds;    // Number of gas clouds to spawn
 
     Vector2 screenBoundsMin; // Minimum bounds of the screen in world coordinates
     Vector2 screenBoundsMax; // Maximum bounds of the screen in world coordinates
@@ -68,6 +68,9 @@ public class MushroomBoss : Enemy
     public float timeBetweenShockwaves; // Delay between each wave
 
     CinemachineImpulseSource impulseSource;
+
+    public LayerMask terrainLayer;
+    public float terrainCheckRadius = 1f;
 
     void Start()
     {
@@ -295,7 +298,7 @@ public class MushroomBoss : Enemy
         }
 
         // Check if the position is on or near a terrain tile
-        if (IsPositionOnTerrain(position))
+        if (IsNearTerrain(position))
         {
             return false;
         }
@@ -303,33 +306,38 @@ public class MushroomBoss : Enemy
         return true;
     }
 
-    bool IsPositionOnTerrain(Vector2 position)
+    // bool IsPositionOnTerrain(Vector2 position)
+    // {
+    //     // Convert the radius of the object to a range of checks around the position
+    //     float checkRadius = spawnRadius; // Adjust as needed for your object's actual size
+
+    //     // Iterate through a series of angles to check points around the position
+    //     int checkPoints = 12; // Number of points to check (more = finer precision)
+    //     for (int i = 0; i < checkPoints; i++)
+    //     {
+    //         // Calculate the angle for this check point
+    //         float angle = i * Mathf.PI * 2f / checkPoints;
+
+    //         // Determine the offset position at this angle and radius
+    //         Vector2 offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * checkRadius;
+    //         Vector2 checkPosition = position + offset;
+
+    //         // Convert the position to a cell position in the tilemap
+    //         Vector3Int cellPosition = terrainTilemap.WorldToCell(checkPosition);
+
+    //         // Check if there is a terrain tile at the offset position
+    //         if (terrainTilemap.HasTile(cellPosition))
+    //         {
+    //             return true; // If any point within the radius hits a terrain tile, the position is invalid
+    //         }
+    //     }
+
+    //     return false; // No terrain tiles within the radius
+    // }
+
+    bool IsNearTerrain(Vector2 position)
     {
-        // Convert the radius of the object to a range of checks around the position
-        float checkRadius = spawnRadius; // Adjust as needed for your object's actual size
-
-        // Iterate through a series of angles to check points around the position
-        int checkPoints = 12; // Number of points to check (more = finer precision)
-        for (int i = 0; i < checkPoints; i++)
-        {
-            // Calculate the angle for this check point
-            float angle = i * Mathf.PI * 2f / checkPoints;
-
-            // Determine the offset position at this angle and radius
-            Vector2 offset = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * checkRadius;
-            Vector2 checkPosition = position + offset;
-
-            // Convert the position to a cell position in the tilemap
-            Vector3Int cellPosition = terrainTilemap.WorldToCell(checkPosition);
-
-            // Check if there is a terrain tile at the offset position
-            if (terrainTilemap.HasTile(cellPosition))
-            {
-                return true; // If any point within the radius hits a terrain tile, the position is invalid
-            }
-        }
-
-        return false; // No terrain tiles within the radius
+        return Physics2D.OverlapCircle(position, terrainCheckRadius, terrainLayer) != null;
     }
 
     override public void TakeDamage (int damage)
@@ -368,24 +376,30 @@ public class MushroomBoss : Enemy
     {
         isJumping = true;
 
-        // Jumping up
         Vector3 startPosition = transform.position;
         Vector3 peakPosition = new Vector3(startPosition.x, groundPosition.position.y + jumpHeight, startPosition.z);
 
         float elapsed = 0f;
-        while (elapsed < jumpDuration / 2)
+        float halfDuration = jumpDuration / 2;
+
+        // Jumping up (Stronger ease-out for a faster start)
+        while (elapsed < halfDuration)
         {
             elapsed += Time.deltaTime;
-            transform.position = Vector3.Lerp(startPosition, peakPosition, elapsed / (jumpDuration / 2));
+            float t = elapsed / halfDuration;
+            float easedT = 1 - Mathf.Cos(t * Mathf.PI * 0.5f);  // Faster start, slower stop
+            transform.position = Vector3.Lerp(startPosition, peakPosition, easedT);
             yield return null;
         }
 
-        // Slamming down
+        // Slamming down (Stronger ease-in for a slower start and super-fast finish)
         elapsed = 0f;
-        while (elapsed < jumpDuration / 2)
+        while (elapsed < halfDuration)
         {
             elapsed += Time.deltaTime;
-            transform.position = Vector3.Lerp(peakPosition, startPosition, elapsed / (jumpDuration / 2));
+            float t = elapsed / halfDuration;
+            float easedT = Mathf.Pow(t, 2f);  // Higher exponent makes the slam finish even faster
+            transform.position = Vector3.Lerp(peakPosition, startPosition, easedT);
             yield return null;
         }
 

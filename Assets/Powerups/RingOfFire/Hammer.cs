@@ -24,9 +24,9 @@ public class Hammer : MonoBehaviour
                 Vector2 knockbackDirection = collision.transform.position - GameManager.Instance.thePlayer.transform.position;
                 collision.gameObject.GetComponent<IEnemy>().ApplyKnockback(knockbackDirection, knockbackForce, knockbackDuration);
             }
-            collision.GetComponent<IEnemy>().TakeDamage(damage);
+            collision.GetComponent<IEnemy>().TakeDamage(damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.DamageModifier));
         }else if(collision.gameObject.GetComponent<Damagable>() != null){
-            collision.gameObject.GetComponent<Damagable>().TakeDamage(damage);
+            collision.gameObject.GetComponent<Damagable>().TakeDamage(damage + Mathf.RoundToInt(damage * GameManager.Instance.thePlayer.DamageModifier));
         }
     }
 

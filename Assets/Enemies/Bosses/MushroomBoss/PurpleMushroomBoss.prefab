@@ -201,7 +201,7 @@ MonoBehaviour:
   timeBtwAttack: 0
   attackPos: {fileID: 8575935487428392944}
   gasCloudPrefab: {fileID: 8976496974152768478, guid: b3ed266471b042c499abd262be7d3203, type: 3}
-  numberOfClouds: 8
+  numberOfClouds: 5
   slamTime: 5
   startSlamTime: 5
   mushroomPrefab: {fileID: 7972992333229994541, guid: 98bf8caf334c11e4fba9301c69738fe2, type: 3}
@@ -211,8 +211,8 @@ MonoBehaviour:
   spawnPoint: {fileID: 8575935487428392944}
   ogSpawnPoint: {fileID: 7249810151025586961}
   sporeBombPrefab: {fileID: 1545743211241906437, guid: abe308b5fc130554181d0ad487fb9fe9, type: 3}
-  attackDuration: 20
-  bombSpawnInterval: 0.35
+  attackDuration: 10
+  bombSpawnInterval: 0.5
   spawnRadius: 4
   mushroomPatchPrefab: {fileID: 957412244852052023, guid: a7fbcd72e4e9742759e91e940a83fc80, type: 3}
   maxPatches: 3
@@ -223,6 +223,10 @@ MonoBehaviour:
   theShockwave: {fileID: 0}
   numberOfShockwaves: 1
   timeBetweenShockwaves: 3
+  terrainLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  terrainCheckRadius: 4
 --- !u!114 &-4212067131235920549
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -51,165 +51,165 @@ public class PlaySystemManager : MonoBehaviour
             ms.StartIntermediateTimeBtwSpawn = 0.5f;
             ms.StartAdvancedTimeBtwSpawn = 1f;
             ms.StartLegendaryTimeBtwSpawn = 1;
-            ms.StartShooterTimeBtwSpawn = 2f;
+            //ms.StartShooterTimeBtwSpawn = 7f;
         }else if(timePlayed >= playedThreeMin){
             ms.StartBasicTimeBtwSpawn = 0.4f;
             ms.StartIntermediateTimeBtwSpawn = 0.5f;
             ms.StartAdvancedTimeBtwSpawn = 1;
             ms.StartLegendaryTimeBtwSpawn = 5;
-            ms.StartShooterTimeBtwSpawn = 2.5f;
+            //ms.StartShooterTimeBtwSpawn = 7f;
         }else if(timePlayed >= playedTwoMin){
             ms.StartBasicTimeBtwSpawn = 0.5f;
             ms.StartIntermediateTimeBtwSpawn = 2;
             ms.StartAdvancedTimeBtwSpawn = 5;
             ms.StartLegendaryTimeBtwSpawn = 10;
-            ms.StartShooterTimeBtwSpawn = 3.5f;
+            //ms.StartShooterTimeBtwSpawn = 7f;
         }else if(timePlayed >= playedOneMin){
             ms.StartBasicTimeBtwSpawn = 0.6f;
             ms.StartIntermediateTimeBtwSpawn = 6;
             ms.StartAdvancedTimeBtwSpawn = 12;
             ms.StartLegendaryTimeBtwSpawn = 20;
-            ms.StartShooterTimeBtwSpawn = 4;
+            //ms.StartShooterTimeBtwSpawn = 7f;
         }else if(timePlayed >= playedThirtySeconds){
             ms.StartBasicTimeBtwSpawn = 0.7f;
             ms.StartIntermediateTimeBtwSpawn = 7;
             ms.StartAdvancedTimeBtwSpawn = 15;
             ms.StartLegendaryTimeBtwSpawn = 25;
-            ms.StartShooterTimeBtwSpawn = 4.5f;
+            //ms.StartShooterTimeBtwSpawn = 7f;
         }
     }
 
     void TrackScore()
     {
-        // if(score >= 25 && powerupCount == 0 )
-        // {
-        //     powerupCount ++;
-        //     pum.PowerUp();
-        // }else if(score >= 200 && powerupCount == 1)
-        // {
-        //     powerupCount ++;
-        //     pum.PowerUp();
-        // }else if(score >= 300 && powerupCount == 2)
-        // {
-        //     powerupCount ++;
-        //     pum.PowerUp();
-        // }
-        // else if(score >= 400 && powerupCount == 3)
-        // {
-        //     powerupCount ++;
-        //     pum.PowerUp();
-        // }
-        // else if(score >= 500 && powerupCount == 4)
-        // {
-        //     powerupCount ++;
-        //     pum.PowerUp();
-        // }
-        // else if(score >= 750 && powerupCount == 5)
-        // {
-        //     powerupCount ++;
-        //     pum.PowerUp();
-        // }else if(score >= 1000 && powerupCount == 6)
-        // {
-        //     powerupCount ++;
-        //     pum.PowerUp();
-        // }
-        // else if(score >= 1250 && powerupCount == 7)
-        // {
-        //     powerupCount ++;
-        //     pum.PowerUp();
-        // }
-        // else if(score >= 1500 && powerupCount == 8)
-        // {
-        //     powerupCount ++;
-        //     pum.PowerUp();
-        // }
-        // else if(score >= 1750 && powerupCount == 9)
-        // {
-        //     powerupCount ++;
-        //     pum.PowerUp();
-        // }
-        // else if(score >= 2000 && powerupCount == 10)
-        // {
-        //     powerupCount ++;
-        //     pum.PowerUp();
-        // }
-        // else if(score >= 2250 && powerupCount == 11)
-        // {
-        //     powerupCount ++;
-        //     pum.PowerUp();
-        // }
-        // else if(score >= 2500 && powerupCount == 12)
-        // {
-        //     powerupCount ++;
-        //     pum.PowerUp();
-        //     ms.SpawnBoss();
-        //     GameObject.Find("PlayerCamera").GetComponent<TheCamera>().LockCamera();
-        // }
-
-        if(score >= 5 && powerupCount == 0 )
+        if(score >= 25 && powerupCount == 0 )
         {
             powerupCount ++;
             pum.PowerUp();
-        }else if(score >= 10 && powerupCount == 1)
+        }else if(score >= 200 && powerupCount == 1)
         {
             powerupCount ++;
             pum.PowerUp();
-        }else if(score >= 10 && powerupCount == 2)
+        }else if(score >= 300 && powerupCount == 2)
         {
             powerupCount ++;
             pum.PowerUp();
         }
-        else if(score >= 10 && powerupCount == 3)
+        else if(score >= 400 && powerupCount == 3)
         {
             powerupCount ++;
             pum.PowerUp();
         }
-        else if(score >= 10 && powerupCount == 4)
+        else if(score >= 500 && powerupCount == 4)
         {
             powerupCount ++;
             pum.PowerUp();
         }
-        else if(score >= 10 && powerupCount == 5)
+        else if(score >= 750 && powerupCount == 5)
         {
             powerupCount ++;
             pum.PowerUp();
-        }else if(score >= 10 && powerupCount == 6)
-        {
-            powerupCount ++;
-            pum.PowerUp();
-        }
-        else if(score >= 10 && powerupCount == 7)
+        }else if(score >= 1000 && powerupCount == 6)
         {
             powerupCount ++;
             pum.PowerUp();
         }
-        else if(score >= 10 && powerupCount == 8)
+        else if(score >= 1250 && powerupCount == 7)
         {
             powerupCount ++;
             pum.PowerUp();
         }
-        else if(score >= 10 && powerupCount == 9)
+        else if(score >= 1500 && powerupCount == 8)
         {
             powerupCount ++;
             pum.PowerUp();
         }
-        else if(score >= 10 && powerupCount == 10)
+        else if(score >= 1750 && powerupCount == 9)
         {
             powerupCount ++;
             pum.PowerUp();
         }
-        else if(score >= 10 && powerupCount == 11)
+        else if(score >= 2000 && powerupCount == 10)
         {
             powerupCount ++;
             pum.PowerUp();
         }
-        else if(score >= 15 && powerupCount == 12)
+        else if(score >= 2250 && powerupCount == 11)
+        {
+            powerupCount ++;
+            pum.PowerUp();
+        }
+        else if(score >= 2500 && powerupCount == 12)
         {
             powerupCount ++;
             pum.PowerUp();
             ms.SpawnBoss();
             GameObject.Find("PlayerCamera").GetComponent<TheCamera>().LockCamera();
         }
+
+        // if(score >= 5 && powerupCount == 0 )
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }else if(score >= 10 && powerupCount == 1)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }else if(score >= 10 && powerupCount == 2)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }
+        // else if(score >= 10 && powerupCount == 3)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }
+        // else if(score >= 10 && powerupCount == 4)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }
+        // else if(score >= 10 && powerupCount == 5)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }else if(score >= 10 && powerupCount == 6)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }
+        // else if(score >= 10 && powerupCount == 7)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }
+        // else if(score >= 10 && powerupCount == 8)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }
+        // else if(score >= 10 && powerupCount == 9)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }
+        // else if(score >= 10 && powerupCount == 10)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }
+        // else if(score >= 10 && powerupCount == 11)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        // }
+        // else if(score >= 15 && powerupCount == 12)
+        // {
+        //     powerupCount ++;
+        //     pum.PowerUp();
+        //     ms.SpawnBoss();
+        //     GameObject.Find("PlayerCamera").GetComponent<TheCamera>().LockCamera();
+        // }
     }
 
     public void IncreaseScore(int scoreValue){

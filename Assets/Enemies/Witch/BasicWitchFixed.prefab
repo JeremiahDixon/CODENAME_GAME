@@ -198,10 +198,13 @@ MonoBehaviour:
   fireRate: 2
   edgePadding: 0.05
   idleDuration: 10
-  spawnRadius: 5
   minPlayerDistance: 3.5
-  avoidDistance: 3
-  laserSpeed: 10
+  avoidDistance: 6
+  laserSpeed: 8
+  terrainLayer:
+    serializedVersion: 2
+    m_Bits: 512
+  terrainCheckRadius: 3
 --- !u!1 &8616709927325519516
 GameObject:
   m_ObjectHideFlags: 0
