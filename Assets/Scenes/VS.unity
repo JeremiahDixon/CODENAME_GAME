@@ -67671,6 +67671,7 @@ MonoBehaviour:
   - {fileID: 2741234081315411931, guid: dae58e7bab08943b3b1d77d8b63c3d37, type: 3}
   possiblePowerups: []
   _powerupMenuFirst: {fileID: 1069049527}
+  playSystemManager: {fileID: 255891812}
 --- !u!1 &1113147524
 GameObject:
   m_ObjectHideFlags: 0

@@ -16,9 +16,14 @@ public class PowerupMenu : MonoBehaviour
     public List<GameObject> possiblePowerups;
     List<GameObject> randomPowerups;
     [SerializeField] GameObject _powerupMenuFirst;
+    [SerializeField] private PlaySystemManager playSystemManager;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        if (playSystemManager != null)
+        {
+            playSystemManager.OnLevelUp += PowerUp;
+        }
         healthManager = GameObject.Find("HealthCanvas");
         foreach (GameObject powerup in allPowerups)
         {
@@ -32,13 +37,21 @@ public class PowerupMenu : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        if (playSystemManager != null)
+        {
+            playSystemManager.OnLevelUp -= PowerUp;
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
 
     }
 
-    public void PowerUp()
+    public void PowerUp(int level)
     {
         GameManager.Instance.PoweringUp();
         Time.timeScale = 0;

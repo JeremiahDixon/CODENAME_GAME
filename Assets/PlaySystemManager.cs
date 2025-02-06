@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -14,11 +15,13 @@ public class PlaySystemManager : MonoBehaviour
     private float playedThreeMin = 180.0f;
     [SerializeField]
     private float playedFiveMin = 300.0f;
-    int score = 0;
     TextMeshProUGUI scoreText;
     MobSpawner ms;
     PowerupMenu pum;
-    int powerupCount = 0;
+    public int score { get; private set; } = 0;
+    public int Level { get; private set; } = 1;
+    private int[] scoreThresholds = { 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500 }; 
+    public event Action<int> OnLevelUp;
 
     void Awake()
     {
@@ -81,71 +84,11 @@ public class PlaySystemManager : MonoBehaviour
 
     void TrackScore()
     {
-        if(score >= 25 && powerupCount == 0 )
+        while (Level - 1 < scoreThresholds.Length && score >= scoreThresholds[Level - 1])
         {
-            powerupCount ++;
-            pum.PowerUp();
-        }else if(score >= 200 && powerupCount == 1)
-        {
-            powerupCount ++;
-            pum.PowerUp();
-        }else if(score >= 300 && powerupCount == 2)
-        {
-            powerupCount ++;
-            pum.PowerUp();
+            Level++;
+            OnLevelUp?.Invoke(Level);
         }
-        else if(score >= 400 && powerupCount == 3)
-        {
-            powerupCount ++;
-            pum.PowerUp();
-        }
-        else if(score >= 500 && powerupCount == 4)
-        {
-            powerupCount ++;
-            pum.PowerUp();
-        }
-        else if(score >= 750 && powerupCount == 5)
-        {
-            powerupCount ++;
-            pum.PowerUp();
-        }else if(score >= 1000 && powerupCount == 6)
-        {
-            powerupCount ++;
-            pum.PowerUp();
-        }
-        else if(score >= 1250 && powerupCount == 7)
-        {
-            powerupCount ++;
-            pum.PowerUp();
-        }
-        else if(score >= 1500 && powerupCount == 8)
-        {
-            powerupCount ++;
-            pum.PowerUp();
-        }
-        else if(score >= 1750 && powerupCount == 9)
-        {
-            powerupCount ++;
-            pum.PowerUp();
-        }
-        else if(score >= 2000 && powerupCount == 10)
-        {
-            powerupCount ++;
-            pum.PowerUp();
-        }
-        else if(score >= 2250 && powerupCount == 11)
-        {
-            powerupCount ++;
-            pum.PowerUp();
-        }
-        else if(score >= 2500 && powerupCount == 12)
-        {
-            powerupCount ++;
-            pum.PowerUp();
-            ms.SpawnBoss();
-            GameObject.Find("PlayerCamera").GetComponent<TheCamera>().LockCamera();
-        }
-
         // if(score >= 5 && powerupCount == 0 )
         // {
         //     powerupCount ++;
@@ -215,11 +158,12 @@ public class PlaySystemManager : MonoBehaviour
     public void IncreaseScore(int scoreValue){
         score += scoreValue;
         scoreText.text = score.ToString();
-        if(scoreValue == 500)
-        {
-            GameManager.Instance.GameWin();
-        }else{
-            TrackScore();
-        }
+        TrackScore();
+        // if(scoreValue == 500)
+        // {
+        //     GameManager.Instance.GameWin();
+        // }else{
+        //     TrackScore();
+        // }
     }
 }
