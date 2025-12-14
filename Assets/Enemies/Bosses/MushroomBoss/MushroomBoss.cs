@@ -356,7 +356,7 @@ public class MushroomBoss : Enemy
         if (hp <= 0)
         {
             playManager.IncreaseScore(scoreValue);
-            if(loot.Length > 0)
+            if (loot.Length > 0)
             {
                 float randomInt = Random.Range(0f, 100.0f);
                 dropLoot(randomInt);
@@ -364,11 +364,13 @@ public class MushroomBoss : Enemy
             GetComponent<SpriteRenderer>().color = Color.white;
             currentSpeed = speed;
             hp = maxHp;
-            foreach(Projectile projectile in GetComponentsInChildren<Projectile>().ToList())
+            foreach (Projectile projectile in GetComponentsInChildren<Projectile>().ToList())
             {
                 projectile.gameObject.transform.parent = null;
                 projectile.gameObject.SetActive(false);
             }
+            ms.RequeueMob(this.gameObject);
+            GameManager.Instance.GameWin();
         }
     }
 

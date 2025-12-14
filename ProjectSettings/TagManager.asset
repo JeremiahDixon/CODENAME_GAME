@@ -13,6 +13,7 @@ TagManager:
   - Spawner
   - GameWinScreen
   - PlayerCamera
+  - Gold
   layers:
   - Default
   - TransparentFX

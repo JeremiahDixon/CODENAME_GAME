@@ -32,6 +32,8 @@ public class GameManager: MonoBehaviour
     const string HEALTH_MANAGER_NAME = "HealthManager";
     const string ARCHER_CLASS_NAME = "Soldier";
     const string ORC_CLASS_NAME = "Orc";
+    private const string GoldKey = "PlayerGold"; // Key for PlayerPrefs
+    TextMeshProUGUI goldText;
 
     private void Awake()
     {
@@ -40,6 +42,7 @@ public class GameManager: MonoBehaviour
             Instance = this;
             DontDestroyOnLoad(gameObject);  // Keeps this manager between scenes
             Debug.Log("GameManager Initialized");
+            LoadGold();
         }
         else
         {
@@ -52,20 +55,26 @@ public class GameManager: MonoBehaviour
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
         sceneLoader = GameObject.Find(SCENE_LOADER_NAME).GetComponent<SceneLoader>();
-        playerGold = 0;
     }
 
     // called third
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if(scene.name == GAMEPLAY_SCENE_DARKFOREST){
+        if (scene.name == GAMEPLAY_SCENE_DARKFOREST)
+        {
             LoadPlayScreen();
             resetPlayer();
             currentState = GameState.Playing;
-        }else if(scene.name == GAMEPLAY_SCENE_HEAT){
+            goldText = GameObject.FindGameObjectWithTag("Gold").GetComponent<TextMeshProUGUI>();
+            goldText.text = playerGold.ToString();
+        }
+        else if (scene.name == GAMEPLAY_SCENE_HEAT)
+        {
             LoadPlayScreen();
             resetPlayer();
             currentState = GameState.Playing;
+            // goldText = GameObject.FindGameObjectWithTag("Gold").GetComponent<TextMeshProUGUI>();
+            // goldText.text = playerGold.ToString();
         }
     }
 
@@ -96,33 +105,55 @@ public class GameManager: MonoBehaviour
         }
     }
 
-    public void GainGold(int amount){
-
+    public void GainGold(int amount)
+    {
+        this.playerGold += amount;
+        goldText.text = playerGold.ToString();
+        SaveGold();
     }
 
-    public void TakeDamage(int amount){
-        if(!dead){
+
+    public bool SpendGold(int amount)
+    {
+        if (playerGold < amount)
+            return false;
+        playerGold -= amount;
+        goldText.text = playerGold.ToString();
+        SaveGold();
+        return true;
+    }
+    
+    public void SaveGold()
+    {
+        PlayerPrefs.SetInt(GoldKey, playerGold);
+        PlayerPrefs.Save();
+    }
+
+    public void LoadGold()
+    {
+        playerGold = PlayerPrefs.GetInt(GoldKey, 0); // default = 0
+    }
+
+    public void TakeDamage(int amount)
+    {
+        if (!dead)
+        {
             int newHealthValue = this.playerHealth - amount;
             healthManager.TakeDamage(amount);
-            if(newHealthValue <= 0){
+            if (newHealthValue <= 0)
+            {
                 dead = true;
                 currentState = GameState.GameOver;
                 playerHealth = 0;
                 thePlayer.Die();
                 GameOverAfter();
-                //StartCoroutine(GameOverAfter());
-            }else{
+            }
+            else
+            {
                 playerHealth = newHealthValue;
             }
         }
     }
-
-    // private IEnumerator GameOverAfter()
-    // {
-    //     yield return new WaitForSeconds(1);
-    //     gameOverScreen.GameOver();
-    //     Time.timeScale = 0;
-    // }
 
     private void GameOverAfter()
     {

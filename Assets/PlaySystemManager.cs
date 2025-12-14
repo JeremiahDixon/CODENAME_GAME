@@ -20,7 +20,7 @@ public class PlaySystemManager : MonoBehaviour
     PowerupMenu pum;
     public int score { get; private set; } = 0;
     public int Level { get; private set; } = 1;
-    private int[] scoreThresholds = { 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500 }; 
+    private int[] scoreThresholds = { 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000, 2100, 2200, 2300, 2400, 2500 }; 
     public event Action<int> OnLevelUp;
 
     void Awake()
@@ -30,7 +30,7 @@ public class PlaySystemManager : MonoBehaviour
         scoreText.text = score.ToString();
         ms = GameObject.Find("Spawner").GetComponent<MobSpawner>();
         pum = GameObject.Find("PowerupCanvas").GetComponent<PowerupMenu>();
-    }
+    } 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -88,6 +88,11 @@ public class PlaySystemManager : MonoBehaviour
         {
             Level++;
             OnLevelUp?.Invoke(Level);
+        }
+
+        if (Level - 1 == scoreThresholds.Length) {
+            ms.SpawnBoss();
+            GameObject.Find("PlayerCamera").GetComponent<TheCamera>().LockCamera();
         }
         // if(score >= 5 && powerupCount == 0 )
         // {
